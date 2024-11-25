@@ -167,7 +167,7 @@ function _generate_bt601-525_480_telecined_hard()
 }
 
 #######################################
-### _generate_bt601-525_480_telecined_hard
+### _generate_bt601-525_480_telecined_soft
 # - Note that timecode format for 23.976fps progressive is 'HH:MM:SS:FF', ie non drop frame (NDF), rather than 'HH:MM:SS;FF' (DF)
 #######################################
 function _generate_bt601-525_480_telecined_soft()
