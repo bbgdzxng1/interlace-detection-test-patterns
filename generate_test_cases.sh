@@ -11,7 +11,7 @@
 # - In theory, output files can be concatted to produce a hybrid/mixed stream.  "-seq_disp_ext:v 'always'" is specified to always write the Sequence Display Extension to aid this.
 #######################################
 
-duration='00:00:30.000'
+duration='00:00:15.000'
 loglevel='level+info'
 
 #######################################
