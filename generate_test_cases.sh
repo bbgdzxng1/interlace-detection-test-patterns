@@ -4,11 +4,11 @@
 #######################################
 ### generate_testcase.sh
 # - Test cases for testing the functionality of FFmpeg's idet and dgpulldown's soft telecine.
-# - The large font with frame countup of {0-29} or {0..23} is designed to ensure that idet has sufficient changing pixels to produce an accurate idet result at 480.
-# - Source is generated at yuv422p, then interlaced and finally converted to yuv420p.  This is because yuv420p may not have sufficient horizontal resolution in the chroma plane to feed the tinterlace filter.
-# - Script requires dgpulldown 1.0.11 for generation of soft telecine.  dgpulldown 1.0.11-L (Linux/macOS) has some quirks on compilation on macOS.  dgpulldown seems to generate 3:2 pulldown (* citation needed) - at least when soft telecine is applied, 'repeatfields,idet' seems to produce the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer the option to select between [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: Pulldown patterns may also depend on the version of dgpulldown.
-# - Accuracy of idet was improved by focusing on the y plane, since yuv420p may not have sufficient horizontal resolution in chroma planes to produce an accurate result.  ie, 'extractplanes=planes='y',idet'
-# - In theory, output files can be concatted to produce a hybrid/mixed stream.  "-seq_disp_ext:v 'always'" is specified to always write the Sequence Display Extension to aid this.
+# - The large fontsize with frame-countup of {0-29} or {0..23} ensures that idet has sufficient changing pixels to produce an accurate idet result at a low resolution of 480.
+# - Source is generated at yuv422p, then interlaced and finally converted to yuv420p.  Sunsampling in yuv420p may have sufficient vertical resolution in the chroma plane to feed the tinterlace filter.
+# - Script requires dgpulldown 1.0.11 for generation of soft telecine.  dgpulldown 1.0.11-L (Linux/macOS) has some build quirks on compilation on macOS.  dgpulldown appears to generate a 3:2 pulldown pattern when soft telecine is applied (* citation needed) since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer the option to select between [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: Pulldown patterns may also depend on the version of dgpulldown.
+# - The accuracy of idet was improved by focusing on the y plane, since yuv420p may not have sufficient vertical resolution in chroma planes to produce an accurate result.  ie, 'extractplanes=planes='y',idet'
+# - In theory, output files can be concatted to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to always(?) write a Sequence Display Extension.
 #######################################
 
 duration='00:00:15.000'
