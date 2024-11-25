@@ -25,11 +25,11 @@ function _check_dependencies
     mediainfo
     grep
     ffprobe
-    /opt/dgpulldown/dgpulldown # Using dgpulldown 1.0.11
+    /opt/dgpulldown/dgpulldown # Using dgpulldown 1.0.11, which requires build and install.
     # ffplay
     # mpv
     # vlc
-    # jq # potentially useful in the future for FFprobe -print_format 'json' for structured data
+    # jq # potentially useful in the future for FFprobe -print_format 'json' for structured data output & parsing
     # dvdauthor # fun-and-games for creating DVDs.
   )
   for dependency in "${array_of_dependencies[@]}"; do
@@ -224,7 +224,7 @@ function _generate_bt601-525_480_telecined_soft()
 #######################################
 function main()
 {
-  _check_dependencies true
+  _check_dependencies
   _generate_bt601-525_480_interlaced_bff "bt601-525_480_interlaced_bff.mkv"
   _generate_bt601-525_480_interlaced_tff "bt601-525_480_interlaced_tff.mkv"
   _generate_bt601-525_480_telecined_hard "bt601-525_480_telecined_hard.mkv"
