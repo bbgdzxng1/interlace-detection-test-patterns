@@ -13,6 +13,7 @@
 
 duration='00:00:15.000'
 loglevel='level+info'
+quality=5 # Should be 2, but reduced to 5 to reduce the filesize for media in Github.
 
 #######################################
 ### _check_dependencies
@@ -54,7 +55,7 @@ function _generate_bt601-525_480_interlaced_bff()
   sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -q:v 2 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags '+ilme+ildct' -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
@@ -96,7 +97,7 @@ function _generate_bt601-525_480_interlaced_tff()
   sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -q:v 2 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags '+ilme+ildct' -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
@@ -138,13 +139,13 @@ function _generate_bt601-525_480_telecined_hard()
     drawtext=text='A':fontcolor='Red':fontsize='(main_h)/8':fontfile='Monospace':x=0:y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),0)', \
     drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='text_w':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),1)', \
     drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(2*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),2)', \
-    drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)' \
+    drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)', \
     format=pix_fmts='yuv422p',telecine=pattern='32',setfield=mode='tff', \
     format=pix_fmts='yuv420p'[out]; \
   sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -q:v 2 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags '+ilme+ildct' -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
@@ -187,12 +188,12 @@ function _generate_bt601-525_480_telecined_soft()
       drawtext=text='A':fontcolor='Red':fontsize='(main_h)/8':fontfile='Monospace':x=0:y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),0)', \
       drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='text_w':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),1)', \
       drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(2*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),2)', \
-      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)' \
+      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)', \
       scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv420p'[out]; \
       sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -q:v 2 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -gop_timecode:v '00:00:00:00' -drop_frame_timecode:v false \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
