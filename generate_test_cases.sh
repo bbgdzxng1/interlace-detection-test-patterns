@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #shellcheck shell=bash
+# set -x # Uncomment for debug
 
 #######################################
 ### generate_testcase.sh
@@ -13,7 +14,7 @@
 
 duration='00:00:15.000'
 loglevel='level+info'
-quality=5 # Should be 2, but reduced to 5 to reduce the filesize for media in Github.
+quality=5 # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to please Github.
 
 #######################################
 ### _check_dependencies
@@ -31,6 +32,7 @@ function _check_dependencies
     # mpv
     # vlc
     # jq # potentially useful in the future for FFprobe -print_format 'json' for structured data output & parsing
+    # avmediainfo # Apple's version of mediainfo
     # dvdauthor # fun-and-games for creating DVDs.
   )
   for dependency in "${array_of_dependencies[@]}"; do
@@ -64,20 +66,20 @@ function _generate_bt601-525_480_interlaced_bff()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'matroska' "${outfile%.*}.mkv" -y
+    -f 'mpegts' "${outfile%.*}.ts" -y
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.mkv"
-  mediainfo "${outfile%.*}.mkv" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.ts"
+  mediainfo "${outfile%.*}.ts" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
     -print_format 'compact' | head -n 30
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.single.current_frame' \
     -print_format 'compact' | head -n 30
 
@@ -106,20 +108,20 @@ function _generate_bt601-525_480_interlaced_tff()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'matroska' "${outfile%.*}.mkv" -y
+    -f 'mpegts' "${outfile%.*}.ts" -y
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.mkv"
-  mediainfo "${outfile%.*}.mkv" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.ts"
+  mediainfo "${outfile%.*}.ts" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
     -print_format 'compact' | head -n 30
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.single.current_frame' \
     -print_format 'compact' | head -n 30
   return 0
@@ -150,24 +152,24 @@ function _generate_bt601-525_480_telecined_hard()
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
     -video_format:v 'ntsc' \
-    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -b:a 192000 \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -b:a 192000 -frame_size:a 1024 \
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'matroska' "${outfile%.*}.mkv" -y
+    -f 'mpegts' "${outfile%.*}.ts" -y
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.mkv"
-  mediainfo "${outfile%.*}.mkv" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.ts"
+  mediainfo "${outfile%.*}.ts" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
     -print_format 'compact' | head -n 30
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.repeated.current_frame' \
     -print_format 'compact' | head -n 30
 
@@ -212,24 +214,47 @@ function _generate_bt601-525_480_telecined_soft()
     -map '0:v:0' -codec:v 'copy' \
     -map '1:a:0' -codec:a 'copy' \
     -metadata:s:a:0 'language=eng' \
-    -f 'matroska' "${outfile%.*}.mkv" -y
+    -f 'mpegts' "${outfile%.*}.ts" -y
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.mkv"
-  mediainfo "${outfile%.*}.mkv" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking mediainfo interpretation:' "${outfile%.*}.ts"
+  mediainfo "${outfile%.*}.ts" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order"
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
     -print_format 'compact' | head -n 24
   printf '\n'
-  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after repeatfields, idet) for file:' "${outfile%.*}.mkv"
+  printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after repeatfields, idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.mkv,repeatfields,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts,repeatfields,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.repeated.current_frame' \
     -print_format 'compact' | head -n 30
 
   rm -f "./${outfile%.*}.m2v" "./${outfile%.*}.ac3" "./${outfile%.*}.pulldown.m2v" # Housekeeping
+  return 0
+}
+
+#######################################
+### _remux
+# Ideally, this would be done with tee muxer.
+# Ideally, would also add MP4, but H.262 in MP4 is a little funky and generates errors with Apple avmediainfo.
+# https://developer.apple.com/library/archive/technotes/tn2429/_index.html
+#######################################
+function _remux()
+{
+  local infile="$1"
+  ffmpeg -hide_banner \
+    -i "${infile}" \
+    -map '0:v:0' -codec:v 'copy' \
+    -map '0:a:0' -codec:a 'mp2' \
+    -movflags '+faststart' "./${infile%.*}.mov" -y
+
+  # Oh matroska, how do I hate thee? Let me count the ways.
+  ffmpeg -hide_banner \
+    -i "${infile}" \
+    -map '0:v:0' -codec:v 'copy' \
+    -map '0:a:0' -codec:a 'copy' -frame_size:a 1024 "./${infile%.*}.mkv" -y
   return 0
 }
 
@@ -239,10 +264,14 @@ function _generate_bt601-525_480_telecined_soft()
 function main()
 {
   _check_dependencies
-  _generate_bt601-525_480_interlaced_bff "bt601-525_480_interlaced_bff.mkv"
-  _generate_bt601-525_480_interlaced_tff "bt601-525_480_interlaced_tff.mkv"
-  _generate_bt601-525_480_telecined_hard "bt601-525_480_telecined_hard.mkv"
-  _generate_bt601-525_480_telecined_soft "bt601-525_480_telecined_soft.mkv"
+  _generate_bt601-525_480_interlaced_bff "bt601-525_480_interlaced_bff.ts"
+  _generate_bt601-525_480_interlaced_tff "bt601-525_480_interlaced_tff.ts"
+  _generate_bt601-525_480_telecined_hard "bt601-525_480_telecined_hard.ts"
+  _generate_bt601-525_480_telecined_soft "bt601-525_480_telecined_soft.ts"
+  _remux "bt601-525_480_interlaced_bff.ts"
+  _remux "bt601-525_480_interlaced_tff.ts"
+  _remux "bt601-525_480_telecined_hard.ts"
+  _remux "bt601-525_480_telecined_soft.ts"
 }
 
 main "${@}"
