@@ -133,7 +133,14 @@ function _generate_bt601-525_480_telecined_hard()
   local gop=15
 
   ffmpeg -hide_banner -loglevel "${loglevel}" \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film',drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font',scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv422p',telecine=pattern='32',setfield=mode='tff',format=pix_fmts='yuv420p'[out]; \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', \
+    drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font',scale=size='ntsc',setdar=ratio='16/9', \
+    drawtext=text='A':fontcolor='Red':fontsize='(main_h)/8':fontfile='Monospace':x=0:y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),0)', \
+    drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='text_w':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),1)', \
+    drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(2*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),2)', \
+    drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)' \
+    format=pix_fmts='yuv422p',telecine=pattern='32',setfield=mode='tff', \
+    format=pix_fmts='yuv420p'[out]; \
   sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
@@ -175,8 +182,14 @@ function _generate_bt601-525_480_telecined_soft()
   local outfile="$1"
   local gop=12 # Note that for DVD, the maximum GOP pre-soft-telecine is 12, since gop will become 15 after repeatfields expansion.
   ffmpeg -hide_banner -loglevel "${loglevel}" \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film',drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Green':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font',scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv420p'[out]; \
-  sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', \
+      drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Green':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
+      drawtext=text='A':fontcolor='Red':fontsize='(main_h)/8':fontfile='Monospace':x=0:y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),0)', \
+      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='text_w':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),1)', \
+      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(2*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),2)', \
+      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)' \
+      scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv420p'[out]; \
+      sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
     -q:v 2 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
