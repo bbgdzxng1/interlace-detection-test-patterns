@@ -22,6 +22,12 @@ These test patterns are useful for evaluating:
   - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns.
   - yadif is a more unselective, field-based deinterlacer and can handle very rapid changes between fields.
 
+#### TODO
+
+- Overlay the names of the test cases into each video.
+- Investigate audio frame_size
+- Would be nice to produce Apple-Compatible MP4.  Quicktime Player does not play H.262+AC3 in MP4, although it will play H.262+AC3 in MOV.  Retagging the fourcc was not really successful.  Renaming from MOV to MP4 is a very dirty workaround. Although MP4 & ISOBMFF was originally based on MOV, they are not identical and differ in support for codecs.
+
 
 <!-- 
 ### Github-specific Previews
