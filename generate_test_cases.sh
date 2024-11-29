@@ -52,8 +52,13 @@ function _generate_bt601-525_480_interlaced_bff()
   local outfile="$1"
   local gop=15
 
-  ffmpeg -hide_banner -loglevel "${loglevel}" \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='(60000/1001)',drawtext=text='%{expr_int_format\\:mod(n\,60)\\:d\\:2}':fontcolor='Orange':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font',scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv422p',tinterlace='interleave_bottom',setfield=mode='bff',format=pix_fmts='yuv420p'[out]; \
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='(60000/1001)', format=pix_fmts='yuv422p', \
+    il=luma_mode='deinterleave':chroma_mode='deinterleave',drawtext=text='TF':fontcolor='White':fontsize='main_h/16':box=0:boxcolor='Gray':font='Monospace':y=0:y_align='text',drawtext=text='BF':fontcolor='White':fontsize='main_h/16':box=0:boxcolor='Gray':font='Monospace':x=0:y='(main_h/2)+(text_h)':y_align='text',il=luma_mode='interleave':chroma_mode='interleave', \
+    drawtext=text='%{expr_int_format\\:mod(n\,60)\\:d\\:2}':fontcolor='Orange':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
+    scale=size='ntsc',setdar=ratio='16/9', \
+    tinterlace='interleave_bottom',setfield=mode='bff', \
+    format=pix_fmts='yuv420p'[out]; \
   sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
@@ -94,9 +99,16 @@ function _generate_bt601-525_480_interlaced_tff()
   local outfile="$1"
   local gop=15
 
-  ffmpeg -hide_banner -loglevel "${loglevel}" \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='(60000/1001)',drawtext=text='%{expr_int_format\\:mod(n\,60)\\:d\\:2}':fontcolor='Yellow':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font',scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv422p',tinterlace='interleave_top',setfield=mode='tff',format=pix_fmts='yuv420p'[out]; \
-  sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='(60000/1001)', format=pix_fmts='yuv422p', \
+      il=luma_mode='deinterleave':chroma_mode='deinterleave', \
+      drawtext=text='TF':fontcolor='White':fontsize='main_h/16':box=0:boxcolor='Gray':font='Monospace':y=0:y_align='text', \
+      drawtext=text='BF':fontcolor='White':fontsize='main_h/16':box=0:boxcolor='Gray':font='Monospace':x=0:y='(main_h/2)+(text_h)':y_align='text', \
+      il=luma_mode='interleave':chroma_mode='interleave', \
+      drawtext=text='%{expr_int_format\\:mod(n\,60)\\:d\\:2}':fontcolor='Yellow':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
+      scale=size='ntsc', setdar=ratio='16/9', \
+      tinterlace='interleave_top', setfield=mode='tff', format=pix_fmts='yuv420p'[out]; \
+    sine=frequency=440:sample_rate=48000, volume=0.01, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
     -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
@@ -134,17 +146,19 @@ function _generate_bt601-525_480_telecined_hard()
 {
   local outfile="$1"
   local gop=15
+  local pulldownpattern=32 # This was selected to match the output of dgpulldown, although [ 23 | 2332 ] are common.
 
-  ffmpeg -hide_banner -loglevel "${loglevel}" \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', \
-    drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font',scale=size='ntsc',setdar=ratio='16/9', \
-    drawtext=text='A':fontcolor='Red':fontsize='(main_h)/8':fontfile='Monospace':x=0:y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),0)', \
-    drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='text_w':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),1)', \
-    drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(2*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),2)', \
-    drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)', \
-    format=pix_fmts='yuv422p',telecine=pattern='32',setfield=mode='tff', \
-    format=pix_fmts='yuv420p'[out]; \
-  sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', format=pix_fmts='yuv422p', \
+      drawtext=text='A':fontcolor='Red':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(4*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),0)', \
+      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(3*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),1)', \
+      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(2*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),2)', \
+      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(main_w-(1*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),3)', \
+      drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
+      scale=size='ntsc', setdar=ratio='16/9', \
+      telecine=pattern=${pulldownpattern}, setfield=mode='tff', \
+      format=pix_fmts='yuv420p'[out]; \
+    sine=frequency=440:sample_rate=48000, volume=0.01, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
     -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
@@ -164,13 +178,13 @@ function _generate_bt601-525_480_telecined_hard()
   printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${outfile%.*}.ts" \
-    -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
+    -show_entries 'frame=key_frame, pict_type, interlaced_frame, top_field_first, repeat_pict' \
     -print_format 'compact' | head -n 30
   printf '\n'
   printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.ts,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
-    -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.repeated.current_frame' \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts, extractplanes=planes='y', idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
+    -show_entries 'frame=key_frame, pict_type, interlaced_frame, top_field_first, repeat_pict : frame_tags=lavfi.idet.repeated.current_frame' \
     -print_format 'compact' | head -n 30
 
   return 0
@@ -184,15 +198,15 @@ function _generate_bt601-525_480_telecined_soft()
 {
   local outfile="$1"
   local gop=12 # Note that for DVD, the maximum GOP pre-soft-telecine is 12, since gop will become 15 after repeatfields expansion.
-  ffmpeg -hide_banner -loglevel "${loglevel}" \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', \
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', format=pix_fmts='yuv422p',\
+      drawtext=text='A':fontcolor='Red':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(4*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),0)', \
+      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(3*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),1)', \
+      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(2*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),2)', \
+      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(main_w-(1*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),3)', \
       drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Green':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
-      drawtext=text='A':fontcolor='Red':fontsize='(main_h)/8':fontfile='Monospace':x=0:y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),0)', \
-      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='text_w':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),1)', \
-      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(2*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),2)', \
-      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(3*text_w)':y=0:y_align='font':box=1:boxcolor='Black':enable='eq((mod(n,4)),3)', \
-      scale=size='ntsc',setdar=ratio='16/9',format=pix_fmts='yuv420p'[out]; \
-      sine=frequency=440:sample_rate=48000,volume=0.01,aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
+      scale=size='ntsc', setdar=ratio='16/9', format=pix_fmts='yuv420p'[out]; \
+    sine=frequency=440:sample_rate=48000, volume=0.01, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
     -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
@@ -208,7 +222,7 @@ function _generate_bt601-525_480_telecined_soft()
 
   /opt/dgpulldown/dgpulldown "./${outfile%.*}.m2v" -o "./${outfile%.*}.pulldown.m2v" -srcfps 24000/1001 -destfps 29.970
 
-  ffmpeg -hide_banner \
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
     -f 'mpegvideo' -framerate 'ntsc-film' -fflags '+genpts' -i "./${outfile%.*}.pulldown.m2v" \
     -f 'ac3' -fflags '+genpts' -i "./${outfile%.*}.ac3" \
     -map '0:v:0' -codec:v 'copy' \
@@ -222,13 +236,13 @@ function _generate_bt601-525_480_telecined_soft()
   printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags (no idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${outfile%.*}.ts" \
-    -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
+    -show_entries 'frame=key_frame, pict_type, interlaced_frame, top_field_first, repeat_pict' \
     -print_format 'compact' | head -n 24
   printf '\n'
   printf '%s | %s %s \n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO: Checking flags+tags (after repeatfields, idet) for file:' "${outfile%.*}.ts"
   ffprobe -hide_banner -loglevel 'error' \
-    -f 'lavfi' "movie=filename=${outfile%.*}.ts,repeatfields,extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
-    -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.repeated.current_frame' \
+    -f 'lavfi' "movie=filename=${outfile%.*}.ts, repeatfields, extractplanes=planes='y', idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
+    -show_entries 'frame=key_frame, pict_type, interlaced_frame, top_field_first, repeat_pict : frame_tags=lavfi.idet.repeated.current_frame' \
     -print_format 'compact' | head -n 30
 
   rm -f "./${outfile%.*}.m2v" "./${outfile%.*}.ac3" "./${outfile%.*}.pulldown.m2v" # Housekeeping
@@ -244,7 +258,7 @@ function _generate_bt601-525_480_telecined_soft()
 function _remux()
 {
   local infile="$1"
-  ffmpeg -hide_banner \
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
     -i "${infile}" \
     -map '0:v:0' -codec:v 'copy' \
     -map '0:a:0' -codec:a 'mp2' \
