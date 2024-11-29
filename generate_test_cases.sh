@@ -258,17 +258,19 @@ function _generate_bt601-525_480_telecined_soft()
 function _remux()
 {
   local infile="$1"
+
+  # Oh matroska, how do I hate thee? Let me count the ways.
   ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
     -i "${infile}" \
     -map '0:v:0' -codec:v 'copy' \
-    -map '0:a:0' -codec:a 'mp2' \
-    -movflags '+faststart' "./${infile%.*}.mov" -y
-
-  # Oh matroska, how do I hate thee? Let me count the ways.
-  ffmpeg -hide_banner \
-    -i "${infile}" \
-    -map '0:v:0' -codec:v 'copy' \
     -map '0:a:0' -codec:a 'copy' -frame_size:a 1024 "./${infile%.*}.mkv" -y
+
+  # ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+  #   -i "${infile}" \
+  #   -map '0:v:0' -codec:v 'copy' \
+  #   -map '0:a:0' -codec:a 'mp2' \
+  #   -movflags '+faststart' "./${infile%.*}.mov" -y
+
   return 0
 }
 
