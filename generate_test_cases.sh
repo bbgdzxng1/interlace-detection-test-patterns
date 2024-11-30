@@ -203,8 +203,7 @@ function _generate_bt601-525_480_telecined_soft()
     -timecode '00:00:00:00' \
     -t "${duration}" \
     -f tee "[select='v':f='mpeg2video']./${basename}_progressive.m2v \
-    | [select='a':f='ac3']./${basename}_audio.ac3 \
-    | [select='v,a':f='mpegts']./${basename}_progressive.ts" -y
+    | [select='a':f='ac3']./${basename}_audio.ac3" -y
 
   # [TODO] Still needs work to avoid using alias in shell script (add to path or symlink to ~/bin/dgpulldown?)
   # [TODO] Add error checking or && to only run if previous command is successful
@@ -221,6 +220,42 @@ function _generate_bt601-525_480_telecined_soft()
     -f 'mpegts' "./${basename}_telecined_soft.ts" -y
 
   rm -f "./${basename}_progressive.m2v" "./${basename}_audio.ac3" "./${basename}_pulldown.m2v" # Housekeeping
+  return 0
+}
+
+#######################################
+### _generate_bt601-525_480_progressive
+#######################################
+function _generate_bt601-525_480_progressive()
+{
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
+  local basename="$1"
+  local gop=15
+
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', format=pix_fmts='yuv422p10le', \
+      drawtext=text='A':fontcolor='Red':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(4*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),0)', \
+      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(3*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),1)', \
+      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(2*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),2)', \
+      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(main_w-(1*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),3)', \
+      drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
+      drawtext=text=${basename}_progressive.ts:fontcolor='Blue':fontsize='main_h/16':font='Monospace':x='((main_w-text_w)/2)':y='(main_h-text_h)':y_align='font', \
+      scale=size='ntsc', setdar=ratio='16/9', \
+      format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
+    sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
+    -map '0:v:0' -codec:v 'mpeg2video' \
+    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
+    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -flags:v '+bitexact' \
+    -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
+    -seq_disp_ext:v 'always' \
+    -video_format:v 'ntsc' \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 -frame_size:a 1024 \
+    -flags:a '+bitexact' \
+    -timecode '00:00:00:00' \
+    -metadata:s:a:0 'language=eng' \
+    -t "${duration}" \
+    -f 'mpegts' "${basename}_480_progressive_segmented_frame_tff.ts" -y
   return 0
 }
 
@@ -245,7 +280,7 @@ function _generate_bt601-525_480_progressive_segmented_frame_tff()
       drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(2*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),2)', \
       drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(main_w-(1*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),3)', \
       drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
-      drawtext=text=${basename}_telecined_hard.ts:fontcolor='Blue':fontsize='main_h/16':font='Monospace':x='((main_w-text_w)/2)':y='(main_h-text_h)':y_align='font', \
+      drawtext=text=${basename}_progressive_segmented_frame.ts:fontcolor='Blue':fontsize='main_h/16':font='Monospace':x='((main_w-text_w)/2)':y='(main_h-text_h)':y_align='font', \
       scale=size='ntsc', setdar=ratio='16/9', \
       setfield=mode='tff', \
       format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
@@ -393,6 +428,12 @@ function main()
       _analyse "bt601-525_480_interlaced_tff.ts"
       _analyse_idet "bt601-525_480_interlaced_tff.ts"
     }
+  _generate_bt601-525_480_progressive "bt601-525_480" \
+    && {
+      _remux "bt601-525_480_progressive.ts"
+      _analyse "bt601-525_480_progressive.ts"
+      _analyse_idet "bt601-525_480_progressive.ts"
+    }
   _generate_bt601-525_480_telecined_hard "bt601-525_480" \
     && {
       _remux "bt601-525_480_telecined_hard.ts"
@@ -401,7 +442,6 @@ function main()
     }
   _generate_bt601-525_480_telecined_soft "bt601-525_480" \
     && {
-      _remux "bt601-525_480_progressive.ts"
       _remux "bt601-525_480_telecined_soft.ts"
       _analyse "bt601-525_480_telecined_soft.ts"
       _analyse_idet "bt601-525_480_telecined_soft.ts"
