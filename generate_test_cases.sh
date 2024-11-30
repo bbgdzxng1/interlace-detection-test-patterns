@@ -13,14 +13,14 @@
 #######################################
 
 duration='00:00:15.000'
-loglevel='level+info'
+loglevel='level+warning'
 quality=7 # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to please Github.
 
 export logdir="./logs"
 mkdir -p "${logdir}"
 rm -rf "${logdir}"/*.log "${logdir}"/*.json "${logdir}"/*.txt "${logdir}"/*.csv
 export FFREPORT=file="${logdir}/%p-%t.log:level=48"
-printf '%s | %s: %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO' 'Starting idet test patterns script.' | tee -a "${logdir}/log.txt"
+printf '%s | %s: %s: %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO' 'Starting idet test patterns script. Logs will be written to' "${logdir}/log.txt" | tee -a "${logdir}/log.txt"
 
 #######################################
 ### _check_dependencies
@@ -31,6 +31,7 @@ function _check_dependencies
   required_dependencies=(
     ffmpeg
     /opt/dgpulldown/dgpulldown # Using dgpulldown 1.0.11, which requires build and install.
+    tee
   )
   for dependency in "${required_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
@@ -199,8 +200,12 @@ function _generate_bt601-525_480_telecined_soft()
     | [select='a':f='ac3']./${basename}_audio.ac3 \
     | [select='v,a':f='mpegts']./${basename}_progressive.ts" -y
 
-  /opt/dgpulldown/dgpulldown "./${basename}_progressive.m2v" -o "./${basename}_pulldown.m2v" -srcfps 24000/1001 -destfps 29.970
+  # [TODO] Still needs work to avoid using alias in shell script (add to path or symlink to ~/bin/dgpulldown?)
+  # [TODO] Add error checking or && to only run if previous command is successful
+  [[ $(command -v /opt/dgpulldown/dgpulldown) ]] \
+    && /opt/dgpulldown/dgpulldown "./${basename}_progressive.m2v" -o "./${basename}_pulldown.m2v" -srcfps 24000/1001 -destfps 29.970
 
+  # [TODO] Add error checking or && to only run if previous command is successful
   ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
     -f 'mpegvideo' -framerate 'ntsc-film' -fflags '+genpts' -i "./${basename}_pulldown.m2v" \
     -f 'ac3' -fflags '+genpts' -i "./${basename}_audio.ac3" \
@@ -238,7 +243,9 @@ function _analyse()
   local infile="$1"
   [[ $(command -v mediainfo) ]] \
     && mediainfo --output=JSON --LogFile="${logdir}/${infile%.*}.mediainfo.json" "${infile}"
-  # Mediainfo does not seem to free up the file
+  # mediainfo does not seem to free up the file
+  # [TODO] How to make mediainfo quieter at the console, yet still output to --LogFile (tee?)
+  # [TODO] use jq to parse output.
   # jq --compact-output '[.media.track.[] | select(.["@type"] == "Video") | {FrameRate, FrameRate_Num, FrameRate_Den, ScanType, ScanOrder}]'
   [[ $(command -v mediainfo) ]] \
     && mediainfo "${infile}" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order" > "${logdir}/${infile%.*}.mediainfo.txt"
@@ -247,7 +254,8 @@ function _analyse()
       -f 'lavfi' "movie=filename=${infile}" \
       -show_entries 'frame' \
       -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.json"
-  # Preferable to use jq on the json
+  # Preferable to use jq to parse the json.
+  # [TODO] should only run if the previous command is successful.
   [[ $(command -v jq) ]] \
     && jq --raw-output '[.frames.[]| select(.["media_type"] == "video") | {pict_type,interlaced_frame,top_field_first,repeat_pict}] | (["pict_type", "interlaced_frame", "top_field_first", "repeat_pict"], (.[] | [.pict_type, .interlaced_frame, .top_field_first, .repeat_pict])) | @csv' "${logdir}/${infile%.*}.ffprobe.json" > "${logdir}/${infile%.*}.ffprobe.summary.csv"
   # ffprobe -hide_banner -loglevel 'error' \
@@ -269,7 +277,7 @@ function _analyse_idet()
       -f 'lavfi' "movie=filename=${infile},extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
       -show_entries 'frame' \
       -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.idet.json"
-  ##################### Would be better to use jq on the json################
+  ##################### Would be better to use jq on the json, if previous command is successful ################
   [[ $(command -v ffprobe) ]] \
     && ffprobe -hide_banner -loglevel 'error' \
       -f 'lavfi' "movie=filename=${infile},extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \

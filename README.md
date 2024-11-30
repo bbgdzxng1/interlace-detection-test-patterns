@@ -18,6 +18,9 @@ These test patterns are useful for evaluating:
 - The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
 - In theory, output files can be concatted to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to always(?) write a Sequence Display Extension.
 - Files are generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more broadcasty format, but MKV is included to mimic the output produced from MakeMKV DVD rip.
+- These extreme interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif remains superior to yadif, but the particular characteristics of the content exposes bwdif's weakness.
+  - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns.
+  - yadif is a more unselective, field-based deinterlacer and can handle very rapid changes between fields.
 
 #### TODO
 
@@ -26,15 +29,8 @@ These test patterns are useful for evaluating:
 - [ ] Only analyse if dependency is installed
 - [ ] Use `jq` for parsing and summarizing the json
 
-### Notes
 
-#### bwdif deinterlace filter
-
-- These extreme-case interlace test patterns expose one of the weaknesses of the `bwdif` deinterlacer.  For general use, `bwdif` remains superior to `yadif`, but the particular characteristics of the content exposes bwdif's weakness.
-  - `bwdif` is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  `bwdif` will leave artifacts with these test patterns.
-  - `yadif` is not selective, and is a frame/field (rather than block) based deinterlacer and can handle very rapid changes between fields.
-
-#### MPEG2Video/H.262 in MP4
+#### A note on MPEG2Video/H.262 in MP4
 
 FFmpeg can't write mpeg2video & ac3 to an MP4, in a way that Apple Quicktime / Apple avmediainfo likes...
 
