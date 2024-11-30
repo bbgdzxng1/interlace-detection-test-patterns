@@ -127,13 +127,13 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from './test.mov':
         encoder         : Lavc61.19.100 mpeg2video
 ```
 
-### Future - PsF & Quasi-interlace
+### Progressive segmented-Frame (PsF) & Quasi-interlace
 
-Poynton in Digital Video and HDTV Algorithms and Interfaces claims *"24PsF Image format is typically 1920×1080" and "A scheme called progressive segmented-frame has been adopted to adapt HDTV equipment to handle images at 24 frames per second. The scheme, denoted 24PsF, samples in progressive fashion: Both fields represent the same instant in time, and vertical filtering to reduce twitter is both unnecessary and undesirable. However, lines are rearranged to interlaced order for studio distribution and recording."*
+Poynton in "Digital Video and HDTV Algorithms and Interfaces" states *"24PsF Image format is typically 1920×1080" and "A scheme called Progressive segmented-Frame has been adopted to adapt HDTV equipment to handle images at 24 frames per second. The scheme, denoted 24PsF, samples in progressive fashion: Both fields represent the same instant in time, and vertical filtering to reduce twitter is both unnecessary and undesirable. However, lines are rearranged to interlaced order for studio distribution and recording."*
 
-*"The progressive segmented-frame (PsF) technique is known in consumer SDTV systems as quasi-interlace."
+*"The Progressive segmented-Frame (PsF) technique is known in consumer SDTV systems as quasi-interlace."
 
-Quasi-Interlace is a *"Term in consumer electronics denoting progressive segmented frame"* and *"Quasi-interlace in consumer SDTV is comparable to progressive segmented-frame (PsF) in HDTV, though at 25 or 29.97 frames per second instead of 24"*
+Quasi-Interlace is a *"Term in consumer electronics denoting progressive segmented frame"* and *"Quasi-interlace in consumer SDTV is comparable to Progressive segmented-Frame (PsF) in HDTV, though at 25 or 29.97 frames per second instead of 24"*
 
 
 ### References
