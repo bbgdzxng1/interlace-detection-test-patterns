@@ -262,44 +262,12 @@ function _generate_bt601-525_480_progressive()
 #######################################
 ### _generate_bt601-525_480_progressive_segmented_frame
 #######################################
-function _generate_bt601-525_480_progressive_segmented_frame_tff()
-{
-  # EXPERIMENTAL. In theory, PsF is progressive, broken into fields.  But what is the frame rate?
-  # -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true
-  # https://forum.videohelp.com/threads/352391-FFMPEG-Ability-to-identify-progressive-segmented-frame-material-in-h-264
-  # https://forum.videohelp.com/threads/400447-Detect-Progressive-Segmented-Frame-PsF-video
-
-  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
-  local basename="$1"
-  local gop=15
-
-  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
-    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', format=pix_fmts='yuv422p10le', \
-      drawtext=text='A':fontcolor='Red':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(4*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),0)', \
-      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(3*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),1)', \
-      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(2*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),2)', \
-      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(main_w-(1*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),3)', \
-      drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
-      drawtext=text=${basename}_progressive_segmented_frame.ts:fontcolor='Blue':fontsize='main_h/16':font='Monospace':x='((main_w-text_w)/2)':y='(main_h-text_h)':y_align='font', \
-      scale=size='ntsc', setdar=ratio='16/9', \
-      setfield=mode='tff', \
-      format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
-    sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
-    -map '0:v:0' -codec:v 'mpeg2video' \
-    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
-    -flags:v '+ilme+ildct+bitexact' \
-    -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
-    -seq_disp_ext:v 'always' \
-    -video_format:v 'ntsc' \
-    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 -frame_size:a 1024 \
-    -flags:a '+bitexact' \
-    -timecode '00:00:00:00' \
-    -metadata:s:a:0 'language=eng' \
-    -t "${duration}" \
-    -f 'mpegts' "${basename}_480_progressive_segmented_frame_tff.ts" -y
-  return 0
-}
+# function _generate_bt601-525_480_progressive_segmented_frame_tff()
+# {
+# # Poyton claims... "The progressive segmented-frame (PsF) technique is known in consumer SDTV systems as quasi-interlace.
+#   # https://forum.videohelp.com/threads/352391-FFMPEG-Ability-to-identify-progressive-segmented-frame-material-in-h-264
+#   # https://forum.videohelp.com/threads/400447-Detect-Progressive-Segmented-Frame-PsF-video
+# }
 
 #######################################
 ### _remux function.
@@ -447,7 +415,6 @@ function main()
       _analyse_idet "bt601-525_480_telecined_soft.ts"
       _analyse_repeatfields_idet "bt601-525_480_telecined_soft.ts"
     }
-  _generate_bt601-525_480_progressive_segmented_frame_tff "experimental_bt601-525_480"
 }
 
 echo "running main code"
