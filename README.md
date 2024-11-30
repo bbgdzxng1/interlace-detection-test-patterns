@@ -24,9 +24,10 @@ These test patterns are useful for evaluating:
 - [x] Overlay the names of the test cases into each video.  WARNING: progressive test case has the wrong overlay.  Needs separate function.
 - [ ] Investigate audio frame_size
 - [ ] Only analyse if dependency is installed
-- [ ] Use `jq` for parsing and summarizing the json
+- [ ] Use `jq` for parsing and summarizing the json (WIP)
 - [ ] -flags:v '+bitexact' # so as to avoid unnecessry git changes
 - [ ] -flags:a '+bitexact' # so as to avoid unnecessry git changes
+- [ ] Add gnuplot graphs to plot csv/tsv to svg
 
 ## Notes
 
