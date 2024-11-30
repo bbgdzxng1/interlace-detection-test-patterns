@@ -135,6 +135,40 @@ Poynton in "Digital Video and HDTV Algorithms and Interfaces" states *"24PsF Ima
 
 Quasi-Interlace is a *"Term in consumer electronics denoting progressive segmented frame"* and *"Quasi-interlace in consumer SDTV is comparable to Progressive segmented-Frame (PsF) in HDTV, though at 25 or 29.97 frames per second instead of 24"*
 
+### Pulldown with x264 command line interface [Informational]
+
+This script/repo deals exclusively with mpeg2video/H.262.  However, the following is included as a quick note on the x264 command line tool, with the aim of validating the pulldown pattern with FFprobe and achieving the same pulldown pattern as mpeg2video + DGPulldown.  It is noted that FFmpeg's libx264 foes not support `-x264opts pulldown=32` or `-x264-params pulldown=32`.
+
+```bash
+$ ffmpeg -hide_banner -loglevel 'error' -f 'lavfi' -i "testsrc2=rate='ntsc-film'" -frames:v 24 -f 'yuv4mpegpipe' - \
+  | x264 --quiet --demuxer 'y4m' --keyint 12 --crf 23 --bframes 2 --pulldown 32 -o - - \
+  | ffprobe -hide_banner -loglevel 'error' -f 'h264' "./output.h264" -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact'
+
+frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0
+frame|pict_type=P|interlaced_frame=0|top_field_first=0|repeat_pict=1
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1
+frame|pict_type=P|interlaced_frame=0|top_field_first=0|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0
+frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0
+frame|pict_type=P|interlaced_frame=0|top_field_first=0|repeat_pict=1
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1
+frame|pict_type=P|interlaced_frame=0|top_field_first=0|repeat_pict=0
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0
+```
 
 ### References
 
