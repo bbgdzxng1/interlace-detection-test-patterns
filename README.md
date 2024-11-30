@@ -39,6 +39,7 @@ These test patterns are useful for:
 - [ ] Investigate audio frame_size.
 - [ ] Add Github release(s) of output media.
 - [ ] If someone wants to add PAL / 625 / 576 outputs they are welcome.
+- [ ] mediainfo has separate fields for "FrameRate_Original" and "FrameRate" - although I have not yet got DGPulldown to trigger this behavior.  Needs further digging.
 
 ## Notes
 
@@ -126,8 +127,26 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from './test.mov':
         encoder         : Lavc61.19.100 mpeg2video
 ```
 
+### Future - PsF & Quasi-interlace
+
+Poynton in Digital Video and HDTV Algorithms and Interfaces claims *"24PsF Image format is typically 1920×1080" and "A scheme called progressive segmented-frame has been adopted to adapt HDTV equipment to handle images at 24 frames per second. The scheme, denoted 24PsF, samples in progressive fashion: Both fields represent the same instant in time, and vertical filtering to reduce twitter is both unnecessary and undesirable. However, lines are rearranged to interlaced order for studio distribution and recording."*
+
+*"The progressive segmented-frame (PsF) technique is known in consumer SDTV systems as quasi-interlace."
+
+Quasi-Interlace is a *"Term in consumer electronics denoting progressive segmented frame"* and *"Quasi-interlace in consumer SDTV is comparable to progressive segmented-frame (PsF) in HDTV, though at 25 or 29.97 frames per second instead of 24"*
+
+
 ### References
 
 - Older version of H.262 Specification, but publicly available without payment.  https://www.itu.int/rec/T-REC-H.262-200002-S/en
 - DVD Format/Logo Licensing Corporation (FLLC) https://www.dvdfllc.co.jp/notice.html#october
+- DVD Demystified, Third Edition(2006).  Tailor, J. McGraw-Hill Publishing.
+  - First edition		 1998, McGraw-Hill. https://archive.org/details/B-001-001-580
+  - Second edition	2001, McGraw-Hill. https://archive.org/details/dvddemystified00tayl
+  - Third Edition		2006, McGraw-Hill. https://archive.org/details/dvddemystified0000tayl_a1x8
+  - Bonus Disc for Second & Third Edition.  https://archive.org/details/DVDDemystifiedBonusDisc
+- Poynton
+  - Digital Video and HD, Algorithms & Interfaces, Second Edition.  https://archive.org/details/digital-video-and-hd-algorithms-and-interfaces-2nd-ed.-poynton-2012-02-07/mode/2up
+  - Digital Video and HDTV, Algorithms & Interfaces, First Edition.  https://archive.org/details/DigitalVideoForDummies/Digital%20Video%20And%20Hdtv%20Algorithms%20And%20Interfaces/mode/2up
+  
 - Mediainfo MPEG2 Pulldown support https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353
