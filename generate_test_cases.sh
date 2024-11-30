@@ -4,29 +4,26 @@
 
 #######################################
 ### generate_testcase.sh
-# - Test cases for testing the functionality of FFmpeg's idet and dgpulldown's soft telecine.
-# - The large fontsize with frame-countup of {0-29} or {0..23} ensures that idet has sufficient changing pixels to produce an accurate idet result at a low resolution of 480.
-# - Source is generated at yuv422p10le, then interlaced and finally converted to yuv420p.  Sunsampling in yuv420p may have sufficient vertical resolution in the chroma plane to feed the tinterlace filter.
-# - Script requires dgpulldown 1.0.11 for generation of soft telecine.  dgpulldown 1.0.11-L (Linux/macOS) has some build quirks on compilation on macOS.  dgpulldown appears to generate a 3:2 pulldown pattern when soft telecine is applied (* citation needed) since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer the option to select between [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: Pulldown patterns may also depend on the version of dgpulldown.
-# - The accuracy of idet was improved by focusing on the y plane, since yuv420p may not have sufficient vertical resolution in chroma planes to produce an accurate result.  ie, 'extractplanes=planes='y',idet'
-# - In theory, output files can be concatted to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to always(?) write a Sequence Display Extension.
 #######################################
-
-duration='00:00:15.000'
-loglevel='level+warning'
-quality=7 # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to please Github.
 
 export logdir="./logs"
 mkdir -p "${logdir}"
+printf '%s | %s: %s: %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Starting idet test patterns script. Logs will be written to' "${logdir}/log.txt" | tee -a "${logdir}/log.txt"
+
 rm -rf "${logdir}"/*.log "${logdir}"/*.json "${logdir}"/*.txt "${logdir}"/*.csv
+
 export FFREPORT=file="${logdir}/%p-%t.log:level=48"
-printf '%s | %s: %s: %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO' 'Starting idet test patterns script. Logs will be written to' "${logdir}/log.txt" | tee -a "${logdir}/log.txt"
+
+duration='00:00:10.000'  # Duration limited to 10s to reduce filesize to satisfy Github.
+loglevel='level+warning' # FFmpeg loglevel
+quality=7                # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to satisfy Github.
 
 #######################################
 ### _check_dependencies
 #######################################
 function _check_dependencies
 {
+  printf '%s | %s: %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Checking dependecies.' | tee -a "${logdir}/log.txt"
   local -a required_dependencies
   required_dependencies=(
     ffmpeg
@@ -35,7 +32,7 @@ function _check_dependencies
   )
   for dependency in "${required_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
-      printf '%s | %s: %s %s %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'ERROR' 'Required Dependency' "${dependency}" 'not found.  Exiting.' | tee -a "${logdir}/log.txt"
+      printf '%s | %s: %s %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'ERROR' 'Required Dependency' "${dependency}" 'not found.  Exiting.' | tee -a "${logdir}/log.txt"
       exit 1
     }
   done
@@ -58,7 +55,7 @@ function _check_dependencies
   )
   for dependency in "${optional_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
-      printf '%s | %s: %s %s %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'WARNING' 'Optional Dependency' "${dependency}" 'not found.' | tee -a "${logdir}/log.txt"
+      printf '%s | %s: %s %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'WARNING' 'Optional Dependency' "${dependency}" 'not found.' | tee -a "${logdir}/log.txt"
     }
   done
   return 0
@@ -69,6 +66,8 @@ function _check_dependencies
 #######################################
 function _generate_bt601-525_480_interlaced_bff()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
+
   local basename="$1"
   local gop=15
 
@@ -101,6 +100,7 @@ function _generate_bt601-525_480_interlaced_bff()
 #######################################
 function _generate_bt601-525_480_interlaced_tff()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local basename="$1"
   local gop=15
 
@@ -136,6 +136,7 @@ function _generate_bt601-525_480_interlaced_tff()
 #######################################
 function _generate_bt601-525_480_telecined_hard()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local basename="$1"
   local gop=15
   local pulldownpattern=32 # This was selected to match the output of dgpulldown, although [ 23 | 2332 ] are common.
@@ -173,6 +174,7 @@ function _generate_bt601-525_480_telecined_hard()
 #######################################
 function _generate_bt601-525_480_telecined_soft()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local basename="$1"
   local gop=12 # Note that for DVD, the maximum GOP pre-soft-telecine is 12, since gop will become 15 after repeatfields expansion.
   ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
@@ -219,6 +221,47 @@ function _generate_bt601-525_480_telecined_soft()
 }
 
 #######################################
+### _generate_bt601-525_480_progressive_segmented_frame
+#######################################
+function _generate_bt601-525_480_progressive_segmented_frame_tff()
+{
+  # EXPERIMENTAL. In theory, PsF is progressive, broken into fields.  But what is the frame rate?
+  # -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true
+  # https://forum.videohelp.com/threads/352391-FFMPEG-Ability-to-identify-progressive-segmented-frame-material-in-h-264
+  # https://forum.videohelp.com/threads/400447-Detect-Progressive-Segmented-Frame-PsF-video
+
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
+  local basename="$1"
+  local gop=15
+
+  ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
+    -f 'lavfi' -color_range:v 'tv' -colorspace:v 'smpte170m' -color_primaries:v 'smpte170m' -color_trc:v 'smpte170m' -i "color=color='Black':size='hd480':rate='ntsc-film', format=pix_fmts='yuv422p10le', \
+      drawtext=text='A':fontcolor='Red':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(4*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),0)', \
+      drawtext=text='B':fontcolor='Blue':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(3*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),1)', \
+      drawtext=text='C':fontcolor='Green':fontsize='(main_h/8)':fontfile='Monospace':x='(main_w-(2*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),2)', \
+      drawtext=text='D':fontcolor='Purple':fontsize='(main_h)/8':fontfile='Monospace':x='(main_w-(1*text_w))':y=0:y_align='text':box=false:boxcolor='Gray':enable='eq((mod(n,4)),3)', \
+      drawtext=text='%{expr_int_format\\:mod(n\,24)\\:d\\:2}':fontcolor='Blue':fontsize='main_h':font='Monospace':x='((main_w-text_w)/2)':y='((main_h-text_h)/2)':y_align='font', \
+      drawtext=text=${basename}_telecined_hard.ts:fontcolor='Blue':fontsize='main_h/16':font='Monospace':x='((main_w-text_w)/2)':y='(main_h-text_h)':y_align='font', \
+      scale=size='ntsc', setdar=ratio='16/9', \
+      setfield=mode='tff', \
+      format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
+    sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
+    -map '0:v:0' -codec:v 'mpeg2video' \
+    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
+    -q:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -flags '+ilme+ildct' \
+    -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
+    -seq_disp_ext:v 'always' \
+    -video_format:v 'ntsc' \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 -frame_size:a 1024 \
+    -timecode '00:00:00:00' \
+    -metadata:s:a:0 'language=eng' \
+    -t "${duration}" \
+    -f 'mpegts' "${basename}_480_progressive_segmented_frame_tff.ts" -y
+  return 0
+}
+
+#######################################
 ### _remux function.
 # Ideally, this would be done with tee muxer.
 # Ideally, would also add MP4, but H.262 in MP4 is a little funky and generates errors with Apple avmediainfo.
@@ -226,6 +269,7 @@ function _generate_bt601-525_480_telecined_soft()
 #######################################
 function _remux()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local infile="$1"
   # Oh matroska, how do I hate thee? Let me count the ways.
   ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags "+accurate_rnd+full_chroma_int" -bitexact \
@@ -240,29 +284,45 @@ function _remux()
 #######################################
 function _analyse()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local infile="$1"
-  [[ $(command -v mediainfo) ]] \
-    && mediainfo --output=JSON --LogFile="${logdir}/${infile%.*}.mediainfo.json" "${infile}"
-  # mediainfo does not seem to free up the file
-  # [TODO] How to make mediainfo quieter at the console, yet still output to --LogFile (tee?)
-  # [TODO] use jq to parse output.
-  # jq --compact-output '[.media.track.[] | select(.["@type"] == "Video") | {FrameRate, FrameRate_Num, FrameRate_Den, ScanType, ScanOrder}]'
-  [[ $(command -v mediainfo) ]] \
-    && mediainfo "${infile}" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order" > "${logdir}/${infile%.*}.mediainfo.txt"
-  [[ $(command -v ffprobe) ]] \
-    && ffprobe -hide_banner -loglevel 'error' \
-      -f 'lavfi' "movie=filename=${infile}" \
-      -show_entries 'frame' \
-      -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.json"
-  # Preferable to use jq to parse the json.
-  # [TODO] should only run if the previous command is successful.
-  [[ $(command -v jq) ]] \
-    && jq --raw-output '[.frames.[]| select(.["media_type"] == "video") | {pict_type,interlaced_frame,top_field_first,repeat_pict}] | (["pict_type", "interlaced_frame", "top_field_first", "repeat_pict"], (.[] | [.pict_type, .interlaced_frame, .top_field_first, .repeat_pict])) | @csv' "${logdir}/${infile%.*}.ffprobe.json" > "${logdir}/${infile%.*}.ffprobe.summary.csv"
-  # ffprobe -hide_banner -loglevel 'error' \
-  #   -f 'lavfi' "movie=filename=${infile}" \
-  #   -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
-  #   -print_format 'compact' -o "${logdir}/${infile%.*}.ffprobe.compact.txt"
-  # avmediainfo "${infile}" > "${infile%.*}.avmediainfo.txt" # Error analysis is not supported for format public.mpeg-2-transport-stream.
+  if [[ $(command -v mediainfo) ]]; then
+    {
+      mediainfo --output='JSON' --LogFile="${logdir}/${infile%.*}.mediainfo.json" "${infile}" 1> /dev/null
+      if [[ $(command -v jq) ]]; then
+        {
+          # [TODO] Add the filename
+          # [TODO] Write to the logger
+          jq --compact-output '
+            [.media.track.[] 
+            | select(.["@type"] == "Video") 
+            | {FrameRate, FrameRate_Num, FrameRate_Den, ScanType, ScanOrder}]' "${logdir}/${infile%.*}.mediainfo.json"
+        }
+      else
+        {
+          printf '%s | %s: %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'WARNING' 'Optional Dependency is not installed or not on path.  Falling back to mediainfo summary.' | tee -a "${logdir}/log.txt"
+          mediainfo "${infile}" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order" > "${logdir}/${infile%.*}.mediainfo.txt"
+        }
+      fi
+    }
+  else
+    printf '%s | %s: %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'WARNING' 'Optional Dependency mediainfo is not installed or not on path.  Skipping.' | tee -a "${logdir}/log.txt"
+  fi
+  if [[ $(command -v ffprobe) ]]; then
+    {
+      ffprobe -hide_banner -loglevel 'error' -f 'lavfi' "movie=filename=${infile}" -show_entries 'frame' -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.json"
+      if [[ $(command -v jq) ]]; then
+        {
+          # [TODO] output needs to be tsv (not csv) for future gnuplot compatibility
+          jq --raw-output '[.frames.[]| select(.["media_type"] == "video") | {pict_type,interlaced_frame,top_field_first,repeat_pict}] | (["pict_type", "interlaced_frame", "top_field_first", "repeat_pict"], (.[] | [.pict_type, .interlaced_frame, .top_field_first, .repeat_pict])) | @csv' "${logdir}/${infile%.*}.ffprobe.json" > "${logdir}/${infile%.*}.ffprobe.summary.csv"
+        }
+      else
+        ffprobe -hide_banner -loglevel 'error' -f 'lavfi' "movie=filename=${infile}" -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact' -o "${logdir}/${infile%.*}.ffprobe.compact.txt"
+      fi
+    }
+  else
+    printf '%s | %s: %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'WARNING' 'Optional Dependency ffprobe not installed or not on path.  Skipping.' | tee -a "${logdir}/log.txt"
+  fi
   return 0
 }
 
@@ -271,6 +331,7 @@ function _analyse()
 #######################################
 function _analyse_idet()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local infile="$1"
   [[ $(command -v ffprobe) ]] \
     && ffprobe -hide_banner -loglevel 'error' \
@@ -291,6 +352,7 @@ function _analyse_idet()
 #######################################
 function _analyse_repeatfields_idet()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   local infile="$1"
   [[ $(command -v ffprobe) ]] \
     && ffprobe -hide_banner -loglevel 'error' \
@@ -311,26 +373,87 @@ function _analyse_repeatfields_idet()
 #######################################
 function main()
 {
+  printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
   _check_dependencies
-  _generate_bt601-525_480_interlaced_bff "bt601-525_480"
-  _generate_bt601-525_480_interlaced_tff "bt601-525_480"
-  _generate_bt601-525_480_telecined_hard "bt601-525_480"
-  _generate_bt601-525_480_telecined_soft "bt601-525_480"
-  _analyse "bt601-525_480_interlaced_bff.ts"
-  _analyse_idet "bt601-525_480_interlaced_bff.ts"
-  _analyse "bt601-525_480_interlaced_tff.ts"
-  _analyse_idet "bt601-525_480_interlaced_tff.ts"
-  _analyse "bt601-525_480_telecined_hard.ts"
-  _analyse_idet "bt601-525_480_telecined_hard.ts"
-  _analyse "bt601-525_480_telecined_soft.ts"
-  _analyse_idet "bt601-525_480_telecined_soft.ts"
-  _analyse_repeatfields_idet "bt601-525_480_telecined_soft.ts"
-  _remux "bt601-525_480_interlaced_bff.ts"
-  _remux "bt601-525_480_interlaced_tff.ts"
-  _remux "bt601-525_480_telecined_hard.ts"
-  _remux "bt601-525_480_progressive.ts"
-  _remux "bt601-525_480_telecined_soft.ts"
+
+  _generate_bt601-525_480_interlaced_bff "bt601-525_480" \
+    && {
+      _remux "bt601-525_480_interlaced_bff.ts"
+      _analyse "bt601-525_480_interlaced_bff.ts"
+      _analyse_idet "bt601-525_480_interlaced_bff.ts"
+    }
+  _generate_bt601-525_480_interlaced_tff "bt601-525_480" \
+    && {
+      _remux "bt601-525_480_interlaced_tff.ts"
+      _analyse "bt601-525_480_interlaced_tff.ts"
+      _analyse_idet "bt601-525_480_interlaced_tff.ts"
+    }
+  _generate_bt601-525_480_telecined_hard "bt601-525_480" \
+    && {
+      _remux "bt601-525_480_telecined_hard.ts"
+      _analyse "bt601-525_480_telecined_hard.ts"
+      _analyse_idet "bt601-525_480_telecined_hard.ts"
+    }
+  _generate_bt601-525_480_telecined_soft "bt601-525_480" \
+    && {
+      _remux "bt601-525_480_progressive.ts"
+      _remux "bt601-525_480_telecined_soft.ts"
+      _analyse "bt601-525_480_telecined_soft.ts"
+      _analyse_idet "bt601-525_480_telecined_soft.ts"
+      _analyse_repeatfields_idet "bt601-525_480_telecined_soft.ts"
+    }
+  _generate_bt601-525_480_progressive_segmented_frame_tff "experimental_bt601-525_480"
 }
 
+echo "running main code"
 main "${@}"
 exit 0
+
+# #######################################
+# ### _plotgraph function.
+# # Fun and games with gnuplot.  Requires TSV
+# #######################################
+# function _plotgraph()
+# {
+#     printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
+# 	local infile="$1"
+# 	local outfile="./test.svg"
+# 	gnuplot -e " ; \
+# 		datafile = '${infile}' ; \
+# 		set datafile separator '\t' ; \
+# 		set datafile missing 'null' ; \
+# 		set terminal svg size 1920,1920 dynamic ; \
+# 		set output '${outfile}' ; \
+# 		set multiplot layout 3,1 ; \
+# 			set title 'avframe Metadata Flags' ; \
+# 			set tics nomirror ; \
+# 			set xlabel 'Time(s)' ; \
+# 			set yrange [0:1] ; \
+# 			set ytics offset 5 ('False' 0.10, 'True' 0.90) ; \
+# 			set key autotitle columnhead ; \
+# 			set key opaque ; \
+# 			plot \
+# 				datafile using 1:5 axis x1y1 with points, \
+# 				datafile using 1:4 axis x1y1 with points, \
+# 				datafile using 1:3 axis x1y1 with line ; \
+# 			set title 'Interlace Analysis' ; \
+# 			set xlabel 'Time(s)' ; \
+# 			set yrange [-1:1] ; \
+# 			set tics nomirror ; \
+# 			set ytics offset 25 ('Interlaced BFF' -0.90, 'Progressive' 0.10, 'Interlaced TFF' 0.90) ; \
+# 			set key autotitle columnhead ; \
+# 			set key opaque ; \
+# 			plot \
+# 			  datafile using 1:6 axis x1y1 with line ; \
+# 			set title 'Progressive Analysis' ; \
+# 			set xlabel 'Time(s)' ; \
+# 			set yrange [0:3] ; \
+# 			set tics nomirror ; \
+# 			set ytics offset 25 ('Interlaced' 0.10, 'Progressive' 1.10, 'Telecine Repeat Field 2' 2.10, 'Telecine Repeat Field 3' 2.90) ; \
+# 			set key autotitle columnhead ; \
+# 			set key opaque ; \
+# 			plot \
+# 				datafile using 1:7 axis x1y1 with points ; \
+# 		unset multiplot"
+# 	return 0
+# }
