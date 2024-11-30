@@ -25,6 +25,8 @@ These test patterns are useful for evaluating:
 - [ ] Investigate audio frame_size
 - [ ] Only analyse if dependency is installed
 - [ ] Use `jq` for parsing and summarizing the json
+- [ ] -flags:v '+bitexact' # so as to avoid unnecessry git changes
+- [ ] -flags:a '+bitexact' # so as to avoid unnecessry git changes
 
 ## Notes
 
@@ -67,4 +69,7 @@ $ avmediainfo ./test.mov
 >  Movie analyzed with 0 error.
 ```
 
-Will need some investigation around codecIds, boxesm MOV vs MP4 vs ISOBMFF and atoms.
+Will need further investigation:
+- `-tag:v`
+- `-codec_tag`
+- MOV vs MP4 vs ISOBMFF boxes and atoms.
