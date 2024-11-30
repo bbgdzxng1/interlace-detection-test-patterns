@@ -1,0 +1,1048 @@
+[info] ffmpeg started on 2024-11-29 at 20:52:08
+Report written to "./logs/ffmpeg-20241129-205208.log"
+Log level: 48
+Command line:
+ffmpeg -hide_banner -loglevel level+info -sws_flags +accurate_rnd+full_chroma_int -bitexact -i bt601-525_480_telecined_hard.ts -map 0:v:0 -codec:v copy -map 0:a:0 -codec:a copy ./bt601-525_480_telecined_hard.mkv -y
+[debug] Splitting the commandline.
+[debug] Reading option '-hide_banner' ... matched as option 'hide_banner' (do not show program banner) with argument '1'.
+[debug] Reading option '-loglevel' ... matched as option 'loglevel' (set logging level) with argument 'level+info'.
+[debug] Reading option '-sws_flags' ... matched as AVOption 'sws_flags' with argument '+accurate_rnd+full_chroma_int'.
+[debug] Reading option '-bitexact' ... matched as option 'bitexact' (bitexact mode) with argument '1'.
+[debug] Reading option '-i' ... matched as input url with argument 'bt601-525_480_telecined_hard.ts'.
+[debug] Reading option '-map' ... matched as option 'map' (set input stream mapping) with argument '0:v:0'.
+[debug] Reading option '-codec:v' ... matched as option 'codec' (alias for -c (select encoder/decoder)) with argument 'copy'.
+[debug] Reading option '-map' ... matched as option 'map' (set input stream mapping) with argument '0:a:0'.
+[debug] Reading option '-codec:a' ... matched as option 'codec' (alias for -c (select encoder/decoder)) with argument 'copy'.
+[debug] Reading option './bt601-525_480_telecined_hard.mkv' ... matched as output url.
+[debug] Reading option '-y' ... matched as option 'y' (overwrite output files) with argument '1'.
+[debug] Finished splitting the commandline.
+[debug] Parsing a group of options: global .
+[debug] Applying option hide_banner (do not show program banner) with argument 1.
+[debug] Applying option loglevel (set logging level) with argument level+info.
+[debug] Applying option y (overwrite output files) with argument 1.
+[debug] Successfully parsed a group of options.
+[debug] Parsing a group of options: input url bt601-525_480_telecined_hard.ts.
+[debug] Applying option bitexact (bitexact mode) with argument 1.
+[debug] Successfully parsed a group of options.
+[debug] Opening an input file: bt601-525_480_telecined_hard.ts.
+[AVFormatContext @ 0x159710800] [debug] Opening 'bt601-525_480_telecined_hard.ts' for reading
+[file @ 0x15af31560] [debug] Setting default whitelist 'file,crypto,data'
+[mpegts @ 0x159710800] [debug] Format mpegts probed with size=2048 and score=50
+[mpegts @ 0x159710800] [debug] stream=0 stream_type=2 pid=100 prog_reg_desc=
+[mpegts @ 0x159710800] [debug] stream=1 stream_type=81 pid=101 prog_reg_desc=
+[mpegts @ 0x159710800] [debug] Before avformat_find_stream_info() pos: 0 bytes read:32768 seeks:0 nb_streams:2
+[debug] Transform tree:
+[debug]     mdct_inv_float_c - type: mdct_float, len: 128, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+[debug]         fft_sr_ns_float_neon - type: fft_float, len: 64, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+[debug] Transform tree:
+[debug]     mdct_inv_float_c - type: mdct_float, len: 256, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+[debug]         fft_sr_ns_float_neon - type: fft_float, len: 128, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+[mpeg2video @ 0x15af4cd00] [debug] Format yuv420p chosen by get_format().
+[mpegts @ 0x159710800] [verbose] max_analyze_duration 5000000 reached at 5005000 microseconds st:0
+[mpegts @ 0x159710800] [debug] After avformat_find_stream_info() pos: 0 bytes read:1167504 seeks:2 frames:310
+[info] Input #0, mpegts, from 'bt601-525_480_telecined_hard.ts':
+[info]   Duration: 00:00:15.02, start: 1.428033, bitrate: 1377 kb/s
+[info]   Program 1 
+[info]     Metadata:
+[info]       service_name    : Service01
+[info]       service_provider: FFmpeg
+[info]   Stream #0:0[0x100], 152, 1/90000: Video: mpeg2video (Main) ([2][0][0][0] / 0x0002), yuv420p(tv, smpte170m, top first), 720x480 [SAR 32:27 DAR 16:9], 29.97 fps, 29.97 tbr, 90k tbn
+[info]       Side data:
+[info]         cpb: bitrate max/min/avg: 8000000/0/0 buffer size: 1835008 vbv_delay: N/A
+[info]   Stream #0:1[0x101](eng), 158, 1/90000: Audio: ac3 (AC-3 / 0x332D4341), 48000 Hz, stereo, fltp, 192 kb/s
+[debug] Successfully opened the file.
+[debug] Parsing a group of options: output url ./bt601-525_480_telecined_hard.mkv.
+[debug] Applying option map (set input stream mapping) with argument 0:v:0.
+[debug] Applying option codec:v (alias for -c (select encoder/decoder)) with argument copy.
+[debug] Applying option map (set input stream mapping) with argument 0:a:0.
+[debug] Applying option codec:a (alias for -c (select encoder/decoder)) with argument copy.
+[debug] Successfully parsed a group of options.
+[debug] Opening an output file: ./bt601-525_480_telecined_hard.mkv.
+[out#0/matroska @ 0x15af4d730] [verbose] Adding streams from explicit maps...
+[vost#0:0/copy @ 0x15af4e240] [verbose] Created video stream from input stream 0:0
+[aost#0:1/copy @ 0x15af4f020] [verbose] Created audio stream from input stream 0:1
+[file @ 0x15af4f490] [debug] Setting default whitelist 'file,crypto,data'
+[debug] Successfully opened the file.
+[info] Stream mapping:
+[info]   Stream #0:0 -> #0:0 (copy)
+[info]   Stream #0:1 -> #0:1 (copy)
+[matroska @ 0x15af4d7f0] [debug] get_metadata_duration returned: 0
+[info] Output #0, matroska, to './bt601-525_480_telecined_hard.mkv':
+[info]   Metadata:
+[info]     encoder         : Lavf61.7.100
+[info]   Stream #0:0, 0, 1/1000: Video: mpeg2video (Main) (mpg2 / 0x3267706D), yuv420p(tv, smpte170m, top first), 720x480 [SAR 32:27 DAR 16:9], q=2-31, 29.97 fps, 29.97 tbr, 1k tbn
+[info]       Side data:
+[info]         cpb: bitrate max/min/avg: 8000000/0/0 buffer size: 1835008 vbv_delay: N/A
+[info]   Stream #0:1(eng), 0, 1/1000: Audio: ac3 ([0] [0][0] / 0x2000), 48000 Hz, stereo, fltp, 192 kb/s
+[out#0/matroska @ 0x15af4d730] [verbose] Starting thread...
+[in#0/mpegts @ 0x15aa7c610] [verbose] Starting thread...
+[info] Press [q] to stop, [?] for help
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 5 at offset 695 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 5, dts -28, duration 33 at relative offset 9 in cluster at offset 695. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 0, dts 0, duration 32 at relative offset 13177 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3635 with pts 105, dts 5, duration 33 at relative offset 13952 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 32, dts 32, duration 32 at relative offset 17594 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4867 with pts 39, dts 39, duration 33 at relative offset 18369 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 64, dts 64, duration 32 at relative offset 23243 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3001 with pts 72, dts 72, duration 33 at relative offset 24018 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 96, dts 96, duration 32 at relative offset 27026 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5950 with pts 206, dts 105, duration 33 at relative offset 27801 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 128, dts 128, duration 32 at relative offset 33758 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2516 with pts 139, dts 139, duration 33 at relative offset 34533 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 160, dts 160, duration 32 at relative offset 37056 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 172, dts 172, duration 33 at relative offset 37831 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 192, dts 192, duration 32 at relative offset 40301 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2714 with pts 306, dts 206, duration 33 at relative offset 41076 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 224, dts 224, duration 32 at relative offset 43797 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3903 with pts 239, dts 239, duration 33 at relative offset 44572 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 256, dts 256, duration 32 at relative offset 48482 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3505 with pts 272, dts 272, duration 33 at relative offset 49257 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 288, dts 288, duration 32 at relative offset 52769 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8328 with pts 406, dts 306, duration 33 at relative offset 53544 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 320, dts 320, duration 32 at relative offset 61879 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3793 with pts 339, dts 339, duration 33 at relative offset 62654 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 352, dts 352, duration 32 at relative offset 66454 in cluster at offset 695. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4873 with pts 372, dts 372, duration 33 at relative offset 67229 in cluster at offset 695. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 384 at offset 72811 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 384, dts 384, duration 32 at relative offset 10 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 506, dts 406, duration 33 at relative offset 785 in cluster at offset 72811. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 416, dts 416, duration 32 at relative offset 12130 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2872 with pts 439, dts 439, duration 33 at relative offset 12905 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 448, dts 448, duration 32 at relative offset 15784 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3026 with pts 472, dts 472, duration 33 at relative offset 16559 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 480, dts 480, duration 32 at relative offset 19592 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3975 with pts 606, dts 506, duration 33 at relative offset 20367 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 512, dts 512, duration 32 at relative offset 24349 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3351 with pts 539, dts 539, duration 33 at relative offset 25124 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 544, dts 544, duration 32 at relative offset 28482 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5026 with pts 573, dts 573, duration 33 at relative offset 29257 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 576, dts 576, duration 32 at relative offset 34290 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5672 with pts 706, dts 606, duration 33 at relative offset 35065 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 608, dts 608, duration 32 at relative offset 40744 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 639, dts 639, duration 33 at relative offset 41519 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 640, dts 640, duration 32 at relative offset 44302 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 672, dts 672, duration 32 at relative offset 45077 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2462 with pts 673, dts 673, duration 33 at relative offset 45852 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 704, dts 704, duration 32 at relative offset 48321 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4007 with pts 806, dts 706, duration 33 at relative offset 49096 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 736, dts 736, duration 32 at relative offset 53110 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4728 with pts 739, dts 739, duration 33 at relative offset 53885 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 768, dts 768, duration 32 at relative offset 58620 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3636 with pts 773, dts 773, duration 33 at relative offset 59395 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 800, dts 800, duration 32 at relative offset 63038 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6350 with pts 906, dts 806, duration 33 at relative offset 63813 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 832, dts 832, duration 32 at relative offset 70170 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3373 with pts 840, dts 840, duration 33 at relative offset 70945 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 864, dts 864, duration 32 at relative offset 74325 in cluster at offset 72811. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4859 with pts 873, dts 873, duration 33 at relative offset 75100 in cluster at offset 72811. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 896 at offset 152784 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 896, dts 896, duration 32 at relative offset 10 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 1006, dts 906, duration 33 at relative offset 785 in cluster at offset 152784. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 928, dts 928, duration 32 at relative offset 13953 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 940, dts 940, duration 33 at relative offset 14728 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 960, dts 960, duration 32 at relative offset 17196 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3336 with pts 973, dts 973, duration 33 at relative offset 17971 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 992, dts 992, duration 32 at relative offset 21314 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 1106, dts 1006, duration 33 at relative offset 22089 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1024, dts 1024, duration 32 at relative offset 25766 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4793 with pts 1040, dts 1040, duration 33 at relative offset 26541 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1056, dts 1056, duration 32 at relative offset 31341 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 1073, dts 1073, duration 33 at relative offset 32116 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1088, dts 1088, duration 32 at relative offset 35750 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6035 with pts 1207, dts 1106, duration 33 at relative offset 36525 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1120, dts 1120, duration 32 at relative offset 42567 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2593 with pts 1140, dts 1140, duration 33 at relative offset 43342 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1152, dts 1152, duration 32 at relative offset 45942 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2173 with pts 1173, dts 1173, duration 33 at relative offset 46717 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1184, dts 1184, duration 32 at relative offset 48897 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2766 with pts 1307, dts 1207, duration 33 at relative offset 49672 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1216, dts 1216, duration 32 at relative offset 52445 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 1240, dts 1240, duration 33 at relative offset 53220 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1248, dts 1248, duration 32 at relative offset 57137 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3279 with pts 1273, dts 1273, duration 33 at relative offset 57912 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1280, dts 1280, duration 32 at relative offset 61198 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8577 with pts 1407, dts 1307, duration 33 at relative offset 61973 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1312, dts 1312, duration 32 at relative offset 70557 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3960 with pts 1340, dts 1340, duration 33 at relative offset 71332 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1344, dts 1344, duration 32 at relative offset 75299 in cluster at offset 152784. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5781 with pts 1373, dts 1373, duration 33 at relative offset 76074 in cluster at offset 152784. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 1376 at offset 234653 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1376, dts 1376, duration 32 at relative offset 10 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 1507, dts 1407, duration 33 at relative offset 785 in cluster at offset 234653. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1408, dts 1408, duration 32 at relative offset 12130 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2908 with pts 1440, dts 1440, duration 33 at relative offset 12905 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1440, dts 1440, duration 32 at relative offset 15820 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1472, dts 1472, duration 32 at relative offset 16595 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2944 with pts 1473, dts 1473, duration 33 at relative offset 17370 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1504, dts 1504, duration 32 at relative offset 20321 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 1607, dts 1507, duration 33 at relative offset 21096 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1536, dts 1536, duration 32 at relative offset 25079 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3395 with pts 1540, dts 1540, duration 33 at relative offset 25854 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1568, dts 1568, duration 32 at relative offset 29256 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5002 with pts 1574, dts 1574, duration 33 at relative offset 30031 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1600, dts 1600, duration 32 at relative offset 35040 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 1707, dts 1607, duration 33 at relative offset 35815 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1632, dts 1632, duration 32 at relative offset 41277 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 1640, dts 1640, duration 33 at relative offset 42052 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1664, dts 1664, duration 32 at relative offset 44767 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 1674, dts 1674, duration 33 at relative offset 45542 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1696, dts 1696, duration 32 at relative offset 48045 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 1807, dts 1707, duration 33 at relative offset 48820 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1728, dts 1728, duration 32 at relative offset 52837 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 1740, dts 1740, duration 33 at relative offset 53612 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1760, dts 1760, duration 32 at relative offset 58344 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 1774, dts 1774, duration 33 at relative offset 59119 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1792, dts 1792, duration 32 at relative offset 62260 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 1907, dts 1807, duration 33 at relative offset 63035 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1824, dts 1824, duration 32 at relative offset 69398 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 1841, dts 1841, duration 33 at relative offset 70173 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1856, dts 1856, duration 32 at relative offset 73589 in cluster at offset 234653. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4839 with pts 1874, dts 1874, duration 33 at relative offset 74364 in cluster at offset 234653. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 1888 at offset 313870 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1888, dts 1888, duration 32 at relative offset 10 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 2007, dts 1907, duration 33 at relative offset 785 in cluster at offset 313870. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1920, dts 1920, duration 32 at relative offset 13953 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2505 with pts 1941, dts 1941, duration 33 at relative offset 14728 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1952, dts 1952, duration 32 at relative offset 17240 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3422 with pts 1974, dts 1974, duration 33 at relative offset 18015 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 1984, dts 1984, duration 32 at relative offset 21444 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 2107, dts 2007, duration 33 at relative offset 22219 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2016, dts 2016, duration 32 at relative offset 25816 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 2041, dts 2041, duration 33 at relative offset 26591 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2048, dts 2048, duration 32 at relative offset 31402 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 2074, dts 2074, duration 33 at relative offset 32177 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2080, dts 2080, duration 32 at relative offset 35181 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 2208, dts 2107, duration 33 at relative offset 35956 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2112, dts 2112, duration 32 at relative offset 41891 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 2141, dts 2141, duration 33 at relative offset 42666 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2144, dts 2144, duration 32 at relative offset 45149 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 2174, dts 2174, duration 33 at relative offset 45924 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2176, dts 2176, duration 32 at relative offset 48336 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 2308, dts 2208, duration 33 at relative offset 49111 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2208, dts 2208, duration 32 at relative offset 51857 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2240, dts 2240, duration 32 at relative offset 52632 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 2241, dts 2241, duration 33 at relative offset 53407 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2272, dts 2272, duration 32 at relative offset 57370 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 2274, dts 2274, duration 33 at relative offset 58145 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2304, dts 2304, duration 32 at relative offset 61735 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 2408, dts 2308, duration 33 at relative offset 62510 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2336, dts 2336, duration 32 at relative offset 71091 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 2341, dts 2341, duration 33 at relative offset 71866 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2368, dts 2368, duration 32 at relative offset 75672 in cluster at offset 313870. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 2374, dts 2374, duration 33 at relative offset 76447 in cluster at offset 313870. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 2400 at offset 395303 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2400, dts 2400, duration 32 at relative offset 10 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 2508, dts 2408, duration 33 at relative offset 785 in cluster at offset 395303. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2432, dts 2432, duration 32 at relative offset 12130 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 2441, dts 2441, duration 33 at relative offset 12905 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2464, dts 2464, duration 32 at relative offset 15779 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 2474, dts 2474, duration 33 at relative offset 16554 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2496, dts 2496, duration 32 at relative offset 19601 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 2608, dts 2508, duration 33 at relative offset 20376 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2528, dts 2528, duration 32 at relative offset 24359 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 2541, dts 2541, duration 33 at relative offset 25134 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2560, dts 2560, duration 32 at relative offset 28484 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 2575, dts 2575, duration 33 at relative offset 29259 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2592, dts 2592, duration 32 at relative offset 34298 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 2708, dts 2608, duration 33 at relative offset 35073 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2624, dts 2624, duration 32 at relative offset 40748 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 2641, dts 2641, duration 33 at relative offset 41523 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2656, dts 2656, duration 32 at relative offset 44306 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 2675, dts 2675, duration 33 at relative offset 45081 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2688, dts 2688, duration 32 at relative offset 47551 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 2808, dts 2708, duration 33 at relative offset 48326 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2720, dts 2720, duration 32 at relative offset 52344 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 2741, dts 2741, duration 33 at relative offset 53119 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2752, dts 2752, duration 32 at relative offset 57862 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 2775, dts 2775, duration 33 at relative offset 58637 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2784, dts 2784, duration 32 at relative offset 62297 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 2908, dts 2808, duration 33 at relative offset 63072 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2816, dts 2816, duration 32 at relative offset 69427 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 2842, dts 2842, duration 33 at relative offset 70202 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2848, dts 2848, duration 32 at relative offset 73624 in cluster at offset 395303. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 2875, dts 2875, duration 33 at relative offset 74399 in cluster at offset 395303. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 2880 at offset 474643 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2880, dts 2880, duration 32 at relative offset 10 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 3008, dts 2908, duration 33 at relative offset 785 in cluster at offset 474643. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2912, dts 2912, duration 32 at relative offset 13953 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 2942, dts 2942, duration 33 at relative offset 14728 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2944, dts 2944, duration 32 at relative offset 17196 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3339 with pts 2975, dts 2975, duration 33 at relative offset 17971 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 2976, dts 2976, duration 32 at relative offset 21317 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 3108, dts 3008, duration 33 at relative offset 22092 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3008, dts 3008, duration 32 at relative offset 25769 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3040, dts 3040, duration 32 at relative offset 26544 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4795 with pts 3042, dts 3042, duration 33 at relative offset 27319 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3072, dts 3072, duration 32 at relative offset 32121 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 3075, dts 3075, duration 33 at relative offset 32896 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3104, dts 3104, duration 32 at relative offset 36530 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6036 with pts 3209, dts 3108, duration 33 at relative offset 37305 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3136, dts 3136, duration 32 at relative offset 43348 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2588 with pts 3142, dts 3142, duration 33 at relative offset 44123 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3168, dts 3168, duration 32 at relative offset 46718 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2172 with pts 3175, dts 3175, duration 33 at relative offset 47493 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3200, dts 3200, duration 32 at relative offset 49672 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2760 with pts 3309, dts 3209, duration 33 at relative offset 50447 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3232, dts 3232, duration 32 at relative offset 53214 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 3242, dts 3242, duration 33 at relative offset 53989 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3264, dts 3264, duration 32 at relative offset 57906 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3280 with pts 3275, dts 3275, duration 33 at relative offset 58681 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3296, dts 3296, duration 32 at relative offset 61968 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8578 with pts 3409, dts 3309, duration 33 at relative offset 62743 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3328, dts 3328, duration 32 at relative offset 71328 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 3342, dts 3342, duration 33 at relative offset 72103 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3360, dts 3360, duration 32 at relative offset 76066 in cluster at offset 474643. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4999 with pts 3375, dts 3375, duration 33 at relative offset 76841 in cluster at offset 474643. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 3392 at offset 556497 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3392, dts 3392, duration 32 at relative offset 10 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 3509, dts 3409, duration 33 at relative offset 785 in cluster at offset 556497. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3424, dts 3424, duration 32 at relative offset 12130 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2862 with pts 3442, dts 3442, duration 33 at relative offset 12905 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3456, dts 3456, duration 32 at relative offset 15774 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2957 with pts 3475, dts 3475, duration 33 at relative offset 16549 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3488, dts 3488, duration 32 at relative offset 19513 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 3609, dts 3509, duration 33 at relative offset 20288 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3520, dts 3520, duration 32 at relative offset 24271 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3391 with pts 3542, dts 3542, duration 33 at relative offset 25046 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3552, dts 3552, duration 32 at relative offset 28444 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5065 with pts 3576, dts 3576, duration 33 at relative offset 29219 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3584, dts 3584, duration 32 at relative offset 34291 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 3709, dts 3609, duration 33 at relative offset 35066 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3616, dts 3616, duration 32 at relative offset 40528 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 3642, dts 3642, duration 33 at relative offset 41303 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3648, dts 3648, duration 32 at relative offset 44018 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 3676, dts 3676, duration 33 at relative offset 44793 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3680, dts 3680, duration 32 at relative offset 47296 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 3809, dts 3709, duration 33 at relative offset 48071 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3712, dts 3712, duration 32 at relative offset 52088 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 3742, dts 3742, duration 33 at relative offset 52863 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3744, dts 3744, duration 32 at relative offset 57595 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 3776, dts 3776, duration 33 at relative offset 58370 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3776, dts 3776, duration 32 at relative offset 61511 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3808, dts 3808, duration 32 at relative offset 62286 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 3909, dts 3809, duration 33 at relative offset 63061 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3840, dts 3840, duration 32 at relative offset 69424 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 3843, dts 3843, duration 33 at relative offset 70199 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3872, dts 3872, duration 32 at relative offset 73615 in cluster at offset 556497. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4834 with pts 3876, dts 3876, duration 33 at relative offset 74390 in cluster at offset 556497. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 3904 at offset 635735 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3904, dts 3904, duration 32 at relative offset 10 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 4009, dts 3909, duration 33 at relative offset 785 in cluster at offset 635735. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3936, dts 3936, duration 32 at relative offset 13953 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2514 with pts 3943, dts 3943, duration 33 at relative offset 14728 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 3968, dts 3968, duration 32 at relative offset 17249 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3430 with pts 3976, dts 3976, duration 33 at relative offset 18024 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4000, dts 4000, duration 32 at relative offset 21461 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 4109, dts 4009, duration 33 at relative offset 22236 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4032, dts 4032, duration 32 at relative offset 25833 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 4043, dts 4043, duration 33 at relative offset 26608 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4064, dts 4064, duration 32 at relative offset 31419 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 4076, dts 4076, duration 33 at relative offset 32194 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4096, dts 4096, duration 32 at relative offset 35198 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 4210, dts 4109, duration 33 at relative offset 35973 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4128, dts 4128, duration 32 at relative offset 41908 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 4143, dts 4143, duration 33 at relative offset 42683 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4160, dts 4160, duration 32 at relative offset 45166 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 4176, dts 4176, duration 33 at relative offset 45941 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4192, dts 4192, duration 32 at relative offset 48353 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 4310, dts 4210, duration 33 at relative offset 49128 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4224, dts 4224, duration 32 at relative offset 51874 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 4243, dts 4243, duration 33 at relative offset 52649 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4256, dts 4256, duration 32 at relative offset 56612 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 4276, dts 4276, duration 33 at relative offset 57387 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4288, dts 4288, duration 32 at relative offset 60977 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 4410, dts 4310, duration 33 at relative offset 61752 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4320, dts 4320, duration 32 at relative offset 70333 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 4343, dts 4343, duration 33 at relative offset 71108 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4352, dts 4352, duration 32 at relative offset 74914 in cluster at offset 635735. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 4376, dts 4376, duration 33 at relative offset 75689 in cluster at offset 635735. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 4384 at offset 716410 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4384, dts 4384, duration 32 at relative offset 10 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 4510, dts 4410, duration 33 at relative offset 785 in cluster at offset 716410. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4416, dts 4416, duration 32 at relative offset 12130 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 4443, dts 4443, duration 33 at relative offset 12905 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4448, dts 4448, duration 32 at relative offset 15779 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 4476, dts 4476, duration 33 at relative offset 16554 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4480, dts 4480, duration 32 at relative offset 19601 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 4610, dts 4510, duration 33 at relative offset 20376 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4512, dts 4512, duration 32 at relative offset 24359 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 4543, dts 4543, duration 33 at relative offset 25134 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4544, dts 4544, duration 32 at relative offset 28484 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4576, dts 4576, duration 32 at relative offset 29259 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 4577, dts 4577, duration 33 at relative offset 30034 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4608, dts 4608, duration 32 at relative offset 35073 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 4710, dts 4610, duration 33 at relative offset 35848 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4640, dts 4640, duration 32 at relative offset 41523 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 4643, dts 4643, duration 33 at relative offset 42298 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4672, dts 4672, duration 32 at relative offset 45081 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 4677, dts 4677, duration 33 at relative offset 45856 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4704, dts 4704, duration 32 at relative offset 48326 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 4810, dts 4710, duration 33 at relative offset 49101 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4736, dts 4736, duration 32 at relative offset 53119 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 4743, dts 4743, duration 33 at relative offset 53894 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4768, dts 4768, duration 32 at relative offset 58637 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 4777, dts 4777, duration 33 at relative offset 59412 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4800, dts 4800, duration 32 at relative offset 63072 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 4910, dts 4810, duration 33 at relative offset 63847 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4832, dts 4832, duration 32 at relative offset 70202 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 4844, dts 4844, duration 33 at relative offset 70977 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4864, dts 4864, duration 32 at relative offset 74399 in cluster at offset 716410. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 4877, dts 4877, duration 33 at relative offset 75174 in cluster at offset 716410. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 4896 at offset 796525 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4896, dts 4896, duration 32 at relative offset 10 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 5010, dts 4910, duration 33 at relative offset 785 in cluster at offset 796525. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4928, dts 4928, duration 32 at relative offset 13953 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 4944, dts 4944, duration 33 at relative offset 14728 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4960, dts 4960, duration 32 at relative offset 17196 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3339 with pts 4977, dts 4977, duration 33 at relative offset 17971 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 4992, dts 4992, duration 32 at relative offset 21317 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 5110, dts 5010, duration 33 at relative offset 22092 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5024, dts 5024, duration 32 at relative offset 25769 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4795 with pts 5044, dts 5044, duration 33 at relative offset 26544 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5056, dts 5056, duration 32 at relative offset 31346 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 5077, dts 5077, duration 33 at relative offset 32121 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5088, dts 5088, duration 32 at relative offset 35755 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6036 with pts 5211, dts 5110, duration 33 at relative offset 36530 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5120, dts 5120, duration 32 at relative offset 42573 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2588 with pts 5144, dts 5144, duration 33 at relative offset 43348 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5152, dts 5152, duration 32 at relative offset 45943 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2172 with pts 5177, dts 5177, duration 33 at relative offset 46718 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5184, dts 5184, duration 32 at relative offset 48897 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2760 with pts 5311, dts 5211, duration 33 at relative offset 49672 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5216, dts 5216, duration 32 at relative offset 52439 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 5244, dts 5244, duration 33 at relative offset 53214 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5248, dts 5248, duration 32 at relative offset 57131 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3280 with pts 5277, dts 5277, duration 33 at relative offset 57906 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5280, dts 5280, duration 32 at relative offset 61193 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8578 with pts 5411, dts 5311, duration 33 at relative offset 61968 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5312, dts 5312, duration 32 at relative offset 70553 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 5344, dts 5344, duration 33 at relative offset 71328 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5344, dts 5344, duration 32 at relative offset 75291 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5376, dts 5376, duration 32 at relative offset 76066 in cluster at offset 796525. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4999 with pts 5377, dts 5377, duration 33 at relative offset 76841 in cluster at offset 796525. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 5408 at offset 878379 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5408, dts 5408, duration 32 at relative offset 10 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 5511, dts 5411, duration 33 at relative offset 785 in cluster at offset 878379. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5440, dts 5440, duration 32 at relative offset 12130 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2862 with pts 5444, dts 5444, duration 33 at relative offset 12905 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5472, dts 5472, duration 32 at relative offset 15774 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2957 with pts 5477, dts 5477, duration 33 at relative offset 16549 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5504, dts 5504, duration 32 at relative offset 19513 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 5611, dts 5511, duration 33 at relative offset 20288 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5536, dts 5536, duration 32 at relative offset 24271 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3391 with pts 5544, dts 5544, duration 33 at relative offset 25046 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5568, dts 5568, duration 32 at relative offset 28444 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5065 with pts 5578, dts 5578, duration 33 at relative offset 29219 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5600, dts 5600, duration 32 at relative offset 34291 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 5711, dts 5611, duration 33 at relative offset 35066 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5632, dts 5632, duration 32 at relative offset 40528 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 5644, dts 5644, duration 33 at relative offset 41303 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5664, dts 5664, duration 32 at relative offset 44018 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 5678, dts 5678, duration 33 at relative offset 44793 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5696, dts 5696, duration 32 at relative offset 47296 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 5811, dts 5711, duration 33 at relative offset 48071 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5728, dts 5728, duration 32 at relative offset 52088 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 5744, dts 5744, duration 33 at relative offset 52863 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5760, dts 5760, duration 32 at relative offset 57595 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 5778, dts 5778, duration 33 at relative offset 58370 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5792, dts 5792, duration 32 at relative offset 61511 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 5911, dts 5811, duration 33 at relative offset 62286 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5824, dts 5824, duration 32 at relative offset 68649 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 5845, dts 5845, duration 33 at relative offset 69424 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5856, dts 5856, duration 32 at relative offset 72840 in cluster at offset 878379. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4834 with pts 5878, dts 5878, duration 33 at relative offset 73615 in cluster at offset 878379. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 5888 at offset 956842 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5888, dts 5888, duration 32 at relative offset 10 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 6011, dts 5911, duration 33 at relative offset 785 in cluster at offset 956842. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5920, dts 5920, duration 32 at relative offset 13953 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2514 with pts 5945, dts 5945, duration 33 at relative offset 14728 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5952, dts 5952, duration 32 at relative offset 17249 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3430 with pts 5978, dts 5978, duration 33 at relative offset 18024 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 5984, dts 5984, duration 32 at relative offset 21461 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 6111, dts 6011, duration 33 at relative offset 22236 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6016, dts 6016, duration 32 at relative offset 25833 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 6045, dts 6045, duration 33 at relative offset 26608 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6048, dts 6048, duration 32 at relative offset 31419 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 6078, dts 6078, duration 33 at relative offset 32194 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6080, dts 6080, duration 32 at relative offset 35198 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 6212, dts 6111, duration 33 at relative offset 35973 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6112, dts 6112, duration 32 at relative offset 41908 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6144, dts 6144, duration 32 at relative offset 42683 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 6145, dts 6145, duration 33 at relative offset 43458 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6176, dts 6176, duration 32 at relative offset 45941 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 6178, dts 6178, duration 33 at relative offset 46716 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6208, dts 6208, duration 32 at relative offset 49128 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 6312, dts 6212, duration 33 at relative offset 49903 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6240, dts 6240, duration 32 at relative offset 52649 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 6245, dts 6245, duration 33 at relative offset 53424 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6272, dts 6272, duration 32 at relative offset 57387 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 6278, dts 6278, duration 33 at relative offset 58162 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6304, dts 6304, duration 32 at relative offset 61752 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 6412, dts 6312, duration 33 at relative offset 62527 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6336, dts 6336, duration 32 at relative offset 71108 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 6345, dts 6345, duration 33 at relative offset 71883 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6368, dts 6368, duration 32 at relative offset 75689 in cluster at offset 956842. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 6378, dts 6378, duration 33 at relative offset 76464 in cluster at offset 956842. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 6400 at offset 1038292 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6400, dts 6400, duration 32 at relative offset 10 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 6512, dts 6412, duration 33 at relative offset 785 in cluster at offset 1038292. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6432, dts 6432, duration 32 at relative offset 12130 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 6445, dts 6445, duration 33 at relative offset 12905 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6464, dts 6464, duration 32 at relative offset 15779 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 6478, dts 6478, duration 33 at relative offset 16554 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6496, dts 6496, duration 32 at relative offset 19601 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 6612, dts 6512, duration 33 at relative offset 20376 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6528, dts 6528, duration 32 at relative offset 24359 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 6545, dts 6545, duration 33 at relative offset 25134 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6560, dts 6560, duration 32 at relative offset 28484 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 6579, dts 6579, duration 33 at relative offset 29259 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6592, dts 6592, duration 32 at relative offset 34298 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 6712, dts 6612, duration 33 at relative offset 35073 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6624, dts 6624, duration 32 at relative offset 40748 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 6645, dts 6645, duration 33 at relative offset 41523 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6656, dts 6656, duration 32 at relative offset 44306 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 6679, dts 6679, duration 33 at relative offset 45081 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6688, dts 6688, duration 32 at relative offset 47551 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 6812, dts 6712, duration 33 at relative offset 48326 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6720, dts 6720, duration 32 at relative offset 52344 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 6745, dts 6745, duration 33 at relative offset 53119 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6752, dts 6752, duration 32 at relative offset 57862 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 6779, dts 6779, duration 33 at relative offset 58637 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6784, dts 6784, duration 32 at relative offset 62297 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 6912, dts 6812, duration 33 at relative offset 63072 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6816, dts 6816, duration 32 at relative offset 69427 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 6846, dts 6846, duration 33 at relative offset 70202 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6848, dts 6848, duration 32 at relative offset 73624 in cluster at offset 1038292. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 6879, dts 6879, duration 33 at relative offset 74399 in cluster at offset 1038292. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 6880 at offset 1117632 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6880, dts 6880, duration 32 at relative offset 10 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 7012, dts 6912, duration 33 at relative offset 785 in cluster at offset 1117632. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6912, dts 6912, duration 32 at relative offset 13953 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6944, dts 6944, duration 32 at relative offset 14728 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 6946, dts 6946, duration 33 at relative offset 15503 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 6976, dts 6976, duration 32 at relative offset 17971 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3339 with pts 6979, dts 6979, duration 33 at relative offset 18746 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7008, dts 7008, duration 32 at relative offset 22092 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 7112, dts 7012, duration 33 at relative offset 22867 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7040, dts 7040, duration 32 at relative offset 26544 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4795 with pts 7046, dts 7046, duration 33 at relative offset 27319 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7072, dts 7072, duration 32 at relative offset 32121 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 7079, dts 7079, duration 33 at relative offset 32896 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7104, dts 7104, duration 32 at relative offset 36530 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6036 with pts 7213, dts 7112, duration 33 at relative offset 37305 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7136, dts 7136, duration 32 at relative offset 43348 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2588 with pts 7146, dts 7146, duration 33 at relative offset 44123 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7168, dts 7168, duration 32 at relative offset 46718 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2172 with pts 7179, dts 7179, duration 33 at relative offset 47493 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7200, dts 7200, duration 32 at relative offset 49672 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2760 with pts 7313, dts 7213, duration 33 at relative offset 50447 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7232, dts 7232, duration 32 at relative offset 53214 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 7246, dts 7246, duration 33 at relative offset 53989 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7264, dts 7264, duration 32 at relative offset 57906 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3280 with pts 7279, dts 7279, duration 33 at relative offset 58681 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7296, dts 7296, duration 32 at relative offset 61968 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8578 with pts 7413, dts 7313, duration 33 at relative offset 62743 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7328, dts 7328, duration 32 at relative offset 71328 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 7346, dts 7346, duration 33 at relative offset 72103 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7360, dts 7360, duration 32 at relative offset 76066 in cluster at offset 1117632. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4999 with pts 7379, dts 7379, duration 33 at relative offset 76841 in cluster at offset 1117632. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 7392 at offset 1199486 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7392, dts 7392, duration 32 at relative offset 10 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 7513, dts 7413, duration 33 at relative offset 785 in cluster at offset 1199486. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7424, dts 7424, duration 32 at relative offset 12130 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2862 with pts 7446, dts 7446, duration 33 at relative offset 12905 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7456, dts 7456, duration 32 at relative offset 15774 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2957 with pts 7479, dts 7479, duration 33 at relative offset 16549 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7488, dts 7488, duration 32 at relative offset 19513 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 7613, dts 7513, duration 33 at relative offset 20288 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7520, dts 7520, duration 32 at relative offset 24271 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3391 with pts 7546, dts 7546, duration 33 at relative offset 25046 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7552, dts 7552, duration 32 at relative offset 28444 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5065 with pts 7580, dts 7580, duration 33 at relative offset 29219 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7584, dts 7584, duration 32 at relative offset 34291 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 7713, dts 7613, duration 33 at relative offset 35066 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7616, dts 7616, duration 32 at relative offset 40528 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 7646, dts 7646, duration 33 at relative offset 41303 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7648, dts 7648, duration 32 at relative offset 44018 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 7680, dts 7680, duration 33 at relative offset 44793 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7680, dts 7680, duration 32 at relative offset 47296 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7712, dts 7712, duration 32 at relative offset 48071 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 7813, dts 7713, duration 33 at relative offset 48846 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7744, dts 7744, duration 32 at relative offset 52863 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 7746, dts 7746, duration 33 at relative offset 53638 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7776, dts 7776, duration 32 at relative offset 58370 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 7780, dts 7780, duration 33 at relative offset 59145 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7808, dts 7808, duration 32 at relative offset 62286 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 7913, dts 7813, duration 33 at relative offset 63061 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7840, dts 7840, duration 32 at relative offset 69424 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 7847, dts 7847, duration 33 at relative offset 70199 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7872, dts 7872, duration 32 at relative offset 73615 in cluster at offset 1199486. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4834 with pts 7880, dts 7880, duration 33 at relative offset 74390 in cluster at offset 1199486. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 7904 at offset 1278724 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7904, dts 7904, duration 32 at relative offset 10 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 8013, dts 7913, duration 33 at relative offset 785 in cluster at offset 1278724. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7936, dts 7936, duration 32 at relative offset 13953 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2514 with pts 7947, dts 7947, duration 33 at relative offset 14728 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 7968, dts 7968, duration 32 at relative offset 17249 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3430 with pts 7980, dts 7980, duration 33 at relative offset 18024 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8000, dts 8000, duration 32 at relative offset 21461 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 8113, dts 8013, duration 33 at relative offset 22236 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8032, dts 8032, duration 32 at relative offset 25833 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 8047, dts 8047, duration 33 at relative offset 26608 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8064, dts 8064, duration 32 at relative offset 31419 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 8080, dts 8080, duration 33 at relative offset 32194 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8096, dts 8096, duration 32 at relative offset 35198 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 8214, dts 8113, duration 33 at relative offset 35973 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8128, dts 8128, duration 32 at relative offset 41908 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 8147, dts 8147, duration 33 at relative offset 42683 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8160, dts 8160, duration 32 at relative offset 45166 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 8180, dts 8180, duration 33 at relative offset 45941 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8192, dts 8192, duration 32 at relative offset 48353 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 8314, dts 8214, duration 33 at relative offset 49128 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8224, dts 8224, duration 32 at relative offset 51874 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 8247, dts 8247, duration 33 at relative offset 52649 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8256, dts 8256, duration 32 at relative offset 56612 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 8280, dts 8280, duration 33 at relative offset 57387 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8288, dts 8288, duration 32 at relative offset 60977 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 8414, dts 8314, duration 33 at relative offset 61752 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8320, dts 8320, duration 32 at relative offset 70333 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 8347, dts 8347, duration 33 at relative offset 71108 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8352, dts 8352, duration 32 at relative offset 74914 in cluster at offset 1278724. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 8380, dts 8380, duration 33 at relative offset 75689 in cluster at offset 1278724. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 8384 at offset 1359399 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8384, dts 8384, duration 32 at relative offset 10 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 8514, dts 8414, duration 33 at relative offset 785 in cluster at offset 1359399. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8416, dts 8416, duration 32 at relative offset 12130 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 8447, dts 8447, duration 33 at relative offset 12905 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8448, dts 8448, duration 32 at relative offset 15779 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 8480, dts 8480, duration 33 at relative offset 16554 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8480, dts 8480, duration 32 at relative offset 19601 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8512, dts 8512, duration 32 at relative offset 20376 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 8614, dts 8514, duration 33 at relative offset 21151 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8544, dts 8544, duration 32 at relative offset 25134 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 8547, dts 8547, duration 33 at relative offset 25909 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8576, dts 8576, duration 32 at relative offset 29259 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 8581, dts 8581, duration 33 at relative offset 30034 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8608, dts 8608, duration 32 at relative offset 35073 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 8714, dts 8614, duration 33 at relative offset 35848 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8640, dts 8640, duration 32 at relative offset 41523 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 8647, dts 8647, duration 33 at relative offset 42298 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8672, dts 8672, duration 32 at relative offset 45081 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 8681, dts 8681, duration 33 at relative offset 45856 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8704, dts 8704, duration 32 at relative offset 48326 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 8814, dts 8714, duration 33 at relative offset 49101 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8736, dts 8736, duration 32 at relative offset 53119 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 8747, dts 8747, duration 33 at relative offset 53894 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8768, dts 8768, duration 32 at relative offset 58637 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 8781, dts 8781, duration 33 at relative offset 59412 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8800, dts 8800, duration 32 at relative offset 63072 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 8914, dts 8814, duration 33 at relative offset 63847 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8832, dts 8832, duration 32 at relative offset 70202 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 8848, dts 8848, duration 33 at relative offset 70977 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8864, dts 8864, duration 32 at relative offset 74399 in cluster at offset 1359399. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 8881, dts 8881, duration 33 at relative offset 75174 in cluster at offset 1359399. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 8896 at offset 1439514 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8896, dts 8896, duration 32 at relative offset 10 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 9014, dts 8914, duration 33 at relative offset 785 in cluster at offset 1439514. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8928, dts 8928, duration 32 at relative offset 13953 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 8948, dts 8948, duration 33 at relative offset 14728 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8960, dts 8960, duration 32 at relative offset 17196 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3339 with pts 8981, dts 8981, duration 33 at relative offset 17971 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 8992, dts 8992, duration 32 at relative offset 21317 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 9114, dts 9014, duration 33 at relative offset 22092 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9024, dts 9024, duration 32 at relative offset 25769 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4795 with pts 9048, dts 9048, duration 33 at relative offset 26544 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9056, dts 9056, duration 32 at relative offset 31346 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 9081, dts 9081, duration 33 at relative offset 32121 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9088, dts 9088, duration 32 at relative offset 35755 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6036 with pts 9215, dts 9114, duration 33 at relative offset 36530 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9120, dts 9120, duration 32 at relative offset 42573 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2588 with pts 9148, dts 9148, duration 33 at relative offset 43348 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9152, dts 9152, duration 32 at relative offset 45943 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2172 with pts 9181, dts 9181, duration 33 at relative offset 46718 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9184, dts 9184, duration 32 at relative offset 48897 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2760 with pts 9315, dts 9215, duration 33 at relative offset 49672 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9216, dts 9216, duration 32 at relative offset 52439 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 9248, dts 9248, duration 33 at relative offset 53214 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9248, dts 9248, duration 32 at relative offset 57131 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9280, dts 9280, duration 32 at relative offset 57906 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3280 with pts 9281, dts 9281, duration 33 at relative offset 58681 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9312, dts 9312, duration 32 at relative offset 61968 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8578 with pts 9415, dts 9315, duration 33 at relative offset 62743 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9344, dts 9344, duration 32 at relative offset 71328 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 9348, dts 9348, duration 33 at relative offset 72103 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9376, dts 9376, duration 32 at relative offset 76066 in cluster at offset 1439514. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4999 with pts 9381, dts 9381, duration 33 at relative offset 76841 in cluster at offset 1439514. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 9408 at offset 1521368 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9408, dts 9408, duration 32 at relative offset 10 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 9515, dts 9415, duration 33 at relative offset 785 in cluster at offset 1521368. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9440, dts 9440, duration 32 at relative offset 12130 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2862 with pts 9448, dts 9448, duration 33 at relative offset 12905 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9472, dts 9472, duration 32 at relative offset 15774 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2957 with pts 9481, dts 9481, duration 33 at relative offset 16549 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9504, dts 9504, duration 32 at relative offset 19513 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 9615, dts 9515, duration 33 at relative offset 20288 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9536, dts 9536, duration 32 at relative offset 24271 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3391 with pts 9548, dts 9548, duration 33 at relative offset 25046 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9568, dts 9568, duration 32 at relative offset 28444 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5065 with pts 9582, dts 9582, duration 33 at relative offset 29219 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9600, dts 9600, duration 32 at relative offset 34291 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 9715, dts 9615, duration 33 at relative offset 35066 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9632, dts 9632, duration 32 at relative offset 40528 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 9648, dts 9648, duration 33 at relative offset 41303 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9664, dts 9664, duration 32 at relative offset 44018 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 9682, dts 9682, duration 33 at relative offset 44793 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9696, dts 9696, duration 32 at relative offset 47296 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 9815, dts 9715, duration 33 at relative offset 48071 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9728, dts 9728, duration 32 at relative offset 52088 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 9748, dts 9748, duration 33 at relative offset 52863 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9760, dts 9760, duration 32 at relative offset 57595 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 9782, dts 9782, duration 33 at relative offset 58370 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9792, dts 9792, duration 32 at relative offset 61511 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 9915, dts 9815, duration 33 at relative offset 62286 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9824, dts 9824, duration 32 at relative offset 68649 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 9849, dts 9849, duration 33 at relative offset 69424 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9856, dts 9856, duration 32 at relative offset 72840 in cluster at offset 1521368. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4834 with pts 9882, dts 9882, duration 33 at relative offset 73615 in cluster at offset 1521368. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 9888 at offset 1599831 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9888, dts 9888, duration 32 at relative offset 10 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 10015, dts 9915, duration 33 at relative offset 785 in cluster at offset 1599831. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9920, dts 9920, duration 32 at relative offset 13953 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2514 with pts 9949, dts 9949, duration 33 at relative offset 14728 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9952, dts 9952, duration 32 at relative offset 17249 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3430 with pts 9982, dts 9982, duration 33 at relative offset 18024 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 9984, dts 9984, duration 32 at relative offset 21461 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 10115, dts 10015, duration 33 at relative offset 22236 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10016, dts 10016, duration 32 at relative offset 25833 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10048, dts 10048, duration 32 at relative offset 26608 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 10049, dts 10049, duration 33 at relative offset 27383 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10080, dts 10080, duration 32 at relative offset 32194 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 10082, dts 10082, duration 33 at relative offset 32969 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10112, dts 10112, duration 32 at relative offset 35973 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 10216, dts 10115, duration 33 at relative offset 36748 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10144, dts 10144, duration 32 at relative offset 42683 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 10149, dts 10149, duration 33 at relative offset 43458 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10176, dts 10176, duration 32 at relative offset 45941 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 10182, dts 10182, duration 33 at relative offset 46716 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10208, dts 10208, duration 32 at relative offset 49128 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 10316, dts 10216, duration 33 at relative offset 49903 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10240, dts 10240, duration 32 at relative offset 52649 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 10249, dts 10249, duration 33 at relative offset 53424 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10272, dts 10272, duration 32 at relative offset 57387 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 10282, dts 10282, duration 33 at relative offset 58162 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10304, dts 10304, duration 32 at relative offset 61752 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 10416, dts 10316, duration 33 at relative offset 62527 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10336, dts 10336, duration 32 at relative offset 71108 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 10349, dts 10349, duration 33 at relative offset 71883 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10368, dts 10368, duration 32 at relative offset 75689 in cluster at offset 1599831. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 10382, dts 10382, duration 33 at relative offset 76464 in cluster at offset 1599831. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 10400 at offset 1681281 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10400, dts 10400, duration 32 at relative offset 10 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 10516, dts 10416, duration 33 at relative offset 785 in cluster at offset 1681281. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10432, dts 10432, duration 32 at relative offset 12130 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 10449, dts 10449, duration 33 at relative offset 12905 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10464, dts 10464, duration 32 at relative offset 15779 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 10482, dts 10482, duration 33 at relative offset 16554 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10496, dts 10496, duration 32 at relative offset 19601 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 10616, dts 10516, duration 33 at relative offset 20376 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10528, dts 10528, duration 32 at relative offset 24359 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 10549, dts 10549, duration 33 at relative offset 25134 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10560, dts 10560, duration 32 at relative offset 28484 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 10583, dts 10583, duration 33 at relative offset 29259 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10592, dts 10592, duration 32 at relative offset 34298 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 10716, dts 10616, duration 33 at relative offset 35073 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10624, dts 10624, duration 32 at relative offset 40748 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 10649, dts 10649, duration 33 at relative offset 41523 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10656, dts 10656, duration 32 at relative offset 44306 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 10683, dts 10683, duration 33 at relative offset 45081 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10688, dts 10688, duration 32 at relative offset 47551 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 10816, dts 10716, duration 33 at relative offset 48326 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10720, dts 10720, duration 32 at relative offset 52344 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 10749, dts 10749, duration 33 at relative offset 53119 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10752, dts 10752, duration 32 at relative offset 57862 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 10783, dts 10783, duration 33 at relative offset 58637 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10784, dts 10784, duration 32 at relative offset 62297 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 10916, dts 10816, duration 33 at relative offset 63072 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10816, dts 10816, duration 32 at relative offset 69427 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10848, dts 10848, duration 32 at relative offset 70202 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 10850, dts 10850, duration 33 at relative offset 70977 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10880, dts 10880, duration 32 at relative offset 74399 in cluster at offset 1681281. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 10883, dts 10883, duration 33 at relative offset 75174 in cluster at offset 1681281. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 10912 at offset 1761396 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10912, dts 10912, duration 32 at relative offset 10 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 11016, dts 10916, duration 33 at relative offset 785 in cluster at offset 1761396. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10944, dts 10944, duration 32 at relative offset 13953 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 10950, dts 10950, duration 33 at relative offset 14728 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 10976, dts 10976, duration 32 at relative offset 17196 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3339 with pts 10983, dts 10983, duration 33 at relative offset 17971 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11008, dts 11008, duration 32 at relative offset 21317 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 11116, dts 11016, duration 33 at relative offset 22092 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11040, dts 11040, duration 32 at relative offset 25769 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4795 with pts 11050, dts 11050, duration 33 at relative offset 26544 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11072, dts 11072, duration 32 at relative offset 31346 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 11083, dts 11083, duration 33 at relative offset 32121 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11104, dts 11104, duration 32 at relative offset 35755 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6036 with pts 11217, dts 11116, duration 33 at relative offset 36530 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11136, dts 11136, duration 32 at relative offset 42573 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2588 with pts 11150, dts 11150, duration 33 at relative offset 43348 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11168, dts 11168, duration 32 at relative offset 45943 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2172 with pts 11183, dts 11183, duration 33 at relative offset 46718 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11200, dts 11200, duration 32 at relative offset 48897 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2760 with pts 11317, dts 11217, duration 33 at relative offset 49672 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11232, dts 11232, duration 32 at relative offset 52439 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 11250, dts 11250, duration 33 at relative offset 53214 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11264, dts 11264, duration 32 at relative offset 57131 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3280 with pts 11283, dts 11283, duration 33 at relative offset 57906 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11296, dts 11296, duration 32 at relative offset 61193 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8578 with pts 11417, dts 11317, duration 33 at relative offset 61968 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11328, dts 11328, duration 32 at relative offset 70553 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 11350, dts 11350, duration 33 at relative offset 71328 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11360, dts 11360, duration 32 at relative offset 75291 in cluster at offset 1761396. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4999 with pts 11383, dts 11383, duration 33 at relative offset 76066 in cluster at offset 1761396. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 11392 at offset 1842475 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11392, dts 11392, duration 32 at relative offset 10 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 11517, dts 11417, duration 33 at relative offset 785 in cluster at offset 1842475. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11424, dts 11424, duration 32 at relative offset 12130 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2862 with pts 11450, dts 11450, duration 33 at relative offset 12905 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11456, dts 11456, duration 32 at relative offset 15774 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2957 with pts 11483, dts 11483, duration 33 at relative offset 16549 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11488, dts 11488, duration 32 at relative offset 19513 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 11617, dts 11517, duration 33 at relative offset 20288 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11520, dts 11520, duration 32 at relative offset 24271 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3391 with pts 11550, dts 11550, duration 33 at relative offset 25046 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11552, dts 11552, duration 32 at relative offset 28444 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5065 with pts 11584, dts 11584, duration 33 at relative offset 29219 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11584, dts 11584, duration 32 at relative offset 34291 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11616, dts 11616, duration 32 at relative offset 35066 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 11717, dts 11617, duration 33 at relative offset 35841 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11648, dts 11648, duration 32 at relative offset 41303 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 11650, dts 11650, duration 33 at relative offset 42078 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11680, dts 11680, duration 32 at relative offset 44793 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 11684, dts 11684, duration 33 at relative offset 45568 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11712, dts 11712, duration 32 at relative offset 48071 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 11817, dts 11717, duration 33 at relative offset 48846 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11744, dts 11744, duration 32 at relative offset 52863 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 11750, dts 11750, duration 33 at relative offset 53638 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11776, dts 11776, duration 32 at relative offset 58370 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 11784, dts 11784, duration 33 at relative offset 59145 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11808, dts 11808, duration 32 at relative offset 62286 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 11917, dts 11817, duration 33 at relative offset 63061 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11840, dts 11840, duration 32 at relative offset 69424 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 11851, dts 11851, duration 33 at relative offset 70199 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11872, dts 11872, duration 32 at relative offset 73615 in cluster at offset 1842475. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4834 with pts 11884, dts 11884, duration 33 at relative offset 74390 in cluster at offset 1842475. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 11904 at offset 1921713 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11904, dts 11904, duration 32 at relative offset 10 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 12017, dts 11917, duration 33 at relative offset 785 in cluster at offset 1921713. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11936, dts 11936, duration 32 at relative offset 13953 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2514 with pts 11951, dts 11951, duration 33 at relative offset 14728 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 11968, dts 11968, duration 32 at relative offset 17249 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3430 with pts 11984, dts 11984, duration 33 at relative offset 18024 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12000, dts 12000, duration 32 at relative offset 21461 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 12117, dts 12017, duration 33 at relative offset 22236 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12032, dts 12032, duration 32 at relative offset 25833 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 12051, dts 12051, duration 33 at relative offset 26608 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12064, dts 12064, duration 32 at relative offset 31419 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 12084, dts 12084, duration 33 at relative offset 32194 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12096, dts 12096, duration 32 at relative offset 35198 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 12218, dts 12117, duration 33 at relative offset 35973 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12128, dts 12128, duration 32 at relative offset 41908 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 12151, dts 12151, duration 33 at relative offset 42683 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12160, dts 12160, duration 32 at relative offset 45166 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 12184, dts 12184, duration 33 at relative offset 45941 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12192, dts 12192, duration 32 at relative offset 48353 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 12318, dts 12218, duration 33 at relative offset 49128 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12224, dts 12224, duration 32 at relative offset 51874 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 12251, dts 12251, duration 33 at relative offset 52649 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12256, dts 12256, duration 32 at relative offset 56612 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 12284, dts 12284, duration 33 at relative offset 57387 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12288, dts 12288, duration 32 at relative offset 60977 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 12418, dts 12318, duration 33 at relative offset 61752 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12320, dts 12320, duration 32 at relative offset 70333 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 12351, dts 12351, duration 33 at relative offset 71108 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12352, dts 12352, duration 32 at relative offset 74914 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 12384, dts 12384, duration 33 at relative offset 75689 in cluster at offset 1921713. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12384, dts 12384, duration 32 at relative offset 80668 in cluster at offset 1921713. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 12416 at offset 2003163 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12416, dts 12416, duration 32 at relative offset 10 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 12518, dts 12418, duration 33 at relative offset 785 in cluster at offset 2003163. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12448, dts 12448, duration 32 at relative offset 12130 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 12451, dts 12451, duration 33 at relative offset 12905 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12480, dts 12480, duration 32 at relative offset 15779 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 12484, dts 12484, duration 33 at relative offset 16554 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12512, dts 12512, duration 32 at relative offset 19601 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 12618, dts 12518, duration 33 at relative offset 20376 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12544, dts 12544, duration 32 at relative offset 24359 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 12551, dts 12551, duration 33 at relative offset 25134 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12576, dts 12576, duration 32 at relative offset 28484 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 12585, dts 12585, duration 33 at relative offset 29259 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12608, dts 12608, duration 32 at relative offset 34298 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 12718, dts 12618, duration 33 at relative offset 35073 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12640, dts 12640, duration 32 at relative offset 40748 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 12651, dts 12651, duration 33 at relative offset 41523 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12672, dts 12672, duration 32 at relative offset 44306 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 12685, dts 12685, duration 33 at relative offset 45081 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12704, dts 12704, duration 32 at relative offset 47551 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 12818, dts 12718, duration 33 at relative offset 48326 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12736, dts 12736, duration 32 at relative offset 52344 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 12751, dts 12751, duration 33 at relative offset 53119 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12768, dts 12768, duration 32 at relative offset 57862 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 12785, dts 12785, duration 33 at relative offset 58637 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12800, dts 12800, duration 32 at relative offset 62297 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 12918, dts 12818, duration 33 at relative offset 63072 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12832, dts 12832, duration 32 at relative offset 69427 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 12852, dts 12852, duration 33 at relative offset 70202 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12864, dts 12864, duration 32 at relative offset 73624 in cluster at offset 2003163. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 12885, dts 12885, duration 33 at relative offset 74399 in cluster at offset 2003163. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 12896 at offset 2082503 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12896, dts 12896, duration 32 at relative offset 10 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 13018, dts 12918, duration 33 at relative offset 785 in cluster at offset 2082503. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12928, dts 12928, duration 32 at relative offset 13953 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2461 with pts 12952, dts 12952, duration 33 at relative offset 14728 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12960, dts 12960, duration 32 at relative offset 17196 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3339 with pts 12985, dts 12985, duration 33 at relative offset 17971 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 12992, dts 12992, duration 32 at relative offset 21317 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3670 with pts 13118, dts 13018, duration 33 at relative offset 22092 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13024, dts 13024, duration 32 at relative offset 25769 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4795 with pts 13052, dts 13052, duration 33 at relative offset 26544 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13056, dts 13056, duration 32 at relative offset 31346 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3627 with pts 13085, dts 13085, duration 33 at relative offset 32121 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13088, dts 13088, duration 32 at relative offset 35755 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6036 with pts 13219, dts 13118, duration 33 at relative offset 36530 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13120, dts 13120, duration 32 at relative offset 42573 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2588 with pts 13152, dts 13152, duration 33 at relative offset 43348 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13152, dts 13152, duration 32 at relative offset 45943 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13184, dts 13184, duration 32 at relative offset 46718 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2172 with pts 13185, dts 13185, duration 33 at relative offset 47493 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13216, dts 13216, duration 32 at relative offset 49672 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2760 with pts 13319, dts 13219, duration 33 at relative offset 50447 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13248, dts 13248, duration 32 at relative offset 53214 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3910 with pts 13252, dts 13252, duration 33 at relative offset 53989 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13280, dts 13280, duration 32 at relative offset 57906 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3280 with pts 13285, dts 13285, duration 33 at relative offset 58681 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13312, dts 13312, duration 32 at relative offset 61968 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8578 with pts 13419, dts 13319, duration 33 at relative offset 62743 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13344, dts 13344, duration 32 at relative offset 71328 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 13352, dts 13352, duration 33 at relative offset 72103 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13376, dts 13376, duration 32 at relative offset 76066 in cluster at offset 2082503. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4999 with pts 13385, dts 13385, duration 33 at relative offset 76841 in cluster at offset 2082503. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 13408 at offset 2164357 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13408, dts 13408, duration 32 at relative offset 10 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 13519, dts 13419, duration 33 at relative offset 785 in cluster at offset 2164357. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13440, dts 13440, duration 32 at relative offset 12130 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2862 with pts 13452, dts 13452, duration 33 at relative offset 12905 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13472, dts 13472, duration 32 at relative offset 15774 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2957 with pts 13485, dts 13485, duration 33 at relative offset 16549 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13504, dts 13504, duration 32 at relative offset 19513 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 13619, dts 13519, duration 33 at relative offset 20288 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13536, dts 13536, duration 32 at relative offset 24271 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3391 with pts 13552, dts 13552, duration 33 at relative offset 25046 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13568, dts 13568, duration 32 at relative offset 28444 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5065 with pts 13586, dts 13586, duration 33 at relative offset 29219 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13600, dts 13600, duration 32 at relative offset 34291 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5455 with pts 13719, dts 13619, duration 33 at relative offset 35066 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13632, dts 13632, duration 32 at relative offset 40528 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2708 with pts 13652, dts 13652, duration 33 at relative offset 41303 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13664, dts 13664, duration 32 at relative offset 44018 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2496 with pts 13686, dts 13686, duration 33 at relative offset 44793 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13696, dts 13696, duration 32 at relative offset 47296 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4010 with pts 13819, dts 13719, duration 33 at relative offset 48071 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13728, dts 13728, duration 32 at relative offset 52088 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4725 with pts 13752, dts 13752, duration 33 at relative offset 52863 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13760, dts 13760, duration 32 at relative offset 57595 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3134 with pts 13786, dts 13786, duration 33 at relative offset 58370 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13792, dts 13792, duration 32 at relative offset 61511 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6356 with pts 13919, dts 13819, duration 33 at relative offset 62286 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13824, dts 13824, duration 32 at relative offset 68649 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3409 with pts 13853, dts 13853, duration 33 at relative offset 69424 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13856, dts 13856, duration 32 at relative offset 72840 in cluster at offset 2164357. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4834 with pts 13886, dts 13886, duration 33 at relative offset 73615 in cluster at offset 2164357. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 13888 at offset 2242820 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13888, dts 13888, duration 32 at relative offset 10 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 13161 with pts 14019, dts 13919, duration 33 at relative offset 785 in cluster at offset 2242820. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13920, dts 13920, duration 32 at relative offset 13953 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13952, dts 13952, duration 32 at relative offset 14728 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2514 with pts 13953, dts 13953, duration 33 at relative offset 15503 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 13984, dts 13984, duration 32 at relative offset 18024 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3430 with pts 13986, dts 13986, duration 33 at relative offset 18799 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14016, dts 14016, duration 32 at relative offset 22236 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3590 with pts 14119, dts 14019, duration 33 at relative offset 23011 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14048, dts 14048, duration 32 at relative offset 26608 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4804 with pts 14053, dts 14053, duration 33 at relative offset 27383 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14080, dts 14080, duration 32 at relative offset 32194 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2997 with pts 14086, dts 14086, duration 33 at relative offset 32969 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14112, dts 14112, duration 32 at relative offset 35973 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5928 with pts 14220, dts 14119, duration 33 at relative offset 36748 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14144, dts 14144, duration 32 at relative offset 42683 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2476 with pts 14153, dts 14153, duration 33 at relative offset 43458 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14176, dts 14176, duration 32 at relative offset 45941 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2405 with pts 14186, dts 14186, duration 33 at relative offset 46716 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14208, dts 14208, duration 32 at relative offset 49128 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2739 with pts 14320, dts 14220, duration 33 at relative offset 49903 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14240, dts 14240, duration 32 at relative offset 52649 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3956 with pts 14253, dts 14253, duration 33 at relative offset 53424 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14272, dts 14272, duration 32 at relative offset 57387 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3583 with pts 14286, dts 14286, duration 33 at relative offset 58162 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14304, dts 14304, duration 32 at relative offset 61752 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 8574 with pts 14420, dts 14320, duration 33 at relative offset 62527 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14336, dts 14336, duration 32 at relative offset 71108 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3799 with pts 14353, dts 14353, duration 33 at relative offset 71883 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14368, dts 14368, duration 32 at relative offset 75689 in cluster at offset 2242820. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4972 with pts 14386, dts 14386, duration 33 at relative offset 76464 in cluster at offset 2242820. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 14400 at offset 2324270 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14400, dts 14400, duration 32 at relative offset 10 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11338 with pts 14520, dts 14420, duration 33 at relative offset 785 in cluster at offset 2324270. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14432, dts 14432, duration 32 at relative offset 12130 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2867 with pts 14453, dts 14453, duration 33 at relative offset 12905 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14464, dts 14464, duration 32 at relative offset 15779 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3040 with pts 14486, dts 14486, duration 33 at relative offset 16554 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14496, dts 14496, duration 32 at relative offset 19601 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3976 with pts 14620, dts 14520, duration 33 at relative offset 20376 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14528, dts 14528, duration 32 at relative offset 24359 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3343 with pts 14553, dts 14553, duration 33 at relative offset 25134 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14560, dts 14560, duration 32 at relative offset 28484 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5032 with pts 14587, dts 14587, duration 33 at relative offset 29259 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14592, dts 14592, duration 32 at relative offset 34298 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 5668 with pts 14720, dts 14620, duration 33 at relative offset 35073 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14624, dts 14624, duration 32 at relative offset 40748 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2776 with pts 14653, dts 14653, duration 33 at relative offset 41523 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14656, dts 14656, duration 32 at relative offset 44306 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 2463 with pts 14687, dts 14687, duration 33 at relative offset 45081 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14688, dts 14688, duration 32 at relative offset 47551 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4011 with pts 14820, dts 14720, duration 33 at relative offset 48326 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14720, dts 14720, duration 32 at relative offset 52344 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14752, dts 14752, duration 32 at relative offset 53119 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4736 with pts 14753, dts 14753, duration 33 at relative offset 53894 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14784, dts 14784, duration 32 at relative offset 58637 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3653 with pts 14787, dts 14787, duration 33 at relative offset 59412 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14816, dts 14816, duration 32 at relative offset 63072 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 6348 with pts 14920, dts 14820, duration 33 at relative offset 63847 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14848, dts 14848, duration 32 at relative offset 70202 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 3415 with pts 14854, dts 14854, duration 33 at relative offset 70977 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14880, dts 14880, duration 32 at relative offset 74399 in cluster at offset 2324270. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 4927 with pts 14887, dts 14887, duration 33 at relative offset 75174 in cluster at offset 2324270. TrackNumber 1, keyframe 0
+[in#0/mpegts @ 0x15aa7c610] [verbose] EOF while reading input
+[in#0/mpegts @ 0x15aa7c610] [verbose] Terminating thread with return code 0 (success)
+[matroska @ 0x15af4d7f0] [debug] Starting new cluster with timestamp 14912 at offset 2404385 bytes
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14912, dts 14912, duration 32 at relative offset 10 in cluster at offset 2404385. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 11486 with pts 14987, dts 14920, duration 33 at relative offset 785 in cluster at offset 2404385. TrackNumber 1, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14944, dts 14944, duration 32 at relative offset 12278 in cluster at offset 2404385. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 1981 with pts 14954, dts 14954, duration 33 at relative offset 13053 in cluster at offset 2404385. TrackNumber 1, keyframe 0
+[out#0/matroska @ 0x15af4d730] [verbose] All streams finished
+[out#0/matroska @ 0x15af4d730] [verbose] Terminating thread with return code 0 (success)
+[matroska @ 0x15af4d7f0] [debug] Writing block of size 768 with pts 14976, dts 14976, duration 32 at relative offset 15041 in cluster at offset 2404385. TrackNumber 2, keyframe 1
+[matroska @ 0x15af4d7f0] [debug] end duration = 15020
+[matroska @ 0x15af4d7f0] [debug] stream 0 end duration = 15020
+[matroska @ 0x15af4d7f0] [debug] stream 1 end duration = 15008
+[AVIOContext @ 0x15af4f570] [verbose] Statistics: 2421487 bytes written, 2 seeks, 11 writeouts
+[out#0/matroska @ 0x15af4d730] [verbose] Output file #0 (./bt601-525_480_telecined_hard.mkv):
+[out#0/matroska @ 0x15af4d730] [verbose]   Output stream #0:0 (video): 450 packets muxed (2052362 bytes); 
+[out#0/matroska @ 0x15af4d730] [verbose]   Output stream #0:1 (audio): 469 packets muxed (360192 bytes); 
+[out#0/matroska @ 0x15af4d730] [verbose]   Total: 919 packets (2412554 bytes) muxed
+[out#0/matroska @ 0x15af4d730] [info] video:2004KiB audio:352KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.343288%
+[info] frame=  450 fps=0.0 q=-1.0 Lsize=    2364KiB time=00:00:14.98 bitrate=1292.2kbits/s speed=1.27e+03x    
+[in#0/mpegts @ 0x15aa7c610] [verbose] Input file #0 (bt601-525_480_telecined_hard.ts):
+[in#0/mpegts @ 0x15aa7c610] [verbose]   Input stream #0:0 (video): 450 packets read (2052362 bytes); 
+[in#0/mpegts @ 0x15aa7c610] [verbose]   Input stream #0:1 (audio): 469 packets read (360192 bytes); 
+[in#0/mpegts @ 0x15aa7c610] [verbose]   Total: 919 packets (2412554 bytes) demuxed
+[AVIOContext @ 0x159710a70] [verbose] Statistics: 3753632 bytes read, 2 seeks

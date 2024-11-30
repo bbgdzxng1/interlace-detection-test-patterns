@@ -1,0 +1,40 @@
+ffprobe started on 2024-11-29 at 20:51:57
+Report written to "./logs/ffprobe-20241129-205157.log"
+Log level: 48
+Command line:
+ffprobe -hide_banner -loglevel error -f lavfi "movie=filename=bt601-525_480_interlaced_tff.ts" -show_entries "frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict" -print_format compact -o ./logs/bt601-525_480_interlaced_tff.ffprobe.compact.txt
+Adding 'key_frame' to the entries to show in section 'frame'
+Adding 'pict_type' to the entries to show in section 'frame'
+Adding 'interlaced_frame' to the entries to show in section 'frame'
+Adding 'top_field_first' to the entries to show in section 'frame'
+Adding 'repeat_pict' to the entries to show in section 'frame'
+'frame' matches section with unique name 'frame'
+[file @ 0x15d1905f0] Setting default whitelist 'file,crypto,data'
+[AVFilterGraph @ 0x15d111370] Setting 'filename' to value 'bt601-525_480_interlaced_tff.ts'
+detected 8 logical cores
+[AVFormatContext @ 0x15d4da950] Opening 'bt601-525_480_interlaced_tff.ts' for reading
+[file @ 0x15d4daca0] Setting default whitelist 'file,crypto,data'
+[mpegts @ 0x15d4da950] Format mpegts probed with size=2048 and score=50
+[mpegts @ 0x15d4da950] stream=0 stream_type=2 pid=100 prog_reg_desc=
+[mpegts @ 0x15d4da950] stream=1 stream_type=81 pid=101 prog_reg_desc=
+[mpegts @ 0x15d4da950] Before avformat_find_stream_info() pos: 0 bytes read:32768 seeks:0 nb_streams:2
+Transform tree:
+    mdct_inv_float_c - type: mdct_float, len: 128, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+        fft_sr_ns_float_neon - type: fft_float, len: 64, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+Transform tree:
+    mdct_inv_float_c - type: mdct_float, len: 256, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+        fft_sr_ns_float_neon - type: fft_float, len: 128, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+[mpegts @ 0x15d4da950] All programs have pmt, headers found
+[mpeg2video @ 0x15d4db740] Format yuv420p chosen by get_format().
+[mpegts @ 0x15d4da950] All info found
+[mpegts @ 0x15d4da950] After avformat_find_stream_info() pos: 0 bytes read:512144 seeks:2 frames:41
+[Parsed_movie_0 @ 0x15d1114c0] seek_point:0 format_name:(null) file_name:bt601-525_480_interlaced_tff.ts stream_index:-1
+[AVFilterGraph @ 0x15d111370] query_formats: 2 queried, 3 merged, 0 already done, 0 delayed
+[mpeg2video @ 0x15d4dc150] Format yuv420p chosen by get_format().
+[lavfi @ 0x15d111100] All info found
+Input #0, lavfi, from 'movie=filename=bt601-525_480_interlaced_tff.ts':
+  Duration: N/A, start: 1.433367, bitrate: N/A
+  Stream #0:0, 1, 1/90000: Video: wrapped_avframe, yuv420p, 720x480 [SAR 1:1 DAR 3:2], 29.97 fps, 29.97 tbr, 90k tbn
+Processing read interval id:0 start:N/A end:N/A
+[AVIOContext @ 0x15d4dae00] Statistics: 5619352 bytes read, 2 seeks
+[AVIOContext @ 0x15d2d45f0] Statistics: 36900 bytes written, 0 seeks, 1 writeouts

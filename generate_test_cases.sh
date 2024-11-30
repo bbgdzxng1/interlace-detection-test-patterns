@@ -16,6 +16,12 @@ duration='00:00:15.000'
 loglevel='level+info'
 quality=7 # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to please Github.
 
+export logdir="./logs"
+mkdir -p "${logdir}"
+rm -rf "${logdir}"/*.log "${logdir}"/*.json "${logdir}"/*.txt
+export FFREPORT=file="${logdir}/%p-%t.log:level=48"
+printf '%s | %s: %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'INFO' 'Starting idet test patterns script.' | tee -a "${logdir}/log.txt"
+
 #######################################
 ### _check_dependencies
 #######################################
@@ -31,14 +37,14 @@ function _check_dependencies
   )
   for dependency in "${required_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
-      printf '%s | %s %s %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'ERROR: Required Dependency' "${dependency}" 'not found.  Exiting.'
+      printf '%s | %s: %s %s %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'ERROR' 'Required Dependency' "${dependency}" 'not found.  Exiting.' | tee -a "${logdir}/log.txt"
       exit 1
     }
   done
 
   local -a optional_dependencies
   optional_dependencies=(
-    foo # Dummy dependency
+    foo-ignore-this # Dummy dependency
     # MP4Box
     # mkvtoolnix
     # ffplay
@@ -50,7 +56,7 @@ function _check_dependencies
   )
   for dependency in "${optional_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
-      printf '%s | %s %s %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'ERROR: Optional Dependency' "${dependency}" 'not found.'
+      printf '%s | %s: %s %s %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'WARNING' 'Optional Dependency' "${dependency}" 'not found.' | tee -a "${logdir}/log.txt"
     }
   done
   return 0
@@ -229,17 +235,17 @@ function _remux()
 function _analyse()
 {
   local infile="$1"
-  mediainfo --output=JSON --LogFile="${infile%.*}.mediainfo.json" "${infile}"
-  mediainfo "${infile}" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order" > "${infile%.*}.mediainfo.txt"
+  mediainfo --output=JSON --LogFile="${logdir}/${infile%.*}.mediainfo.json" "${infile}"
+  mediainfo "${infile}" | grep -e "Frame\ rate" -e "Original\ frame\ rate" -e "Scan\ type" -e "Scan\ order" > "${logdir}/${infile%.*}.mediainfo.txt"
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${infile}" \
     -show_entries 'frame' \
-    -print_format 'json' -o "${infile%.*}.ffprobe.json"
+    -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.json"
   # Would be better to use jq on the json
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${infile}" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict' \
-    -print_format 'compact' | head -n 30 > "${infile%.*}.ffprobe.compact.txt"
+    -print_format 'compact' -o "${logdir}/${infile%.*}.ffprobe.compact.txt"
   # avmediainfo "${infile}" > "${infile%.*}.avmediainfo.txt" # Error analysis is not supported for format public.mpeg-2-transport-stream.
   return 0
 }
@@ -253,12 +259,12 @@ function _analyse_idet()
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${infile},extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame' \
-    -print_format 'json' -o "${infile%.*}.ffprobe.idet.json"
+    -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.idet.json"
   # Would be better to use jq on the json
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${infile},extractplanes=planes='y',idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.single.current_frame' \
-    -print_format 'compact' | head -n 30 > "${infile%.*}.ffprobe.idet.compact.txt"
+    -print_format 'compact' -o "${logdir}/${infile%.*}.ffprobe.idet.compact.txt"
   return 0
 }
 
@@ -271,12 +277,12 @@ function _analyse_repeatfields_idet()
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${infile}, repeatfields, extractplanes=planes='y', idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame' \
-    -print_format 'json' -o "${infile%.*}.ffprobe.repeatfields.idet.json"
+    -print_format 'json' -o "${logdir}/${infile%.*}.ffprobe.repeatfields.idet.json"
   # Would be better to use jq on the json
   ffprobe -hide_banner -loglevel 'error' \
     -f 'lavfi' "movie=filename=${infile}, repeatfields, extractplanes=planes='y', idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" \
     -show_entries 'frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.single.current_frame' \
-    -print_format 'compact' | head -n 30 > "${infile%.*}.ffprobe.repeatfields.idet.compact.txt"
+    -print_format 'compact' -o "${logdir}/${infile%.*}.ffprobe.repeatfields.idet.compact.txt"
   return 0
 }
 

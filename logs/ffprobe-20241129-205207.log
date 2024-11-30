@@ -1,0 +1,614 @@
+ffprobe started on 2024-11-29 at 20:52:07
+Report written to "./logs/ffprobe-20241129-205207.log"
+Log level: 48
+Command line:
+ffprobe -hide_banner -loglevel error -f lavfi "movie=filename=bt601-525_480_telecined_soft.ts, repeatfields, extractplanes=planes='y', idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3" -show_entries "frame=key_frame,pict_type,interlaced_frame,top_field_first,repeat_pict : frame_tags=lavfi.idet.single.current_frame" -print_format compact -o ./logs/bt601-525_480_telecined_soft.ffprobe.repeatfields.idet.compact.txt
+Adding 'key_frame' to the entries to show in section 'frame'
+Adding 'pict_type' to the entries to show in section 'frame'
+Adding 'interlaced_frame' to the entries to show in section 'frame'
+Adding 'top_field_first' to the entries to show in section 'frame'
+Adding 'repeat_pict' to the entries to show in section 'frame'
+'frame' matches section with unique name 'frame'
+Adding 'lavfi.idet.single.current_frame' to the entries to show in section 'frame_tags'
+'frame_tags' matches section with unique name 'frame_tags'
+[file @ 0x150994620] Setting default whitelist 'file,crypto,data'
+[AVFilterGraph @ 0x14877bda0] Setting 'filename' to value 'bt601-525_480_telecined_soft.ts'
+[AVFilterGraph @ 0x14877bda0] Setting 'planes' to value 'y'
+[AVFilterGraph @ 0x14877bda0] Setting 'intl_thres' to value '1.04'
+[AVFilterGraph @ 0x14877bda0] Setting 'prog_thres' to value '1.5'
+[AVFilterGraph @ 0x14877bda0] Setting 'rep_thres' to value '3'
+detected 8 logical cores
+[AVFormatContext @ 0x14877f9d0] Opening 'bt601-525_480_telecined_soft.ts' for reading
+[file @ 0x14877fcb0] Setting default whitelist 'file,crypto,data'
+[mpegts @ 0x14877f9d0] Format mpegts probed with size=2048 and score=50
+[mpegts @ 0x14877f9d0] stream=0 stream_type=2 pid=100 prog_reg_desc=
+[mpegts @ 0x14877f9d0] stream=1 stream_type=81 pid=101 prog_reg_desc=
+[mpegts @ 0x14877f9d0] Before avformat_find_stream_info() pos: 0 bytes read:32768 seeks:0 nb_streams:2
+Transform tree:
+    mdct_inv_float_c - type: mdct_float, len: 128, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+        fft_sr_ns_float_neon - type: fft_float, len: 64, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+Transform tree:
+    mdct_inv_float_c - type: mdct_float, len: 256, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+        fft_sr_ns_float_neon - type: fft_float, len: 128, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+[mpegts @ 0x14877f9d0] All programs have pmt, headers found
+[mpeg2video @ 0x148780540] Format yuv420p chosen by get_format().
+[mpegts @ 0x14877f9d0] All info found
+[mpegts @ 0x14877f9d0] rfps: 23.583333 0.016984
+[mpegts @ 0x14877f9d0] rfps: 23.666667 0.014005
+[mpegts @ 0x14877f9d0] rfps: 23.750000 0.011833
+[mpegts @ 0x14877f9d0] rfps: 23.833333 0.010467
+[mpegts @ 0x14877f9d0] rfps: 23.916667 0.009907
+[mpegts @ 0x14877f9d0] rfps: 23.916667 0.009907
+[mpegts @ 0x14877f9d0] rfps: 24.000000 0.010153
+[mpegts @ 0x14877f9d0] rfps: 24.083333 0.011205
+[mpegts @ 0x14877f9d0] rfps: 24.166667 0.013063
+[mpegts @ 0x14877f9d0] rfps: 24.166667 0.013063
+[mpegts @ 0x14877f9d0] rfps: 24.250000 0.015727
+[mpegts @ 0x14877f9d0] rfps: 24.333333 0.019197
+[mpegts @ 0x14877f9d0] rfps: 36.000000 0.009895
+[mpegts @ 0x14877f9d0] rfps: 36.000000 0.009895
+[mpegts @ 0x14877f9d0] rfps: 60.000000 0.000209
+[mpegts @ 0x14877f9d0] rfps: 60.000000 0.000209
+[mpegts @ 0x14877f9d0] rfps: 120.000000 0.000834
+[mpegts @ 0x14877f9d0] rfps: 120.000000 0.000834
+[mpegts @ 0x14877f9d0] rfps: 240.000000 0.003336
+[mpegts @ 0x14877f9d0] rfps: 240.000000 0.003336
+[mpegts @ 0x14877f9d0] rfps: 23.976024 0.010000
+[mpegts @ 0x14877f9d0] rfps: 23.976024 0.010000
+[mpegts @ 0x14877f9d0] rfps: 59.940060 0.000000
+[mpegts @ 0x14877f9d0] rfps: 59.940060 0.000000
+[mpegts @ 0x14877f9d0] After avformat_find_stream_info() pos: 0 bytes read:381072 seeks:2 frames:47
+[Parsed_movie_0 @ 0x14877f450] seek_point:0 format_name:(null) file_name:bt601-525_480_telecined_soft.ts stream_index:-1
+[AVFilterGraph @ 0x14877bda0] query_formats: 5 queried, 12 merged, 0 already done, 0 delayed
+[mpeg2video @ 0x148781bf0] Format yuv420p chosen by get_format().
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[lavfi @ 0x14877e880] All info found
+Input #0, lavfi, from 'movie=filename=bt601-525_480_telecined_soft.ts, repeatfields, extractplanes=planes='y', idet=intl_thres=1.04:prog_thres=1.5:rep_thres=3':
+  Duration: N/A, start: 1.450056, bitrate: N/A
+  Stream #0:0, 1, 1/90000: Video: wrapped_avframe, gray, 720x480 [SAR 1:1 DAR 3:2], 59.94 fps, 59.94 tbr, 90k tbn
+Processing read interval id:0 start:N/A end:N/A
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[Parsed_repeatfields_1 @ 0x14877f580] Copying data in avfilter.
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:         top, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:      bottom, Single frame:         tff, Multi frame:         tff
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Field:     neither, Single frame: progressive, Multi frame:         tff
+[AVIOContext @ 0x14877e170] Statistics: 2419932 bytes read, 2 seeks
+[Parsed_idet_3 @ 0x14877f7b0] Repeated Fields: Neither:   270 Top:    90 Bottom:    90
+[Parsed_idet_3 @ 0x14877f7b0] Single frame detection: TFF:   360 BFF:     0 Progressive:    90 Undetermined:     0
+[Parsed_idet_3 @ 0x14877f7b0] Multi frame detection: TFF:   450 BFF:     0 Progressive:     0 Undetermined:     0
+[AVIOContext @ 0x148780e40] Statistics: 55620 bytes written, 0 seeks, 1 writeouts

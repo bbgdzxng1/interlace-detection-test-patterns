@@ -1,0 +1,119 @@
+[info] ffmpeg started on 2024-11-29 at 20:51:53
+Report written to "./logs/ffmpeg-20241129-205153.log"
+Log level: 48
+Command line:
+ffmpeg -hide_banner -loglevel level+info -sws_flags +accurate_rnd+full_chroma_int -bitexact -f mpegvideo -framerate ntsc-film -fflags +genpts -i ./bt601-525_480_pulldown.m2v -f ac3 -fflags +genpts -i ./bt601-525_480_audio.ac3 -map 0:v:0 -codec:v copy -map 1:a:0 -codec:a copy -metadata:s:a:0 "language=eng" -f mpegts ./bt601-525_480_telecined_soft.ts -y
+[debug] Splitting the commandline.
+[debug] Reading option '-hide_banner' ... matched as option 'hide_banner' (do not show program banner) with argument '1'.
+[debug] Reading option '-loglevel' ... matched as option 'loglevel' (set logging level) with argument 'level+info'.
+[debug] Reading option '-sws_flags' ... matched as AVOption 'sws_flags' with argument '+accurate_rnd+full_chroma_int'.
+[debug] Reading option '-bitexact' ... matched as option 'bitexact' (bitexact mode) with argument '1'.
+[debug] Reading option '-f' ... matched as option 'f' (force container format (auto-detected otherwise)) with argument 'mpegvideo'.
+[debug] Reading option '-framerate' ... matched as AVOption 'framerate' with argument 'ntsc-film'.
+[debug] Reading option '-fflags' ... matched as AVOption 'fflags' with argument '+genpts'.
+[debug] Reading option '-i' ... matched as input url with argument './bt601-525_480_pulldown.m2v'.
+[debug] Reading option '-f' ... matched as option 'f' (force container format (auto-detected otherwise)) with argument 'ac3'.
+[debug] Reading option '-fflags' ... matched as AVOption 'fflags' with argument '+genpts'.
+[debug] Reading option '-i' ... matched as input url with argument './bt601-525_480_audio.ac3'.
+[debug] Reading option '-map' ... matched as option 'map' (set input stream mapping) with argument '0:v:0'.
+[debug] Reading option '-codec:v' ... matched as option 'codec' (alias for -c (select encoder/decoder)) with argument 'copy'.
+[debug] Reading option '-map' ... matched as option 'map' (set input stream mapping) with argument '1:a:0'.
+[debug] Reading option '-codec:a' ... matched as option 'codec' (alias for -c (select encoder/decoder)) with argument 'copy'.
+[debug] Reading option '-metadata:s:a:0' ... matched as option 'metadata' (add metadata) with argument 'language=eng'.
+[debug] Reading option '-f' ... matched as option 'f' (force container format (auto-detected otherwise)) with argument 'mpegts'.
+[debug] Reading option './bt601-525_480_telecined_soft.ts' ... matched as output url.
+[debug] Reading option '-y' ... matched as option 'y' (overwrite output files) with argument '1'.
+[debug] Finished splitting the commandline.
+[debug] Parsing a group of options: global .
+[debug] Applying option hide_banner (do not show program banner) with argument 1.
+[debug] Applying option loglevel (set logging level) with argument level+info.
+[debug] Applying option y (overwrite output files) with argument 1.
+[debug] Successfully parsed a group of options.
+[debug] Parsing a group of options: input url ./bt601-525_480_pulldown.m2v.
+[debug] Applying option bitexact (bitexact mode) with argument 1.
+[debug] Applying option f (force container format (auto-detected otherwise)) with argument mpegvideo.
+[debug] Successfully parsed a group of options.
+[debug] Opening an input file: ./bt601-525_480_pulldown.m2v.
+[mpegvideo @ 0x14a0d2c10] [debug] Opening './bt601-525_480_pulldown.m2v' for reading
+[file @ 0x14a0d3150] [debug] Setting default whitelist 'file,crypto,data'
+[mpegvideo @ 0x14a0d2c10] [debug] Before avformat_find_stream_info() pos: 0 bytes read:32768 seeks:0 nb_streams:1
+[mpeg1video @ 0x14a0d3a20] [debug] Format yuv420p chosen by get_format().
+[mpegvideo @ 0x14a0d2c10] [debug] All info found
+[mpegvideo @ 0x14a0d2c10] [debug] After avformat_find_stream_info() pos: 223232 bytes read:229376 seeks:0 frames:50
+[info] Input #0, mpegvideo, from './bt601-525_480_pulldown.m2v':
+[info]   Duration: N/A, bitrate: N/A
+[info]   Stream #0:0, 50, 1/1200000: Video: mpeg2video (mpeg1video) (Main), yuv420p(tv, smpte170m, progressive), 720x480 [SAR 32:27 DAR 16:9], 23.98 fps, 59.94 tbr, 1200k tbn
+[info]       Side data:
+[info]         cpb: bitrate max/min/avg: 8000000/0/0 buffer size: 1835008 vbv_delay: N/A
+[debug] Successfully opened the file.
+[debug] Parsing a group of options: input url ./bt601-525_480_audio.ac3.
+[debug] Applying option f (force container format (auto-detected otherwise)) with argument ac3.
+[debug] Successfully parsed a group of options.
+[debug] Opening an input file: ./bt601-525_480_audio.ac3.
+[ac3 @ 0x14a5af220] [debug] Opening './bt601-525_480_audio.ac3' for reading
+[file @ 0x14a5af5b0] [debug] Setting default whitelist 'file,crypto,data'
+[ac3 @ 0x14a5af220] [debug] Before avformat_find_stream_info() pos: 0 bytes read:32768 seeks:0 nb_streams:1
+[debug] Transform tree:
+[debug]     mdct_inv_float_c - type: mdct_float, len: 128, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+[debug]         fft_sr_ns_float_neon - type: fft_float, len: 64, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+[debug] Transform tree:
+[debug]     mdct_inv_float_c - type: mdct_float, len: 256, factors[2]: [2, any], flags: [unaligned, out_of_place, inv_only]
+[debug]         fft_sr_ns_float_neon - type: fft_float, len: 128, factor: 2, flags: [aligned, inplace, out_of_place, preshuf]
+[ac3 @ 0x14a5af220] [debug] All info found
+[ac3 @ 0x14a5af220] [warning] Estimating duration from bitrate, this may be inaccurate
+[ac3 @ 0x14a5af220] [debug] After avformat_find_stream_info() pos: 38912 bytes read:65536 seeks:0 frames:50
+[info] Input #1, ac3, from './bt601-525_480_audio.ac3':
+[info]   Duration: 00:00:15.01, start: 0.000000, bitrate: 192 kb/s
+[info]   Stream #1:0, 50, 1/90000: Audio: ac3, 48000 Hz, stereo, fltp, 192 kb/s
+[debug] Successfully opened the file.
+[debug] Parsing a group of options: output url ./bt601-525_480_telecined_soft.ts.
+[debug] Applying option map (set input stream mapping) with argument 0:v:0.
+[debug] Applying option codec:v (alias for -c (select encoder/decoder)) with argument copy.
+[debug] Applying option map (set input stream mapping) with argument 1:a:0.
+[debug] Applying option codec:a (alias for -c (select encoder/decoder)) with argument copy.
+[debug] Applying option metadata:s:a:0 (add metadata) with argument language=eng.
+[debug] Applying option f (force container format (auto-detected otherwise)) with argument mpegts.
+[debug] Successfully parsed a group of options.
+[debug] Opening an output file: ./bt601-525_480_telecined_soft.ts.
+[out#0/mpegts @ 0x14c2f2b80] [verbose] Adding streams from explicit maps...
+[vost#0:0/copy @ 0x14c2e7c70] [verbose] Created video stream from input stream 0:0
+[aost#0:1/copy @ 0x14c2e86b0] [verbose] Created audio stream from input stream 1:0
+[file @ 0x14c2e8110] [debug] Setting default whitelist 'file,crypto,data'
+[debug] Successfully opened the file.
+[info] Stream mapping:
+[info]   Stream #0:0 -> #0:0 (copy)
+[info]   Stream #1:0 -> #0:1 (copy)
+[mpegts @ 0x14c2e79b0] [verbose] service 1 using PCR in pid=256, pcr_period=83ms
+[mpegts @ 0x14c2e79b0] [verbose] muxrate VBR, sdt every 500 ms, pat/pmt every 100 ms
+[info] Output #0, mpegts, to './bt601-525_480_telecined_soft.ts':
+[info]   Metadata:
+[info]     encoder         : Lavf61.7.100
+[info]   Stream #0:0, 0, 1/90000: Video: mpeg2video (Main), yuv420p(tv, smpte170m, progressive), 720x480 [SAR 32:27 DAR 16:9], q=2-31, 23.98 fps, 59.94 tbr, 90k tbn
+[info]       Side data:
+[info]         cpb: bitrate max/min/avg: 8000000/0/0 buffer size: 1835008 vbv_delay: N/A
+[info]   Stream #0:1(eng), 0, 1/90000: Audio: ac3, 48000 Hz, stereo, fltp, 192 kb/s
+[out#0/mpegts @ 0x14c2f2b80] [verbose] Starting thread...
+[in#0/mpegvideo @ 0x14a0cfd70] [verbose] Starting thread...
+[in#1/ac3 @ 0x14a5aeef0] [verbose] Starting thread...
+[info] Press [q] to stop, [?] for help
+[in#1/ac3 @ 0x14a5aeef0] [verbose] EOF while reading input
+[in#0/mpegvideo @ 0x14a0cfd70] [verbose] EOF while reading input
+[in#1/ac3 @ 0x14a5aeef0] [verbose] Terminating thread with return code 0 (success)
+[in#0/mpegvideo @ 0x14a0cfd70] [verbose] Terminating thread with return code 0 (success)
+[out#0/mpegts @ 0x14c2f2b80] [verbose] All streams finished
+[out#0/mpegts @ 0x14c2f2b80] [verbose] Terminating thread with return code 0 (success)
+[AVIOContext @ 0x14c2f34a0] [verbose] Statistics: 2038860 bytes written, 0 seeks, 8 writeouts
+[out#0/mpegts @ 0x14c2f2b80] [verbose] Output file #0 (./bt601-525_480_telecined_soft.ts):
+[out#0/mpegts @ 0x14c2f2b80] [verbose]   Output stream #0:0 (video): 360 packets muxed (1535429 bytes); 
+[out#0/mpegts @ 0x14c2f2b80] [verbose]   Output stream #0:1 (audio): 469 packets muxed (360192 bytes); 
+[out#0/mpegts @ 0x14c2f2b80] [verbose]   Total: 829 packets (1895621 bytes) muxed
+[out#0/mpegts @ 0x14c2f2b80] [info] video:1499KiB audio:352KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 7.556310%
+[info] frame=  360 fps=0.0 q=-1.0 Lsize=    1991KiB time=00:00:15.00 bitrate=1086.8kbits/s speed=3.18e+03x    
+[in#0/mpegvideo @ 0x14a0cfd70] [verbose] Input file #0 (./bt601-525_480_pulldown.m2v):
+[in#0/mpegvideo @ 0x14a0cfd70] [verbose]   Input stream #0:0 (video): 360 packets read (1535429 bytes); 
+[in#0/mpegvideo @ 0x14a0cfd70] [verbose]   Total: 360 packets (1535429 bytes) demuxed
+[AVIOContext @ 0x14a0d2750] [verbose] Statistics: 1535429 bytes read, 0 seeks
+[in#1/ac3 @ 0x14a5aeef0] [verbose] Input file #1 (./bt601-525_480_audio.ac3):
+[in#1/ac3 @ 0x14a5aeef0] [verbose]   Input stream #1:0 (audio): 469 packets read (360192 bytes); 
+[in#1/ac3 @ 0x14a5aeef0] [verbose]   Total: 469 packets (360192 bytes) demuxed
+[AVIOContext @ 0x14c2e6990] [verbose] Statistics: 360192 bytes read, 0 seeks
