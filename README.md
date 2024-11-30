@@ -130,3 +130,4 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from './test.mov':
 
 - Older version of H.262 Specification, but publicly available without payment.  https://www.itu.int/rec/T-REC-H.262-200002-S/en
 - DVD Format/Logo Licensing Corporation (FLLC) https://www.dvdfllc.co.jp/notice.html#october
+- Mediainfo MPEG2 Pulldown support https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353
