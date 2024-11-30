@@ -87,7 +87,7 @@ function _generate_bt601-525_480_interlaced_bff()
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
     -video_format:v 'ntsc' \
-    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -b:a 192000 \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 \
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
@@ -122,7 +122,7 @@ function _generate_bt601-525_480_interlaced_tff()
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
     -video_format:v 'ntsc' \
-    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -b:a 192000 \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 \
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
@@ -158,7 +158,7 @@ function _generate_bt601-525_480_telecined_hard()
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
     -video_format:v 'ntsc' \
-    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -b:a 192000 -frame_size:a 1024 \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 -frame_size:a 1024 \
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
@@ -191,7 +191,7 @@ function _generate_bt601-525_480_telecined_soft()
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
     -video_format:v 'ntsc' \
-    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -b:a 192000 -frame_size 1024 \
+    -map '0:a:0' -codec:a 'ac3' -ac:a 2 -ar:a 48000 -ab:a 192000 -frame_size 1024 \
     -metadata:s:a:0 'language=eng' \
     -timecode '00:00:00:00' \
     -t "${duration}" \
