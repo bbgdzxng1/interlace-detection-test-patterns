@@ -1,10 +1,13 @@
 # Test patterns for deinterlace and inverse-telecine
 
-These test patterns are useful for evaluating:
-- FFmpeg's idet (interlace detect) filter
-- dgpulldown's soft telecine tool
-- Media analyzers (FFprobe, mediainfo, wader/fq, https://media-analyzer.pro/app etc)
-- General deinterlacers and the pullup processes
+These test patterns are useful for:
+- Testing FFmpeg's idet (interlace detect) filter
+- Testing dgpulldown's soft telecine tool
+- Testing media analyzers (FFprobe, mediainfo, wader/fq, https://media-analyzer.pro/app etc)
+- Evaluating deinterlacers (bwdif, yadif, nnedi) and inverse telecine (pullup, fieldmatch) processes
+- Aid in the development of an authomated interlace/inverse telecine detection method using FFmpeg's idet
+  - https://github.com/mpv-player/mpv/blob/master/TOOLS/idet.sh
+  - https://github.com/utahjohnnymontana/DVD-Rip-Prep
 
 
 #### Notes
@@ -16,18 +19,18 @@ These test patterns are useful for evaluating:
 - The soft telecine test pattern requires dgpulldown 1.0.11 for generation of soft telecine.  dgpulldown 1.0.11-L (Linux/macOS) has some build quirks on compilation on macOS.  dgpulldown appears to generate a 3:2 pulldown pattern when soft telecine is applied (* citation needed) since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer the option to select between [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: Pulldown patterns may also depend on the version of dgpulldown.
 - The script contains almost no error checking of success.  That is intentional to make the script readable & accessible.
 - The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
-- In theory, output files can be concatted to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to always(?) write a Sequence Display Extension.
+- In theory, output files can be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to aid concatenation by always(?) writing a Sequence Display Extension, 
 - Files are generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more broadcasty format, but MKV is included to mimic the output produced from MakeMKV DVD rip.
 
 #### TODO
 
-- [x] Overlay the names of the test cases into each video.  WARNING: progressive test case has the wrong overlay.  Needs separate function.
-- [ ] Investigate audio frame_size
-- [ ] Only analyse if dependency is installed
+- [x] Overlay the names of the test cases into each video.  WARNING: progressive test case has the wrong overlay.  Really needs a separate progressive function.
+- [ ] Only analyse if optional dependency is installed (WIP)
 - [ ] Use `jq` for parsing and summarizing the json (WIP)
 - [ ] -flags:v '+bitexact' # so as to avoid unnecessry git changes
 - [ ] -flags:a '+bitexact' # so as to avoid unnecessry git changes
 - [ ] Add gnuplot graphs to plot csv/tsv to svg
+- [ ] Investigate audio frame_size
 
 ## Notes
 
