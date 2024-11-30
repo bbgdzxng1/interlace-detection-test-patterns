@@ -138,15 +138,16 @@ Quasi-Interlace is a *"Term in consumer electronics denoting progressive segment
 
 ### References
 
-- Older version of H.262 Specification, but publicly available without payment.  https://www.itu.int/rec/T-REC-H.262-200002-S/en
-- DVD Format/Logo Licensing Corporation (FLLC) https://www.dvdfllc.co.jp/notice.html#october
-- DVD Demystified, Third Edition(2006).  Tailor, J. McGraw-Hill Publishing.
-  - First edition		 1998, McGraw-Hill. https://archive.org/details/B-001-001-580
-  - Second edition	2001, McGraw-Hill. https://archive.org/details/dvddemystified00tayl
-  - Third Edition		2006, McGraw-Hill. https://archive.org/details/dvddemystified0000tayl_a1x8
-  - Bonus Disc for Second & Third Edition.  https://archive.org/details/DVDDemystifiedBonusDisc
-- Poynton
-  - Digital Video and HD, Algorithms & Interfaces, Second Edition.  https://archive.org/details/digital-video-and-hd-algorithms-and-interfaces-2nd-ed.-poynton-2012-02-07/mode/2up
-  - Digital Video and HDTV, Algorithms & Interfaces, First Edition.  https://archive.org/details/DigitalVideoForDummies/Digital%20Video%20And%20Hdtv%20Algorithms%20And%20Interfaces/mode/2up
-  
-- Mediainfo MPEG2 Pulldown support https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353
+- [BT.601: Studio encoding parameters of digital television for standard 4:3 and wide screen 16:9 aspect ratios](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)
+- [BT.709: Parameter values for the HDTV standards for production and international programme exchange.](https://www.itu.int/rec/R-REC-BT.709)
+- [MPEG2Video/H.262 Specification](https://www.itu.int/rec/T-REC-H.262-200002-S/en).  Older version is public
+- [DVD Format/Logo Licensing Corporation (FLLC)](https://www.dvdfllc.co.jp/notice.html#october)
+- DVD Demystified.  Tailor, J. (McGraw-Hill)
+  - [First edition (1998).](https://archive.org/details/B-001-001-580)
+  - [Second edition (2001).](https://archive.org/details/dvddemystified00tayl)
+  - [Third Edition (2006).](https://archive.org/details/dvddemystified0000tayl_a1x8)
+  - [Bonus Disc for Second & Third Edition.](https://archive.org/details/DVDDemystifiedBonusDisc)
+- Digital Video and HD, Algorithms & Interfaces. Poynton, Charles.  (Morgan Kaufmann)
+  - [First Edition (2003)](https://archive.org/details/DigitalVideoForDummies/Digital%20Video%20And%20Hdtv%20Algorithms%20And%20Interfaces/mode/2up)
+  - [Second Edition (2012)](https://archive.org/details/digital-video-and-hd-algorithms-and-interfaces-2nd-ed.-poynton-2012-02-07/mode/2up)
+- [Mediainfo MPEG2 Pulldown support](https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353)
