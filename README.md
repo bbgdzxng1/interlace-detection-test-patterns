@@ -12,28 +12,33 @@ These test patterns are useful for:
 
 
 #### Notes
-
-- The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient changing pixels for FFmpeg's idet to produce an accurate result.
-- The two interlace test patterns include Top & Bottom Field indicators
-- The two telecine test patterns include ABCD cadence pattern indicators
-- The source is generated at yuv422p, then interlaced or telecined and finally converted to yuv420p.  The drawtext and tinterlace filters prefer running in yuv422p.
-- The soft telecine test pattern requires dgpulldown 1.0.11 for generation of soft telecine.  dgpulldown 1.0.11-L (Linux/macOS) has some build quirks on compilation on macOS.  dgpulldown appears to generate a 3:2 pulldown pattern when soft telecine is applied (* citation needed) since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer the option to select between [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: Pulldown patterns may also depend on the version of dgpulldown.
+- The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient carying pixels for FFmpeg's idet to produce an accurate result.
+- The two interlace test patterns include Top & Bottom Field visual indicators.
+- The two telecine test patterns include ABCD cadence pattern visual indicators.
+- The source is generated at yuv422p10le.  The drawtext and tinterlace filters produce better output when operating with a yuv422p (8 or 10bit) source.  After interlacing or telecining, files are finally converted to a yuv420p "consumer" format.  
 - The script contains almost no error checking of success.  That is intentional to make the script readable & accessible.
 - The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
-- In theory, output files can be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to aid concatenation by always(?) writing a Sequence Display Extension, 
-- Files are generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more broadcasty format, but MKV is included to mimic the output produced from MakeMKV DVD rip.
+- In theory, output files could be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to aid concatenation by always(?) writing a Sequence Display Extension, 
+- Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from MakeMKV DVD rip.
+
+### DGPulldown
+- This script uses DGPulldown 1.0.11 by Donald A. Graft & others to generate the soft telecine test pattern.
+- Caveat: The dgpulldown 1.0.11-L (Linux/macOS) port has some build quirks on compilation on macOS.
+- dgpulldown appears to generate a 3:2 pulldown pattern when soft telecine is applied (* citation needed) since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: The pulldown pattern may also depend on the version of dgpulldown.
+
 
 #### TODO
 
-- [ ] Add interlaced tff untagged test case. 
+- [ ] Add an interlaced tff "untagged" test case. 
 - [x] Overlay the names of the test cases into each video.  WARNING: progressive test case has the wrong overlay.  Really needs a separate progressive function.
 - [ ] Only analyse if optional dependency is installed (WIP)
 - [ ] Use `jq` for parsing and summarizing the json (WIP)
 - [x] -flags:v '+bitexact' # so as to avoid unnecessry git changes
 - [x] -flags:a '+bitexact' # so as to avoid unnecessry git changes
-- [ ] Add gnuplot graphs to plot csv/tsv to svg
-- [ ] Investigate audio frame_size
-- [ ] Add Github release(s)
+- [ ] Add gnuplot graphs to plot csv/tsv to svg.
+- [ ] Investigate audio frame_size.
+- [ ] Add Github release(s) of output media.
+- [ ] If someone wants to add PAL / 625 / 576 outputs they are welcome.
 
 ## Notes
 
@@ -120,3 +125,8 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from './test.mov':
         vendor_id       : FFMP
         encoder         : Lavc61.19.100 mpeg2video
 ```
+
+### References
+
+- Older version of H.262 Specification, but publicly available without payment.  https://www.itu.int/rec/T-REC-H.262-200002-S/en
+- DVD Format/Logo Licensing Corporation (FLLC) https://www.dvdfllc.co.jp/notice.html#october
