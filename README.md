@@ -26,16 +26,40 @@ These test patterns are useful for evaluating:
 
 - Overlay the names of the test cases into each video.
 - Investigate audio frame_size
-- Would be nice to produce Apple-Compatible MP4.  Quicktime Player does not play H.262+AC3 in MP4, although it will play H.262+AC3 in MOV.  Retagging the fourcc was not really successful.  Renaming from MOV to MP4 is a very dirty workaround. Although MP4 & ISOBMFF was originally based on MOV, they are not identical and differ in support for codecs.
 
 
-<!-- 
-### Github-specific Previews
+#### A note on MPEG2Video/H.262 in MP4
 
-https://github.com/user-attachments/assets/b1639c0f-52d5-4c2f-8880-3d5981cca0ac
+FFmpeg can't write mpeg2video & ac3 to an MP4, in a way that Apple Quicktime / Apple avmediainfo likes...
 
-https://github.com/user-attachments/assets/4d69cb10-89ea-4521-b62b-c511f17745b0
+```
+$ ffmpeg -f lavfi -i "testsrc2=size=ntsc:rate=ntsc[out]" -c:v mpeg2video -t 30 ./test.mp4 -y
 
-https://github.com/user-attachments/assets/c4664e3c-3519-44d7-8603-5f3169e81434
+$ avmediainfo ./test.mp4 
+Asset: ./test.mp4
+Duration: 29.997 seconds (29997/1000)
+Track count: 0
 
-https://github.com/user-attachments/assets/d08a4902-63b0-4cb4-8846-0901e50e4740 -->
+> Movie analyzed with 2 errors.
+> Error in Track ID 1 'vide' Error when generating format descriptions.
+> Error in Track ID 1 'vide' Omitting a track that encountered an error during atom parsing.
+```
+
+But FFmpeg can write mpeg2video & ac3 to an MOV, which is compatible...
+
+```
+$ ffmpeg -f lavfi -i "testsrc2=size=ntsc:rate=ntsc[out]" -c:v mpeg2video -t 30 ./test.mov -y
+
+$ avmediainfo ./test.mov
+>  Movie analyzed with 0 error.
+```
+
+And GPAC/MP4Box can remux that MOV to an MP4. This is a true remux, not a rename.
+```
+$ MP4Box -add ./test.mov -new ./test.mp4
+
+$ avmediainfo ./test.mov
+>  Movie analyzed with 0 error.
+```
+
+Will need some investigation around codecIds, boxesm MOV vs MP4 vs ISOBMFF and atoms.

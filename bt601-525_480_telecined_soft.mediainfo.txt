@@ -1,0 +1,5 @@
+Frame rate                               : 23.976 FPS
+Frame rate                               : 23.976 (24000/1001) FPS
+Scan type                                : Progressive
+Scan order                               : 2:3 Pulldown
+Frame rate                               : 31.250 FPS (1536 SPF)

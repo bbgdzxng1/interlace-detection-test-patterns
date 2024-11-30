@@ -1,0 +1,5 @@
+Frame rate                               : 29.970 FPS
+Frame rate                               : 29.970 (30000/1001) FPS
+Scan type                                : Interlaced
+Scan order                               : Top Field First
+Frame rate                               : 31.250 FPS (1536 SPF)
