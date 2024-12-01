@@ -142,8 +142,8 @@ This script/repo deals exclusively with mpeg2video/H.262.  However, the followin
 ```bash
 $ ffmpeg -hide_banner -loglevel 'error' -f 'lavfi' -i "testsrc2=rate='ntsc-film'" -frames:v 24 -f 'yuv4mpegpipe' - \
   | x264 --quiet --demuxer 'y4m' --keyint 12 --crf 23 --bframes 2 --pulldown 32 -o - - \
-  | ffprobe -hide_banner -loglevel 'error' -f 'h264' "./output.h264" -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact'
-
+  | ffprobe -hide_banner -loglevel 'error' -f 'h264' -framerate 'ntsc-film' - -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact' 
+                                                                               
 frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1|
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
