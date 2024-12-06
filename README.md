@@ -43,6 +43,77 @@ These test patterns are useful for:
 
 ## Notes
 
+### MJPEGTools' mpeg2enc
+
+mpeg2enc claims to be a _"heavily enhanced derivative of the MPEG Software Simulation Group's MPEG-2 reference encoder"_
+
+While FFmpeg's mpeg2video encoder does not support pulldown, MJPEGTool's mpeg2enc does.
+
+https://sourceforge.net/projects/mjpeg/files/mjpegtools/2.2.1/
+
+
+```shell
+$ ffmpeg -loglevel 'error' \
+  -f 'lavfi' -i smptebars=rate='ntsc-film':size='ntsc',setdar=ratio='(4/3)' -t 3 \
+  -f 'yuv4mpegpipe' "pipe:1" \
+    | mpeg2enc --multi-thread 4 \
+    --format 3 --quantisation 1 --video-bitrate 8000 --video-buffer 1835 \
+    --sequence-header-every-gop --video-norm n --aspect 2 \
+    --frame-rate 4 --3-2-pulldown \
+    --min-gop-size 12 --max-gop-size 12 --b-per-refframe 2 \
+    --motion-search-radius 32 --custom-quant-matrices 'hi-res' --reduction-4x4 1 --reduction-2x2 1 \
+    --output "./test.mpg" 
+```
+
+This produces a 3:2 pulldown pattern, in line with dgpulldown and x264 standalone.
+
+It does not support more than two B frames.
+
+```
+ffprobe -hide_banner -loglevel 'error' -f 'mpegvideo' -framerate 'ntsc-film' ./test.mpg -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact'
+frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1|
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0|
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
+frame|pict_type=P|interlaced_frame=0|top_field_first=0|repeat_pict=1|
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=0|
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=1|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1|
+frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0|
+frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1|
+frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
+```
+
+It does support format presets, including DVD and some extra support for dvd-author.
+
+```
+--format 1      Standard VCD.  An MPEG1 profile exactly to the VCD2.0 specification. Flag settings that would result in a non-standard stream structure are simply ignored.
+--format 2      User VCD.  As for profile 2 but bitrate and video buffer size can be set to non-standard values. Frame size may also be non-standard. Bit-rate and buffer sizes default to those for standard VCD.
+--format 3      Generic MPEG2.  A basic MPEG-2 profile that lets most parameters be adjusted for particular applications using the other flags. Typical applications would be to produce a MPEG-2 stream with big buffers and long GOP's for software playback on a computer.
+--format 4      Standard SVCD.  An MPEG-2 profile exactly to the SVCD2.0 specification. Flag settings that would result in a non-standard stream structure are simply ignored.
+--format 5      Non-standard SVCD.  As for profile 4 but bitrate, video buffer size, GOP sizes and structure can be set to non-standard values. Frame size may also be non-standard. Bit-rate and buffer sizes default to those for standard SVCD.
+--format 6      VCD Stills sequence.  Encodes the special style of MPEG stream used for still images on VCDs. To use this profile you must set the target size you wish to compress the images to using the -T flag. Reasonable values are around 35KB for standard resolution stills (352 wide) and 120KB for high resolution stills (704 wide).
+--format 7      SVCD Stills sequence.  Encodes the special style of MPEG stream used for still images on SVCDs. Both standard (480 wide) and high resolution (704 wide) images are supported. As with VCD stills you select how big each compressed still should be using the -T flag.
+--format 8      DVD MPEG-2 for 'dvdauthor'  This version adds special dummy navigation packets into the output stream that the dvdauthor tool fills in to make a proper .VOB for authoring. Bit-rate defaults to 7500kbps, buffer sizes to the maximum permitted by the DVD specification.
+--format 9      DVD MPEG-2.  Just a very basic implementation. Useful with DXR2 board and similar hardware that can decode MPEG-2 only if it is presented in a DVD like form. Bit-rate defaults to 7500kbps, buffer sizes to the maximum permitted by the DVD specification.
+--format 10     ATSC 480i 
+--format 11     ATSC 480p
+--format 12     ATSC 720p
+--format 13     ATSC 1080i 
+```
+
+
+### MPEG Software Simulation Group's mpeg2enc
+
+Clone is available at: https://github.com/mobinsheng/mpeg2enc
+
+MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
+
+
+
 ### TFF vs BFF
 
 - The general consensus (citation needed) seems to be:
