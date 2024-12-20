@@ -3,7 +3,7 @@
 These test patterns are useful for:
 - Testing FFmpeg's idet (interlace detect) filter
 - Testing dgpulldown's soft telecine tool
-- Testing media analyzers (FFprobe, mediainfo, wader/fq, https://media-analyzer.pro/app etc)
+- Testing media analyzers & inspecting headers (FFprobe, mediainfo, wader/fq, https://media-analyzer.pro/app etc)
 - Evaluating deinterlacers (bwdif, yadif, nnedi) and inverse telecine (pullup, fieldmatch) processes
 - Aid in the development of an authomated interlace/inverse telecine detection method using FFmpeg's idet
   - https://github.com/mpv-player/mpv/blob/master/TOOLS/idet.sh
