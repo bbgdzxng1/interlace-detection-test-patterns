@@ -13,8 +13,11 @@ These test patterns are useful for:
 
 #### Notes
 - The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's idet to produce an accurate result.
-- The two interlace test patterns include Top & Bottom Field visual indicators.
+- The two interlace test patterns include Top & Bottom Field visual indicators.  These indicators are not deinterlaced cleanly with bwdif, but produce clean results with yadif.
 - The two telecine test patterns include ABCD cadence pattern visual indicators.
+- These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif remains superior to yadif, but the particular characteristics of the content exposes bwdif's weakness.
+  - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns.
+  - yadif is a field-based deinterlacer and leaves fewer artifacts when there are such significant changes between fields.
 - The source is generated at yuv422p10le.  The drawtext and tinterlace filters produce better output when operating with a yuv422p (8 or 10bit) source.  After interlacing or telecining, files are finally converted to a yuv420p "consumer" format.  
 - The script contains almost no error checking of success.  That is intentional to make the script readable & accessible.
 - The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
@@ -157,11 +160,6 @@ MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
   - Standard Definition ATSC 1.0 captures (via HDHomerun) seem to be TFF.
   - What about DVB-T?
   - What about PAL & NTSC DVDs?  The standard allows both, but does it stand that the convention is that PAL DVDs are TFF and NTSC DVDs are BFF?
-
-#### FFmpeg bwdif & yadif
-- These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif remains superior to yadif, but the particular characteristics of the content exposes bwdif's weakness.
-  - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns.
-  - yadif is a field-based deinterlacer and leaves fewer artifacts when there are such significant changes between fields.
 
 #### MPEG2Video/H.262 in MP4 (macOS & FFmpeg compatibility)
 
