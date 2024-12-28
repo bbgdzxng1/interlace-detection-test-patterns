@@ -14,9 +14,9 @@ rm -rf "${logdir}"/*.log "${logdir}"/*.json "${logdir}"/*.txt "${logdir}"/*.csv
 
 export FFREPORT=file="${logdir}/%p-%t.log:level=48"
 
-duration='00:00:10.000'  # Duration limited to 10s to reduce filesize to satisfy Github.
+duration='00:00:10.000'  # Duration limited to 10s to reduce filesize to satisfy Github's filesize limits.
 loglevel='level+warning' # FFmpeg loglevel
-quality=7                # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to satisfy Github.
+quality=5                # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to satisfy Github's filesize limits.
 
 #######################################
 ### _check_dependencies
@@ -52,6 +52,7 @@ function _check_dependencies
     # vlc
     # avmediainfo # Apple's version of mediainfo
     # dvdauthor # fun-and-games for creating DVDs.
+    # ab-av1 for iterative testing using VMAF.
   )
   for dependency in "${optional_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
@@ -82,7 +83,7 @@ function _generate_bt601-525_480_interlaced_bff()
   sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant true -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -120,7 +121,7 @@ function _generate_bt601-525_480_interlaced_tff()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant true -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -137,6 +138,7 @@ function _generate_bt601-525_480_interlaced_tff()
 
 #######################################
 ### _generate_bt601-525_480_telecined_hard
+# it is tricky to determine whether alternate scan should be false (for the progressive frames) or true (for the interleaved frames).  Given that there will be a higher proportion of progressive frames, we will choose false. 
 #######################################
 function _generate_bt601-525_480_telecined_hard()
 {
@@ -159,7 +161,7 @@ function _generate_bt601-525_480_telecined_hard()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant true -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v false \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -195,7 +197,7 @@ function _generate_bt601-525_480_telecined_soft()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant true -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -alternate_scan:v false \
     -gop_timecode:v '00:00:00:00' -drop_frame_timecode:v false \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -249,7 +251,7 @@ function _generate_bt601-525_480_progressive()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant true -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
     -flags:v '+bitexact' \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -alternate_scan:v false \
@@ -428,7 +430,7 @@ exit 0
 
 # #######################################
 # ### _plotgraph function.
-# # Fun and games with gnuplot.  Requires TSV
+# # Fun and games with gnuplot.  gnuplot requires TSV
 # #######################################
 # function _plotgraph()
 # {
