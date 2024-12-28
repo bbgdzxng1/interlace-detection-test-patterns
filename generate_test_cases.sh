@@ -83,7 +83,7 @@ function _generate_bt601-525_480_interlaced_bff()
   sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant true -qmax 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -121,7 +121,7 @@ function _generate_bt601-525_480_interlaced_tff()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant true -qmax 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -161,7 +161,7 @@ function _generate_bt601-525_480_telecined_hard()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant true -qmax 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v false \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -197,7 +197,7 @@ function _generate_bt601-525_480_telecined_soft()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant true -qmax 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
     -alternate_scan:v false \
     -gop_timecode:v '00:00:00:00' -drop_frame_timecode:v false \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -251,7 +251,7 @@ function _generate_bt601-525_480_progressive()
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant true -qmax 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
     -flags:v '+bitexact' \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -alternate_scan:v false \
