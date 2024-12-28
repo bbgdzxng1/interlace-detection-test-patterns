@@ -138,7 +138,7 @@ function _generate_bt601-525_480_interlaced_tff()
 
 #######################################
 ### _generate_bt601-525_480_telecined_hard
-# it is tricky to determine whether alternate scan should be false (for the progressive frames) or true (for the interleaved frames).  Given that there will be a higher proportion of progressive frames, we will choose false. 
+# it is tricky to determine whether alternate scan should be false (for the progressive frames) or true (for the interleaved frames).  Given that there will be a higher proportion of progressive frames, we will choose false.
 #######################################
 function _generate_bt601-525_480_telecined_hard()
 {
@@ -262,7 +262,7 @@ function _generate_bt601-525_480_progressive()
     -timecode '00:00:00:00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' "${basename}_480_progressive_segmented_frame_tff.ts" -y
+    -f 'mpegts' "${basename}_progressive.ts" -y
   return 0
 }
 
