@@ -46,8 +46,11 @@ These test patterns are useful for:
 ### MJPEGTools' mpeg2enc
 
 mpeg2enc claims to be a _"heavily enhanced derivative of the MPEG Software Simulation Group's MPEG-2 reference encoder"_
-
-While FFmpeg's mpeg2video encoder does not support pulldown, MJPEGTool's mpeg2enc does.
+- mpeg2enc supports pulldown; FFmpeg's mpeg2video encoder does not and thus FFmpeg requires dgpulldown.
+- mpeg2enc produces a 3:2 pulldown pattern, in line with dgpulldown and x264 standalone.
+- mpeg2enc is limited to a maximum of two B frames.
+- It is noted that the VBV Buffer Size `--video-buffer` is defined in KB, wheras with FFmpeg it is defined in bits.  The DVD maximum is understood to be 1835008bits == 224KB
+- mpeg2enc will produce WARN with both `frame-rate 1 --3-2-pulldown` and `frame-rate 4 --3-2-pulldown`.
 
 https://sourceforge.net/projects/mjpeg/files/mjpegtools/2.2.1/
 
@@ -57,20 +60,20 @@ $ ffmpeg -loglevel 'error' \
   -f 'lavfi' -i smptebars=rate='ntsc-film':size='ntsc',setdar=ratio='(4/3)' -t 3 \
   -f 'yuv4mpegpipe' "pipe:1" \
     | mpeg2enc --multi-thread 4 \
-    --format 3 --quantisation 1 --video-bitrate 8000 --video-buffer 1835 \
+    --format 3 --quantisation 5 --video-bitrate 8000 --video-buffer 224 \
     --sequence-header-every-gop --video-norm n --aspect 2 \
-    --frame-rate 4 --3-2-pulldown \
+    --frame-rate 1 --3-2-pulldown \
     --min-gop-size 12 --max-gop-size 12 --b-per-refframe 2 \
-    --motion-search-radius 32 --custom-quant-matrices 'hi-res' --reduction-4x4 1 --reduction-2x2 1 \
+    --reduction-4x4 1 --reduction-2x2 1 \
     --output "./test.mpg" 
 ```
 
-This produces a 3:2 pulldown pattern, in line with dgpulldown and x264 standalone.
 
-It does not support more than two B frames.
+
+
 
 ```
-ffprobe -hide_banner -loglevel 'error' -f 'mpegvideo' -framerate 'ntsc-film' ./test.mpg -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact'
+$ ffprobe -hide_banner -loglevel 'error' -f 'mpegvideo' -framerate 'ntsc-film' ./test.mpg -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact'
 frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1|
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1|
@@ -106,15 +109,37 @@ It does support format presets, including DVD and some extra support for dvd-aut
 ```
 
 
-### MPEG Software Simulation Group's mpeg2enc
+### MPEG Software Simulation Group's mpeg2encode
 
 Clone is available at: https://github.com/mobinsheng/mpeg2enc
 
 MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
 
 
+### References
 
-### TFF vs BFF
+- [BT.601: Studio encoding parameters of digital television for standard 4:3 and wide screen 16:9 aspect ratios](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)
+- [BT.709: Parameter values for the HDTV standards for production and international programme exchange.](https://www.itu.int/rec/R-REC-BT.709)
+- [MPEG2Video/H.262 Specification](https://www.itu.int/rec/T-REC-H.262-200002-S/en).  Older version is public
+- [DVD Format/Logo Licensing Corporation (FLLC)](https://www.dvdfllc.co.jp/notice.html#october)
+- DVD Demystified.  TAILOR, J. (McGraw-Hill)
+  - [First edition (1998).](https://archive.org/details/B-001-001-580)
+  - [Second edition (2001).](https://archive.org/details/dvddemystified00tayl)
+  - [Third Edition (2006).](https://archive.org/details/dvddemystified0000tayl_a1x8)
+  - [Bonus Disc for Second & Third Edition.](https://archive.org/details/DVDDemystifiedBonusDisc)
+- Digital Video and HD, Algorithms & Interfaces. POYNTON, Charles.  (Morgan Kaufmann)
+  - [First Edition (2003)](https://archive.org/details/DigitalVideoForDummies/Digital%20Video%20And%20Hdtv%20Algorithms%20And%20Interfaces/)
+  - [Second Edition (2012)](https://archive.org/details/digital-video-and-hd-algorithms-and-interfaces-2nd-ed.-poynton-2012-02-07/)
+- Fundamentals of Multimedia.   LI Ze-Nian; DREW Mark S.; LIU Jiangchuan (Pearson / Springer)
+  - [First Edition (2004)](https://archive.org/details/fundamentalsofmu0000lize)
+  - [Second Edition (2014)](https://archive.org/details/fundamentalsofmu0000lize_2ed6/)
+  - [Third Edition (2021)](https://link.springer.com/book/10.1007/978-3-030-62124-7)
+- [Mediainfo MPEG2 Pulldown support](https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353)
+
+
+### Other Notes
+
+#### TFF vs BFF
 
 - The general consensus (citation needed) seems to be:
   - High Definition BT.709 is top field first
@@ -125,12 +150,12 @@ MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
   - What about DVB-T?
   - What about PAL & NTSC DVDs?  Does it stand that the convention is that PAL DVDs are TFF and NTSC DVDs are BFF?
 
-### FFmpeg bwdif & yadif
+#### FFmpeg bwdif & yadif
 - These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif remains superior to yadif, but the particular characteristics of the content exposes bwdif's weakness.
   - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns.
-  - yadif is a more unselective, field-based deinterlacer and can handle very rapid changes between fields.
+  - yadif is a field-based deinterlacer and leaves fewer artifacts when there are such significant changes between fields.
 
-### MPEG2Video/H.262 in MP4 (macOS & FFmpeg compatibility)
+#### MPEG2Video/H.262 in MP4 (macOS & FFmpeg compatibility)
 
 At the time of writing FFmpeg (7.x) cannot write mpeg2video & ac3 to an mp4 in a way that is compatible with Apple Quicktime Player / Apple avmediainfo...
 
@@ -198,7 +223,7 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from './test.mov':
         encoder         : Lavc61.19.100 mpeg2video
 ```
 
-### Progressive segmented-Frame (PsF) & Quasi-interlace
+#### Progressive segmented-Frame (PsF) & Quasi-interlace
 
 Poynton in "Digital Video and HDTV Algorithms and Interfaces" states *"24PsF Image format is typically 1920×1080" and "A scheme called Progressive segmented-Frame has been adopted to adapt HDTV equipment to handle images at 24 frames per second. The scheme, denoted 24PsF, samples in progressive fashion: Both fields represent the same instant in time, and vertical filtering to reduce twitter is both unnecessary and undesirable. However, lines are rearranged to interlaced order for studio distribution and recording."*
 
@@ -206,7 +231,7 @@ Poynton in "Digital Video and HDTV Algorithms and Interfaces" states *"24PsF Ima
 
 Quasi-Interlace is a *"Term in consumer electronics denoting progressive segmented frame"* and *"Quasi-interlace in consumer SDTV is comparable to Progressive segmented-Frame (PsF) in HDTV, though at 25 or 29.97 frames per second instead of 24"*
 
-### Pulldown with x264 command line interface [Informational]
+#### Pulldown with x264 command line interface [Informational]
 
 This script/repo deals exclusively with mpeg2video/H.262.  However, the following is included as a quick note on the x264 command line tool, with the aim of validating the pulldown pattern with FFprobe and achieving the same pulldown pattern as mpeg2video + DGPulldown.  It is noted that FFmpeg's libx264 foes not support `-x264opts pulldown=32` or `-x264-params pulldown=32`.
 
@@ -241,22 +266,4 @@ frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
 frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0
 ```
 
-### References
 
-- [BT.601: Studio encoding parameters of digital television for standard 4:3 and wide screen 16:9 aspect ratios](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)
-- [BT.709: Parameter values for the HDTV standards for production and international programme exchange.](https://www.itu.int/rec/R-REC-BT.709)
-- [MPEG2Video/H.262 Specification](https://www.itu.int/rec/T-REC-H.262-200002-S/en).  Older version is public
-- [DVD Format/Logo Licensing Corporation (FLLC)](https://www.dvdfllc.co.jp/notice.html#october)
-- DVD Demystified.  TAILOR, J. (McGraw-Hill)
-  - [First edition (1998).](https://archive.org/details/B-001-001-580)
-  - [Second edition (2001).](https://archive.org/details/dvddemystified00tayl)
-  - [Third Edition (2006).](https://archive.org/details/dvddemystified0000tayl_a1x8)
-  - [Bonus Disc for Second & Third Edition.](https://archive.org/details/DVDDemystifiedBonusDisc)
-- Digital Video and HD, Algorithms & Interfaces. POYNTON, Charles.  (Morgan Kaufmann)
-  - [First Edition (2003)](https://archive.org/details/DigitalVideoForDummies/Digital%20Video%20And%20Hdtv%20Algorithms%20And%20Interfaces/)
-  - [Second Edition (2012)](https://archive.org/details/digital-video-and-hd-algorithms-and-interfaces-2nd-ed.-poynton-2012-02-07/)
-- Fundamentals of Multimedia.   LI Ze-Nian; DREW Mark S.; LIU Jiangchuan (Pearson / Springer)
-  - [First Edition (2004)](https://archive.org/details/fundamentalsofmu0000lize)
-  - [Second Edition (2014)](https://archive.org/details/fundamentalsofmu0000lize_2ed6/)
-  - [Third Edition (2021)](https://link.springer.com/book/10.1007/978-3-030-62124-7)
-- [Mediainfo MPEG2 Pulldown support](https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353)
