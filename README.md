@@ -5,7 +5,7 @@ These test patterns are useful for:
 - Testing dgpulldown's soft telecine tool
 - Testing media analyzers & inspecting headers (FFprobe, mediainfo, wader/fq, https://media-analyzer.pro/app etc)
 - Evaluating deinterlacers (bwdif, yadif, nnedi) and inverse telecine (pullup, fieldmatch) processes
-- Aid in the development of an authomated interlace/inverse telecine detection method using FFmpeg's idet
+- Aid in the development of an automated interlace/inverse telecine detection method using FFmpeg's idet filter.
   - https://github.com/mpv-player/mpv/blob/master/TOOLS/idet.sh
   - https://github.com/utahjohnnymontana/DVD-Rip-Prep
   - https://www.mistralsolutions.com/newsletter/Jul13/Field_Dominance_Algorithm.pdf
@@ -19,12 +19,12 @@ These test patterns are useful for:
 - The script contains almost no error checking of success.  That is intentional to make the script readable & accessible.
 - The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
 - In theory, output files could be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to aid concatenation by always(?) writing a Sequence Display Extension, 
-- Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from MakeMKV DVD rip.
+- Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from a MakeMKV DVD rip.
 
 ### DGPulldown
 - This script uses DGPulldown 1.0.11 by Donald A. Graft & others to generate the soft telecine test pattern.
 - Caveat: The dgpulldown 1.0.11-L (Linux/macOS) port has some build quirks on compilation on macOS.
-- dgpulldown generate a 3:2 pulldown pattern since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: The pulldown pattern may also depend on the version of dgpulldown.
+- dgpulldown generates a 3:2 pulldown pattern producing the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: The pulldown pattern may also depend on the version of dgpulldown.
 
 
 #### TODO
@@ -43,16 +43,23 @@ These test patterns are useful for:
 
 ## Notes
 
+The current script uses FFmpeg's mpeg2video encoder and dgpulldown, although MJPEGTool's mpeg2enc supports native pulldown.  Below are some notes on some alternate, cross platform command-line MPEG-2 encoders.
+
 ### MJPEGTools' mpeg2enc
 
-mpeg2enc claims to be a _"heavily enhanced derivative of the MPEG Software Simulation Group's MPEG-2 reference encoder"_
+[mpeg2enc](https://sourceforge.net/projects/mjpeg/files/mjpegtools/2.2.1/) claims to be a _"heavily enhanced derivative of the MPEG Software Simulation Group's MPEG-2 reference encoder"_
 - mpeg2enc supports pulldown; FFmpeg's mpeg2video encoder does not and thus FFmpeg requires dgpulldown.
-- mpeg2enc produces a 3:2 pulldown pattern, in line with dgpulldown and x264 standalone.
+- mpeg2enc produces a 3:2 pulldown pattern, in line with dgpulldown and x264 standalone and FFmpeg's 'pulldown=pattern=32' hard telecine.
 - mpeg2enc is limited to a maximum of two B frames.
-- It is noted that the VBV Buffer Size `--video-buffer` is defined in KB, wheras with FFmpeg it is defined in bits.  The DVD maximum is understood to be 1835008bits == 224KB
-- mpeg2enc will produce WARN with both `frame-rate 1 --3-2-pulldown` and `frame-rate 4 --3-2-pulldown`.
-
-https://sourceforge.net/projects/mjpeg/files/mjpegtools/2.2.1/
+- It is noted that the VBV Buffer Size `--video-buffer` is defined in KB, wheras with FFmpeg it is defined in bits.  The DVD maximum is understood to be 1835008 bits (FFmpeg's mpev2video) == 224KB (mpeg2enc)
+- mpeg2enc will produce WARN with both `frame-rate 1 --3-2-pulldown` and `frame-rate 4 --3-2-pulldown`
+- speed is improved with `--multi-thread 4`
+- Non-linear quantization is automatically enabled when the output is MPEG-2
+- Supports field encoding (if you desire)
+- The templates (aka mpeg2enc "formats") seem to use alternate_scan by default, even on progressive frames.   LI & DREW in Fundamentals of Multimedia state that alternate_scan is preferable for interlaced frames with fast motion.  HASKELL, PURI and NETRAVALI in Digital Video: An introduction to MPEG-2 state the alternate scan often gives better compression for interlaced video when there is significant motion.
+  - The PSNR data presented in https://www.itu.int/wftp3/av-arch/jvt-site/2002_01_Geneva/JVT-B068r1.doc does not provide comparison data for progressive frames.
+  - The consensus on the doom9 forum is that alternate scan is preferable for interlaced frames and classical zig-zag scan is preferable for progressive frames.
+  - Testing with ab-av1's VMAF comparison (albeit with FFmpeg's mpeg2video codec) on progressive content produced equal VMAF score at various qscales (5,6,7,10) whether alternate scan was enabled or disabled, indicating _equal quality_ for the same qscale, but zig-zag scan produced a file of 414MB compared to alternate scan of 459MB, indicating a 10% improvement in compression efficiency.  This is in line with HASKELL, PURI and NETRAVALI.
 
 
 ```shell
@@ -86,7 +93,7 @@ frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1|
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
 ```
 
-It does support format presets, including DVD and some extra support for dvd-author.
+mpeg2enc support format presets (or templates), including DVD and some extra support for dvd-author.
 
 ```
 --format 1      Standard VCD.  An MPEG1 profile exactly to the VCD2.0 specification. Flag settings that would result in a non-standard stream structure are simply ignored.
@@ -107,6 +114,8 @@ It does support format presets, including DVD and some extra support for dvd-aut
 
 ### MPEG Software Simulation Group's mpeg2encode
 
+This is the reference encoder produced by the MPEG Software Simulation Group.
+
 Clone is available at: https://github.com/mobinsheng/mpeg2enc
 
 MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
@@ -116,7 +125,7 @@ MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
 
 - [BT.601: Studio encoding parameters of digital television for standard 4:3 and wide screen 16:9 aspect ratios](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)
 - [BT.709: Parameter values for the HDTV standards for production and international programme exchange.](https://www.itu.int/rec/R-REC-BT.709)
-- [MPEG2Video/H.262 Specification](https://www.itu.int/rec/T-REC-H.262-200002-S/en).  Older version is public
+- [MPEG2Video/H.262 Specification](https://www.itu.int/rec/T-REC-H.262-200002-S/en).  Older version is now public.
 - [DVD Format/Logo Licensing Corporation (FLLC)](https://www.dvdfllc.co.jp/notice.html#october)
 - DVD Demystified.  TAILOR, J. (McGraw-Hill)
   - [First edition (1998).](https://archive.org/details/B-001-001-580)
@@ -130,6 +139,9 @@ MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
   - [First Edition (2004)](https://archive.org/details/fundamentalsofmu0000lize)
   - [Second Edition (2014)](https://archive.org/details/fundamentalsofmu0000lize_2ed6/)
   - [Third Edition (2021)](https://link.springer.com/book/10.1007/978-3-030-62124-7)
+- Digital Video: An introduction to MPEG-2.  HASKELL, Barry G; PURI, Atul; NETRAVALI, Arun N. (Kluwer)
+  - [First Edition (1997)](https://archive.org/details/digitalvideointr0000hask)
+  - [Second Edition (2002)](https://link.springer.com/book/10.1007/b115887)]
 - [Mediainfo MPEG2 Pulldown support](https://github.com/MediaArea/MediaInfoLib/blob/4af6558e86ac3e64a248af4d7e985d7135d84b18/Source/MediaInfo/Video/File_Mpegv.cpp#L1353)
 
 
@@ -142,9 +154,9 @@ MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
   - Standard definition DV (PAL or NTSC) is bottom field first
   - Standard definition D1 PAL is top field first
   - Standard Definition D1 NTSC is usually (but not always) bottom field first
-  - What about ATSC1.0?  Modern ATSC 1.0 Standard Definition HDHomeRun captures seem to be TFF.
+  - Standard Definition ATSC 1.0 captures (via HDHomerun) seem to be TFF.
   - What about DVB-T?
-  - What about PAL & NTSC DVDs?  Does it stand that the convention is that PAL DVDs are TFF and NTSC DVDs are BFF?
+  - What about PAL & NTSC DVDs?  The standard allows both, but does it stand that the convention is that PAL DVDs are TFF and NTSC DVDs are BFF?
 
 #### FFmpeg bwdif & yadif
 - These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif remains superior to yadif, but the particular characteristics of the content exposes bwdif's weakness.
@@ -236,7 +248,7 @@ $ ffmpeg -hide_banner -loglevel 'error' -f 'lavfi' -i "testsrc2=rate='ntsc-film'
   | x264 --quiet --demuxer 'y4m' --keyint 12 --crf 23 --bframes 2 --pulldown 32 -o - - \
   | ffprobe -hide_banner -loglevel 'error' -f 'h264' -framerate 'ntsc-film' - -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact' 
                                                                                
-frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1|
+frame|pict_type=I|interlaced_frame=0|top_field_first=1|repeat_pict=1
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=1
 frame|pict_type=P|interlaced_frame=0|top_field_first=1|repeat_pict=0
