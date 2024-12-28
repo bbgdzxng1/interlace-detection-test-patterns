@@ -12,7 +12,7 @@ These test patterns are useful for:
 
 
 #### Notes
-- The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient carying pixels for FFmpeg's idet to produce an accurate result.
+- The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's idet to produce an accurate result.
 - The two interlace test patterns include Top & Bottom Field visual indicators.
 - The two telecine test patterns include ABCD cadence pattern visual indicators.
 - The source is generated at yuv422p10le.  The drawtext and tinterlace filters produce better output when operating with a yuv422p (8 or 10bit) source.  After interlacing or telecining, files are finally converted to a yuv420p "consumer" format.  
@@ -24,22 +24,22 @@ These test patterns are useful for:
 ### DGPulldown
 - This script uses DGPulldown 1.0.11 by Donald A. Graft & others to generate the soft telecine test pattern.
 - Caveat: The dgpulldown 1.0.11-L (Linux/macOS) port has some build quirks on compilation on macOS.
-- dgpulldown appears to generate a 3:2 pulldown pattern when soft telecine is applied (* citation needed) since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: The pulldown pattern may also depend on the version of dgpulldown.
+- dgpulldown generate a 3:2 pulldown pattern since 'repeatfields,idet' produces the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: The pulldown pattern may also depend on the version of dgpulldown.
 
 
 #### TODO
 
 - [ ] Add an interlaced tff "untagged" test case. 
-- [x] Overlay the names of the test cases into each video.  WARNING: progressive test case has the wrong overlay.  Really needs a separate progressive function.
-- [ ] Only analyse if optional dependency is installed (WIP)
-- [ ] Use `jq` for parsing and summarizing the json (WIP)
-- [x] -flags:v '+bitexact' # so as to avoid unnecessry git changes
-- [x] -flags:a '+bitexact' # so as to avoid unnecessry git changes
+- [ ] Only analyse if optional dependency is installed
+- [ ] Use `jq` for parsing and summarizing the json
 - [ ] Add gnuplot graphs to plot csv/tsv to svg.
 - [ ] Investigate audio frame_size.
-- [ ] Add Github release(s) of output media.
+- [ ] Add a Github release(s) of output media.
 - [ ] If someone wants to add PAL / 625 / 576 outputs they are welcome.
 - [ ] mediainfo has separate fields for "FrameRate_Original" and "FrameRate" - although I have not yet got DGPulldown to trigger this behavior.  Needs further digging.
+- [x] Overlay the names of the test cases into each video.
+- [x] Add a separate progressive function.
+- [x] Add `-flags:v '+bitexact'` # to avoid unnecessry git changes in media files between architectures 
 
 ## Notes
 
@@ -64,13 +64,9 @@ $ ffmpeg -loglevel 'error' \
     --sequence-header-every-gop --video-norm n --aspect 2 \
     --frame-rate 1 --3-2-pulldown \
     --min-gop-size 12 --max-gop-size 12 --b-per-refframe 2 \
-    --reduction-4x4 1 --reduction-2x2 1 \
+    --intra_dc_prec 10 --reduction-4x4 1 --reduction-2x2 1 \
     --output "./test.mpg" 
 ```
-
-
-
-
 
 ```
 $ ffprobe -hide_banner -loglevel 'error' -f 'mpegvideo' -framerate 'ntsc-film' ./test.mpg -show_entries 'frame=pict_type,interlaced_frame,top_field_first,repeat_pict' -print_format 'compact'
