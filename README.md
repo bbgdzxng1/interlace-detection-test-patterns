@@ -152,14 +152,18 @@ MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
 
 #### TFF vs BFF
 
-- The general consensus (citation needed) seems to be:
-  - High Definition BT.709 is top field first
-  - Standard definition DV (PAL or NTSC) is bottom field first
+- Although the ` { picture_structure, top_field_first, repeat_first_field }` can be modified per picture and is specified in the MPEG-2 Picture Coding Extension, the general consensus (citation needed) seems to be:
+  - High Definition BT.709 is always top field first
+  - Standard definition DV & mini-DV (PAL or NTSC) is bottom field first
   - Standard definition D1 PAL is top field first
   - Standard Definition D1 NTSC is usually (but not always) bottom field first
   - Standard Definition ATSC 1.0 captures (via HDHomerun) seem to be TFF.
   - What about DVB-T?
   - What about PAL & NTSC DVDs?  The standard allows both, but does it stand that the convention is that PAL DVDs are TFF and NTSC DVDs are BFF?
+ 
+https://www.provideocoalition.com/field_order/
+https://www.dvmp.co.uk/digital-video.htm
+
 
 #### MPEG2Video/H.262 in MP4 (macOS & FFmpeg compatibility)
 
