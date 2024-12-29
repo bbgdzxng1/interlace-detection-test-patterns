@@ -86,7 +86,7 @@ Clone is available at: https://github.com/mobinsheng/mpeg2enc
 MPEG-2 Encoder / Decoder, Version 1.2, July 19, 1996
 
 
-### Pulldown with x264/x262 command line interface
+### x264/x262 command line interface
 
 This script/repo deals exclusively with mpeg2video/H.262.  However, the following is included as a quick note on the x264 command line tool, with the aim of validating the pulldown pattern with FFprobe and achieving the same pulldown pattern as mpeg2video + DGPulldown.  It is noted that FFmpeg's libx264 does not support `-x264opts pulldown=32` or `-x264-params pulldown=32`.
 
