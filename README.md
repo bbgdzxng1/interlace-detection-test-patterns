@@ -50,13 +50,13 @@ The current script uses FFmpeg's mpeg2video encoder and dgpulldown, although MJP
 
 ### MJPEGTools' mpeg2enc
 
-[mpeg2enc](https://sourceforge.net/projects/mjpeg/files/mjpegtools/2.2.1/) claims to be a _"heavily enhanced derivative of the MPEG Software Simulation Group's MPEG-2 reference encoder"_
-- mpeg2enc supports pulldown; FFmpeg's mpeg2video encoder does not and thus FFmpeg requires dgpulldown.
-- mpeg2enc produces a 3:2 pulldown pattern, in line with dgpulldown and x264 standalone and FFmpeg's 'pulldown=pattern=32' hard telecine.
+[mpeg2enc](https://sourceforge.net/projects/mjpeg/files/mjpegtools/2.2.1/) describes itself as a _"heavily enhanced derivative of the MPEG Software Simulation Group's MPEG-2 reference encoder"_
+- mpeg2enc supports pulldown; FFmpeg's mpeg2video encoder does not and thus FFmpeg requires a second pass with dgpulldown.
+- mpeg2enc produces a classical 3:2 pulldown pattern, in line with dgpulldown, x264 standalone encoder and FFmpeg's 'pulldown=pattern=32' hard telecine filter.
 - mpeg2enc is limited to a maximum of two B frames.
-- It is noted that the VBV Buffer Size `--video-buffer` is defined in KB, wheras with FFmpeg it is defined in bits.  The DVD maximum is understood to be 1835008 bits (FFmpeg's mpev2video) == 224KB (mpeg2enc)
-- mpeg2enc will produce WARN with both `frame-rate 1 --3-2-pulldown` and `frame-rate 4 --3-2-pulldown`
-- speed is improved with `--multi-thread 4`
+- It is noted that in mpeg2enc, the VBV Buffer Size `--video-buffer` is defined in KB, wheras with FFmpeg it is defined in bits.  The DVD maximum is understood to be 1835008 bits == 224KB
+- mpeg2enc will produce WARN with both `frame-rate 1 --3-2-pulldown` (24000/1001 == ntsc-film) and `frame-rate 4 --3-2-pulldown` (30000/1001 == ntsc).
+- Speed is improved with `--multi-thread 4`
 - Non-linear quantization is automatically enabled when the output is MPEG-2
 - Supports field encoding (if you desire)
 - The templates (aka mpeg2enc "formats") seem to use alternate_scan by default, even on progressive frames.   LI & DREW in Fundamentals of Multimedia state that alternate_scan is preferable for interlaced frames with fast motion.  HASKELL, PURI and NETRAVALI in Digital Video: An introduction to MPEG-2 state the alternate scan often gives better compression for interlaced video when there is significant motion.
@@ -96,7 +96,7 @@ frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1|
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
 ```
 
-mpeg2enc support format presets (or templates), including DVD and some extra support for dvd-author.  Formats 3, 8, 10 and 11 are of most interest to MPEG2 DVD and ATSC 1.0.
+mpeg2enc supports format presets (or templates), including DVD and some extra support for dvd-author.  Formats 3, 8, 10 and 11 are of most interest to MPEG2 DVD and ATSC 1.0.
 
 ```
 --format 1      Standard VCD.  An MPEG1 profile exactly to the VCD2.0 specification. Flag settings that would result in a non-standard stream structure are simply ignored.
@@ -114,6 +114,18 @@ mpeg2enc support format presets (or templates), including DVD and some extra sup
 --format 13     ATSC 1080i 
 ```
 
+```
+$ mpeg2enc --frame-rate 0
+Frame-rate codes:
+ 1 - 24000.0/1001.0 (NTSC 3:2 pulldown converted FILM)
+ 2 - 24.0 (NATIVE FILM)
+ 3 - 25.0 (PAL/SECAM VIDEO / converted FILM)
+ 4 - 30000.0/1001.0 (NTSC VIDEO)
+ 5 - 30.0
+ 6 - 50.0 (PAL FIELD RATE)
+ 7 - 60000.0/1001.0 (NTSC FIELD RATE)
+ 8 - 60.0
+```
 
 ### MPEG Software Simulation Group's mpeg2encode
 
