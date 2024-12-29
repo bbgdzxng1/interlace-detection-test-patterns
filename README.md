@@ -13,14 +13,14 @@ These test patterns are useful for:
 
 #### Notes
 - The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's idet to produce an accurate result.
-- The two interlace test patterns include Top & Bottom Field visual indicators.  These indicators are not deinterlaced cleanly with bwdif, but produce clean results with yadif.
-- The two telecine test patterns include ABCD cadence pattern visual indicators.
-- These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif remains superior to yadif, but the particular characteristics of the content exposes bwdif's weakness.
-  - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns.
+- The interlace test patterns include Top & Bottom Field visual indicators.  These indicators are not fully deinterlaced by bwdif, but remain weaved.  yadif deinterlaces the visual indicators as expected.
+- The telecine test patterns include ABCD cadence pattern visual indicators.
+- These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif is considered superior to yadif, but the particular characteristics of the content knowingly expose bwdif's weakness.
+  - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns; bwdif leaves the visual indicators weaved. 
   - yadif is a field-based deinterlacer and leaves fewer artifacts when there are such significant changes between fields.
 - The source is generated at yuv422p10le.  The drawtext and tinterlace filters produce better output when operating with a yuv422p (8 or 10bit) source.  After interlacing or telecining, files are finally converted to a yuv420p "consumer" format.  
-- The script contains almost no error checking of success.  That is intentional to make the script readable & accessible.
-- The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
+- The script contains almost no error checking of success.  This is intentional to improve readability.
+- The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the Y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
 - In theory, output files could be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to aid concatenation by always(?) writing a Sequence Display Extension, 
 - Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from a MakeMKV DVD rip.
 
@@ -38,7 +38,7 @@ These test patterns are useful for:
 - [ ] Add gnuplot graphs to plot csv/tsv to svg.
 - [ ] Investigate audio frame_size.
 - [ ] Add a Github release(s) of output media.
-- [ ] If someone wants to add PAL / 625 / 576 outputs they are welcome.
+- [ ] Pull requests for producing PAL / 625 / 576 outputs are welcome.
 - [ ] mediainfo has separate fields for "FrameRate_Original" and "FrameRate" - although I have not yet got DGPulldown to trigger this behavior.  Needs further digging.
 - [x] Overlay the names of the test cases into each video.
 - [x] Add a separate progressive function.
@@ -96,7 +96,7 @@ frame|pict_type=B|interlaced_frame=0|top_field_first=1|repeat_pict=1|
 frame|pict_type=B|interlaced_frame=0|top_field_first=0|repeat_pict=0|
 ```
 
-mpeg2enc support format presets (or templates), including DVD and some extra support for dvd-author.
+mpeg2enc support format presets (or templates), including DVD and some extra support for dvd-author.  Formats 3, 8, 10 and 11 are of most interest to MPEG2 DVD and ATSC 1.0.
 
 ```
 --format 1      Standard VCD.  An MPEG1 profile exactly to the VCD2.0 specification. Flag settings that would result in a non-standard stream structure are simply ignored.
