@@ -12,7 +12,7 @@ These test patterns are useful for:
 
 
 #### Notes
-- The test patterns include a frame-countup of {0-29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's idet to produce an accurate result.
+- The test patterns include a frame-countup of {0..29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's idet to produce an accurate result.
 - The interlace test patterns include Top & Bottom Field visual indicators.  These indicators are not fully deinterlaced by bwdif, but remain weaved.  yadif deinterlaces the visual indicators as expected.
 - The telecine test patterns include ABCD cadence pattern visual indicators.
 - These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif is considered superior to yadif, but the particular characteristics of the content knowingly expose bwdif's weakness.
@@ -25,9 +25,9 @@ These test patterns are useful for:
 - Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from a MakeMKV DVD rip.
 
 ### DGPulldown
-- This script uses DGPulldown 1.0.11 by Donald A. Graft & others to generate the soft telecine test pattern.
+- This script uses DGPulldown 1.0.11 by Donald A. Graft _et al_ to generate the soft telecine test pattern.
 - Caveat: The dgpulldown 1.0.11-L (Linux/macOS) port has some build quirks on compilation on macOS.
-- dgpulldown generates a 3:2 pulldown pattern producing the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.  Caveat: The pulldown pattern may also depend on the version of dgpulldown.
+- dgpulldown generates a 3:2 pulldown pattern producing the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.
 
 
 #### TODO
