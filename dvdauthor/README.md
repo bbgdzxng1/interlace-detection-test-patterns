@@ -21,8 +21,8 @@ Simple script for creating DVD-Video with FFmpeg & dvdauthor.  No menus, no noth
 ### FFmpeg muxer
 
 It is important to use FFmpeg's DVD muxer rather than the generic MPEG-2 VOB muxer.
-- [DVD-Video system headers are 18 bytes fixed length)[https://github.com/FFmpeg/FFmpeg/blob/5f38c825367d205e969ecc013a0433adf0f7972b/libavformat/mpegenc.c#L286C23-L286C73]
-- (Reserve space for NAV)[https://github.com/FFmpeg/FFmpeg/blob/5f38c825367d205e969ecc013a0433adf0f7972b/libavformat/mpegenc.c#L180]
+- [DVD-Video system headers are 18 bytes fixed length](https://github.com/FFmpeg/FFmpeg/blob/5f38c825367d205e969ecc013a0433adf0f7972b/libavformat/mpegenc.c#L286C23-L286C73)
+- [Reserve space for NAV](https://github.com/FFmpeg/FFmpeg/blob/5f38c825367d205e969ecc013a0433adf0f7972b/libavformat/mpegenc.c#L180)
 
 ### Color accuracy & macOS DVD Player & FFmpeg smptebars
 
