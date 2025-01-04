@@ -58,8 +58,8 @@ The current script uses FFmpeg's mpeg2video encoder and dgpulldown, since FFmpeg
 
 There have been various attempts to add 3:2 pulldown to FFmpeg, but none have reached stable.
 - Abandoned attempt to port mplayer's mp=softpulldown filter as an FFmpeg filter.  https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2015-January/thread.html#167982
-- Attempt to add a bitstream filter, with `-bsf:v mpeg2_metadata=ivtc=true`.  This was never merged.  https://ffmpeg.org/pipermail/ffmpeg-devel/2020-December/thread.html#274084
-- Original soft-telecine ticket.  https://fftrac-bg.ffmpeg.org/ticket/2602
+- Attempt to add a bitstream filter, with `-bsf:v mpeg2_metadata=ivtc=true`.  This was never merged.  https://ffmpeg.org/pipermail/ffmpeg-devel/2020-December/thread.html#274084.  It does not seem like the patch sets the RFF in the Picture Coding Extension, so appears it is not fully functional.
+- Original FFmpeg soft-telecine trac ticket.  https://fftrac-bg.ffmpeg.org/ticket/2602
 
 [Here](./mpeg2-encoders.md) are some notes on some alternate, cross platform command-line MPEG-2 encoders.
 - MJPEGTool's mpeg2enc supports native 3:2 pulldown.
