@@ -94,7 +94,7 @@ function _generate_bt601-525_480_interlaced_bff()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' "${basename}_interlaced_bff.ts" -y
+    -f 'mpegts' -packetsize 2048 "${basename}_interlaced_bff.ts" -y
   return 0
 }
 
@@ -132,7 +132,7 @@ function _generate_bt601-525_480_interlaced_tff()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' "${basename}_interlaced_tff.ts" -y
+    -f 'mpegts' -packetsize 2048 "${basename}_interlaced_tff.ts" -y
   return 0
 }
 
@@ -172,7 +172,7 @@ function _generate_bt601-525_480_telecined_hard()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' "${basename}_telecined_hard.ts" -y
+    -f 'mpegts' -packetsize 2048 "${basename}_telecined_hard.ts" -y
   return 0
 }
 
@@ -208,7 +208,7 @@ function _generate_bt601-525_480_telecined_soft()
     -metadata:s:a:0 'language=eng' \
     -timecode '00:00:00:00' \
     -t "${duration}" \
-    -f tee "[select='v':f='mpeg2video']./${basename}_progressive.m2v \
+    -f tee "[select='v':f='mpeg2video':packetsize=2048]./${basename}_progressive.m2v \
     | [select='a':f='ac3']./${basename}_audio.ac3" -y
 
   # [TODO] Still needs work to avoid using alias in shell script (add to path or symlink to ~/bin/dgpulldown?)
@@ -223,7 +223,7 @@ function _generate_bt601-525_480_telecined_soft()
     -map '0:v:0' -codec:v 'copy' \
     -map '1:a:0' -codec:a 'copy' \
     -metadata:s:a:0 'language=eng' \
-    -f 'mpegts' "./${basename}_telecined_soft.ts" -y
+    -f 'mpegts' -packetsize 2048 "./${basename}_telecined_soft.ts" -y
 
   rm -f "./${basename}_progressive.m2v" "./${basename}_audio.ac3" "./${basename}_pulldown.m2v" # Housekeeping
   return 0
@@ -262,7 +262,7 @@ function _generate_bt601-525_480_progressive()
     -timecode '00:00:00:00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' "${basename}_progressive.ts" -y
+    -f 'mpegts' -packetsize 2048 "${basename}_progressive.ts" -y
   return 0
 }
 
