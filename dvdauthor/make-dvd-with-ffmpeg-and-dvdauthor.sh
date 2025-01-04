@@ -20,10 +20,10 @@ ffmpeg -hide_banner -loglevel "${loglevel}" -sws_flags '+accurate_rnd+full_chrom
   -map '0:a:0' -codec:a 'ac3' -b:a 192k -ar 48000 -ac 2 \
   -t 60 \
   -f 'tee' \
-  "[select='v':f='mpeg2video']${outfile%.*}.m2v \
+  "[select='v':f='mpeg2video':packetsize=2048]${outfile%.*}.m2v \
    | [select='a':f='ac3']${outfile%.*}.ac3 \
-   | [select='v\,a':f='dvd']${outfile%.*}.vob \
-   | [select='v\,a':f='mpegts']${outfile%.*}.ts"
+   | [select='v\,a':f='dvd':packetsize=2048]${outfile%.*}.vob \
+   | [select='v\,a':f='mpegts:packetsize=2048']${outfile%.*}.ts"
 
 TMPFILE=$(mktemp -t dvdauthor) # No error checking here, as we're going to use it anyway
 
