@@ -25,33 +25,44 @@ These test patterns are useful for:
 - Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from a MakeMKV DVD rip.
 
 ### DGPulldown
-- This script uses DGPulldown 1.0.11 by Donald A. Graft _et al_ to generate the soft telecine test pattern.
+- This script uses DGPulldown 1.0.11 by Donald A. Graft _et al_ to generate the soft-telecine test pattern.
+- https://www.rationalqm.us/dgpulldown/dgpulldown.html
+- DGPulldown was released under the GNU General Public License v2 (GPLv2).
 - Caveat: The dgpulldown 1.0.11-L (Linux/macOS) port has some build quirks on compilation on macOS.
 - dgpulldown generates a 3:2 pulldown pattern producing the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.
 
 
 #### TODO
 
-- [ ] Add an interlaced tff "untagged" test case. 
-- [ ] Only analyse if optional dependency is installed
+- [ ] Add an interlaced tff "untagged" test case, to simulate interlaced content that has been encoded as progressive.
+- [ ] Improve the script to only analyse if optional dependencies are installed
 - [ ] Use `jq` for parsing and summarizing the json
 - [ ] Add gnuplot graphs to plot csv/tsv to svg.
-- [ ] Investigate audio frame_size.
+- [ ] Investigate FFmpeg audio frame_size warning when reading from raw ac3 (frame rate estimated from bitrate)
 - [ ] Add a Github release(s) of output media.
-- [ ] Pull requests for producing PAL / 625 / 576 outputs are welcome.
 - [ ] mediainfo has separate fields for "FrameRate_Original" and "FrameRate" - although I have not yet got DGPulldown to trigger this behavior.  Needs further digging.
-- [x] Overlay the names of the test cases into each video.
-- [x] Add a separate progressive function.
-- [x] Add `-flags:v '+bitexact'` # to avoid unnecessry git changes in media files between architectures 
+- [x] ~Overlay the names of the test cases into each video.~
+- [x] ~Add a distinct function for progressive.~
+- [x] ~Add `-flags:v '+bitexact'` # to avoid unnecessry git changes in media files between architectures~ 
+
+#### Out of Scope / Limitations
+
+- Interlaced 625 / 576i is currently out of scope, but could be added by copying the NTSC templates and using 470b/g colors.
+- Complicated pulldown patterns such as euro-pulldown / 2:2 pulldown are out of scope, but pull requests are welcome.
+- Progressive segmented-Frame (PsF) & Quasi-interlace are out of scope.
+- Field-picture based encoding is out of scope.
 
 ## Notes
 
-The current script uses FFmpeg's mpeg2video encoder and dgpulldown.
+The current script uses FFmpeg's mpeg2video encoder and dgpulldown, since FFmpeg does not support 3:2 pulldown.
 
-MJPEGTool's mpeg2enc supports native pulldown.
+There have been various attempts to add 3:2 pulldown to FFmpeg, but none have reached stable.
+- Abandoned attempt to port mplayer's mp=softpulldown filter as an FFmpeg filter.  https://lists.ffmpeg.org/pipermail/ffmpeg-devel/2015-January/thread.html#167982
+- Attempt to add a bitstream filter, with `-bsf:v mpeg2_metadata=ivtc=true`.  This was never merged.  https://ffmpeg.org/pipermail/ffmpeg-devel/2020-December/thread.html#274084
+- Original soft-telecine ticket.  https://fftrac-bg.ffmpeg.org/ticket/2602
 
 [Here](./mpeg2-encoders.md) are some notes on some alternate, cross platform command-line MPEG-2 encoders.
-
+- MJPEGTool's mpeg2enc supports native 3:2 pulldown.
 
 
 ### References
@@ -84,8 +95,8 @@ MJPEGTool's mpeg2enc supports native pulldown.
 
 - Although the ` { picture_structure, top_field_first, repeat_first_field }` can be modified per picture and is specified in the MPEG-2 Picture Coding Extension, the general consensus (citation needed) seems to be:
   - High Definition BT.709 is always top field first
-  - Standard definition DV & mini-DV (PAL or NTSC) is bottom field first
-  - Standard definition D1 PAL is top field first
+  - Standard definition DV & mini-DV (PAL or NTSC) is usually bottom field first
+  - Standard definition D1 PAL is usually top field first
   - Standard Definition D1 NTSC is usually (but not always) bottom field first
   - Standard Definition ATSC 1.0 captures (via HDHomerun) seem to be TFF.
   - What about DVB-T?
