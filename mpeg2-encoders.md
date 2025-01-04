@@ -65,6 +65,136 @@ mpeg2enc supports format presets (or templates), including DVD and some extra su
 ```
 
 ```
+mpeg2enc --help --output /dev/null 
+--verbose|-v num
+    Level of verbosity. 0 = quiet, 1 = normal 2 = verbose/debug
+--format|-f fmt
+    Encoding profile
+    [0 = Generic MPEG1, 1 = standard VCD, 2 = user VCD,
+     3 = Generic MPEG2, 4 = standard SVCD, 5 = user SVCD,
+     6 = VCD Stills sequences, 7 = SVCD Stills sequences, 8|9 = DVD,
+     10 = ATSC 480i, 11 = ATSC 480p, 12 = ATSC 720p, 13 = ATSC 1080i]
+--display-hsize|-x [32..16383]
+   Set the the display-horizontal-size hint in MPEG-2 output to
+   something other than the encoded image width
+--display-vsize|-y [32..16383]
+   Set the the display-vertical-size hint in MPEG-2 output to
+   something other than the encoded image height
+--aspect|-a num
+    Set displayed image aspect ratio image (default: 2 = 4:3)
+    [1 = 1:1, 2 = 4:3, 3 = 16:9, 4 = 2.21:1]
+--frame-rate|-F num
+    Set playback frame rate of encoded video
+    (default: frame rate of input stream)
+    0 = Display frame rate code table
+--video-bitrate|-b num
+    Set Bitrate / peak bitrate of compressed video in KBit/sec
+    (Peak bitrate if a target bitrate and/or quantisation floor is set
+    (default: 1152.0 for VCD, 2500.0 for SVCD, 7500.0 for DVD)
+--target-video-bitrate|-t
+   Set target bitrate for entire video stream in KBit/sec
+--nonvideo-bitrate|-B num
+    Non-video data bitrate to assume for sequence splitting
+    calculations (see also --sequence-length).
+--quantisation|-q num
+    Image data quantisation factor [1..31] (1 is best quality, no default)
+    When quantisation is set variable bit-rate encoding is activated and
+    the --bitrate value sets an *upper-bound* video data-rate
+--ratecontroller|-A [0..1] (default:0)
+    Specify ratecontrol alorithm
+--output|-o pathname
+    Pathname of output file or fifo (REQUIRED!!!)
+--target-still-size|-T size
+    Size in KB of VCD stills
+--interlace-mode|-I num
+    Sets MPEG 2 motion estimation and encoding modes:
+    0 = Progressive (non-interlaced)(Movies)
+    1 = Interlaced source material (video)
+    2 = Interlaced source material, per-field-encoding (video)
+--motion-search-radius|-r num
+    Motion compensation search radius [0..32] (default 16)
+--reduction-4x4|-4 num
+    Reduction factor for 4x4 subsampled candidate motion estimates
+    [1..4] [1 = max quality, 4 = max. speed] (default: 2)
+--reduction-2x2|-2 num
+    Reduction factor for 2x2 subsampled candidate motion estimates
+    [1..4] [1 = max quality, 4 = max. speed] (default: 3)
+--min-gop-size|-g num
+    Minimum size Group-of-Pictures (default depends on selected format)
+--max-gop-size|-G num
+    Maximum size Group-of-Pictures (default depends on selected format)
+    If min-gop is less than max-gop, mpeg2enc attempts to place GOP
+    boundaries to coincide with scene changes
+--closed-gop|-c
+    All Group-of-Pictures are closed.  Useful for authoring multi-angle DVD
+--force-b-b-p|-P
+    Preserve two B frames between I/P frames when placing GOP boundaries
+--quantisation-reduction|-Q num
+    Max. quantisation reduction for highly active blocks
+    [0.0 .. 4.0] (default: 0.0)
+--quant-reduction-max-var|-X num
+    Luma variance below which quantisation boost (-Q) is used
+    [0.0 .. 2500.0](default: 0.0)
+--video-buffer|-V num
+    Target decoders video buffer size in KB (default 46)
+--video-norm|-n n|p|s
+    Tag output to suit playback in specified video norm
+    (n = NTSC, p = PAL, s = SECAM) (default: PAL)
+--sequence-length|-S num
+    Place a sequence boundary in the video stream so they occur every
+    num Mbytes once the video is multiplexed with audio etc.
+    N.b. --non-video-bitrate is used to the bitrate of the other
+    data that will be multiplexed with this video stream
+--3-2-pulldown|-p
+    Generate header flags for 3-2 pull down of 24fps movie material
+--intra_dc_prec|-D [8..11]
+    Set number of bits precision for DC (base colour) of blocks in MPEG-2
+--reduce-hf|-N num
+    [0.0..2.0] Reduce hf resolution (increase quantization) by num (default: 0.0)
+--keep-hf|-H
+    Maximise high-frequency resolution - useful for high quality sources
+    and/or high bit-rates)
+--sequence-header-every-gop|-s
+    Include a sequence header every GOP if the selected format doesn't
+    do so by default.
+--no-dummy-svcd-SOF|-d
+    Do not generate dummy SVCD scan-data for the ISO CD image
+    generator "vcdimager" to fill in.
+--playback-field-order|-z b|t
+    Force setting of playback field order to bottom or top first
+--multi-thread|-M num
+    Activate multi-threading to optimise throughput on a system with num CPU's
+    [0..32], 0=no multithreading, (default: 0)
+--correct-svcd-hds|-C
+    Force SVCD horizontal_display_size to be 480 - standards say 540 or 720
+    But many DVD/SVCD players screw up with these values.
+--no-constraints
+    Deactivate constraints for maximum video resolution and sample rate.
+    Could expose bugs in the software at very high resolutions!
+--no-altscan-mpeg2
+    Deactivate the use of the alternate block pattern for MPEG-2.  This is
+    A work-around for a Bug in an obscure hardware decoder.
+--dualprime-mpeg2
+    Turn ON use of dual-prime motion compensation. Default is OFF unless this option is used
+--custom-quant-matrices|-K kvcd|tmpgenc|default|hi-res|file=inputfile|help
+    Request custom or userspecified (from a file) quantization matrices
+--unit-coeff-elim|-E num
+    Skip picture blocks which appear to carry little information
+    because they code to only unit coefficients. The number specifies
+    how aggresively this should be done. A negative value means DC
+    coefficients are included.  Reasonable values -40 to 40
+--b-per-refframe| -R 0|1|2
+    The number of B frames to generate between each I/P frame
+--cbr|-u
+    For MPEG-2 force the use of (suboptimal) ConstantBitRate (CBR) encoding
+--chapters X[,Y[,...]]
+    Specifies which frames should be chapter points (first frame is 0)
+    Chapter points are I frames on closed GOP's.
+--help|-?
+    Print this lot out!
+```
+
+```
 $ mpeg2enc --frame-rate 0
 Frame-rate codes:
  1 - 24000.0/1001.0 (NTSC 3:2 pulldown converted FILM)
