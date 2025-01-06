@@ -2,7 +2,25 @@
 #shellcheck shell=bash
 #set -x  # Uncomment for debug
 
-printf '%s\n%s\n%s\n%s\n' '########################################' 'This is an EXPERIMENTAL script.' 'Logic has not been verified' '########################################'
+########################################
+# Could be enhanced with...
+# - plotting time as well as frame number (top axis)
+# - plotting framesize (since we already have framesize)
+# - plotting frametype IPB, keyframe.  Much like FFmpeg plotframes or https://github.com/rodrigopolo/plotframes
+# - if you know the framerate, it should be possible to calculate the bitrate across a GOP.  See also https://github.com/InB4DevOps/bitrate-viewer
+# - Could this method be used to acheve the same as vbv.pl?  https://akuvian.org/src/x264/vbv.pl
+# AT&T Video Optimizer has a buffer occupancy https://developer.att.com/video-optimizer/docs
+# https://github.com/zeroepoch/plotbitrate
+# https://github.com/fifonik/FFBitrateViewer
+# How could you vizualize underflow/overflow
+# plotframes
+# plotbitrate
+# plotbuffer
+# https://github.com/CrypticSignal/bitrate-plotter
+# https://github.com/XuebingZhao/BitratePlotter
+########################################
+
+printf '%s\n%s\n%s\n%s\n' '########################################' 'This is an EXPERIMENTAL script.' 'Results have not been verified' '########################################'
 
 infile=$1
 # infile="./out.mkv"
@@ -61,5 +79,7 @@ gnuplot <<- EOF
 EOF
 
 printf '%s: %s\n' 'Plot saved to' "${plotfile}"
+
+open -a Safari "${plotfile}"
 
 exit 0
