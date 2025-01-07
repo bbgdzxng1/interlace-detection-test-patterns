@@ -21,6 +21,7 @@ maxrate=8000000          # Maximum bitrate for MPEG-2 DVD is 9.8Mbps, but we wil
 minrate=0                # Older players may require a minimum bitrate of non-zero.
 trellis=0                # Trellis quantization.  Note that trellis (1,2) provides more efficient compression, but at the cost of quality.
 mbd='rd'                 # Macroblock decision algorithm. simple (0) = mbcmp (default) | bits (1) = fewest bits | rd (2) = best rate distortion (slow)
+mbcmp='satd'             # Macroblock comparison function.
 precmp='satd'            # Pre-motion estimation comparison function. rd = best rate distortion (slow) | satd (2) sum of absolute Hadamard transformed differences seems popular.  default is dctmax (13)
 cmp='satd'               # Motion estimation comparison function. rd = best rate distortion (Very slow).  default is dctmax (13)
 subcmp='satd'            # Sub-picture element (sub-PEL) motion estimation (ME) compare function.rd = best rate distortion (Very slow).  default is dctmax (13)
@@ -93,7 +94,7 @@ function _generate_bt601-525_480_interlaced_bff()
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
     -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
-    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbcmp:v "${mbcmp}" -mbd:v "${mbd}" \
     -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true -ildctcmp:v "${ildctcmp}" \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
@@ -133,7 +134,7 @@ function _generate_bt601-525_480_interlaced_tff()
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
     -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
-    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbcmp:v "${mbcmp}" -mbd:v "${mbd}" \
     -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true -ildctcmp:v "${ildctcmp}" \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
@@ -175,7 +176,7 @@ function _generate_bt601-525_480_telecined_hard()
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
     -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
-    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbcmp:v "${mbcmp}" -mbd:v "${mbd}" \
     -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v false \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
@@ -213,7 +214,7 @@ function _generate_bt601-525_480_telecined_soft()
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
     -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
-    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbcmp:v "${mbcmp}" -mbd:v "${mbd}" \
     -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -alternate_scan:v false \
     -gop_timecode:v '00:00:00:00' -drop_frame_timecode:v false \
@@ -269,7 +270,7 @@ function _generate_bt601-525_480_progressive()
     -map '0:v:0' -codec:v 'mpeg2video' \
     -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
     -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
-    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbcmp:v "${mbcmp}" -mbd:v "${mbd}" \
     -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -flags:v '+bitexact' \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
