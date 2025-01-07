@@ -64,6 +64,24 @@ There have been various attempts to add 3:2 pulldown to FFmpeg, but none have re
 [Here](./mpeg2-encoders.md) are some notes on some alternate, cross platform command-line MPEG-2 encoders.
 - MJPEGTool's mpeg2enc supports native 3:2 pulldown.
 
+### qscale iterative search with ab-av1
+
+[ab-av1's](https://github.com/alexheretic/ab-av1) `crf-search` has been updated to support qscale for FFmpeg's mpeg2video.
+
+The crf-search tool performs an interative search to identify the crf (qscale) necessary to achieve an VMAF score of 95.  The mpeg2video qscale is passed to the command as if it were "crf" (ie `--min-crf` is equivilent to `--min-qscale`).
+
+```shell
+$ ~/.cargo/bin/ab-av1 crf-search --cache false \
+  -i "${infile}" \
+  --vmaf-scale '720x480' \
+  --min-crf 0 --max-crf 9 \
+  --encoder 'mpeg2video' --pix-format 'yuv420p' \
+  --enc 'profile:v=main' --enc 'level:v=main' \
+  --enc 'g:v=18' --enc 'bf:v=2' --enc b_strategy:v=2 \
+  --enc 'non_linear_quant:v=true' --enc 'qmax:v=28' \
+  --enc 'maxrate:v=9600000' --enc 'bufsize:v=1835006'
+```
+
 
 ### References
 

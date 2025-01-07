@@ -16,7 +16,16 @@ export FFREPORT=file="${logdir}/%p-%t.log:level=48"
 
 duration='00:00:10.000'  # Duration limited to 10s to reduce filesize to satisfy Github's filesize limits.
 loglevel='level+warning' # FFmpeg loglevel
-quality=5                # Should be 2 for maximum quality, but it is reduced to 5 to reduce the filesize to satisfy Github's filesize limits.
+quality=5                # Documentation states this should be 2-31, but it seems that 0 and 1 are still valid.
+maxrate=8000000          # Maximum bitrate for MPEG-2 DVD is 9.8Mbps, but we will use 8Mbps to be safe.
+minrate=0                # Older players may require a minimum bitrate of non-zero.
+trellis=0                # Trellis quantization.  Note that trellis (1,2) provides more efficient compression, but at the cost of quality.
+mbd='rd'                 # Macroblock decision algorithm. simple (0) = mbcmp (default) | bits (1) = fewest bits | rd (2) = best rate distortion (slow)
+precmp='satd'            # Pre-motion estimation comparison function. rd = best rate distortion (slow) | satd (2) sum of absolute Hadamard transformed differences seems popular.  default is dctmax (13)
+cmp='satd'               # Motion estimation comparison function. rd = best rate distortion (Very slow).  default is dctmax (13)
+subcmp='satd'            # Sub-picture element (sub-PEL) motion estimation (ME) compare function.rd = best rate distortion (Very slow).  default is dctmax (13)
+skip_cmp='satd'          # Skip macroblock comparison function. rd = best rate distortion (slow).  default is dctmax (13)
+ildctcmp='satd'          # Interlaced discrete cosine transform (DCT) compare function. Only satd (2), zero (7) seem to work.  Other values cause errors.
 
 #######################################
 ### _check_dependencies
@@ -52,7 +61,7 @@ function _check_dependencies
     # vlc
     # avmediainfo # Apple's version of mediainfo
     # dvdauthor # fun-and-games for creating DVDs.
-    # ab-av1 for iterative testing using VMAF.
+    # ab-av1 for iterative qscale/crf testing using VMAF.
   )
   for dependency in "${optional_dependencies[@]}"; do
     command -v "${dependency}" 1> /dev/null || {
@@ -82,9 +91,11 @@ function _generate_bt601-525_480_interlaced_bff()
     format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
   sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
-    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
-    -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true \
+    -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -mpv_flags:v '+skip_rd+qp_rd+mv0' \
+    -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true -ildctcmp:v "${ildctcmp}" \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
@@ -94,7 +105,7 @@ function _generate_bt601-525_480_interlaced_bff()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' -packetsize 2048 "${basename}_interlaced_bff.ts" -y
+    -f 'mpegts' -fflags '+bitexact' -packetsize 2048 "${basename}_interlaced_bff.ts" -y
   return 0
 }
 
@@ -120,9 +131,11 @@ function _generate_bt601-525_480_interlaced_tff()
       format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240, setparams=range='tv'[out]; \
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
-    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
-    -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true \
+    -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -mpv_flags:v '+skip_rd+qp_rd+mv0' \
+    -flags:v '+ilme+ildct+bitexact' -alternate_scan:v true -ildctcmp:v "${ildctcmp}" \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -seq_disp_ext:v 'always' \
@@ -132,7 +145,7 @@ function _generate_bt601-525_480_interlaced_tff()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' -packetsize 2048 "${basename}_interlaced_tff.ts" -y
+    -f 'mpegts' -fflags '+bitexact' -packetsize 2048 "${basename}_interlaced_tff.ts" -y
   return 0
 }
 
@@ -160,8 +173,10 @@ function _generate_bt601-525_480_telecined_hard()
       format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
-    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
+    -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -flags:v '+ilme+ildct+bitexact' -alternate_scan:v false \
     -gop_timecode:v '00:00:00;00' -drop_frame_timecode:v true \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -172,7 +187,7 @@ function _generate_bt601-525_480_telecined_hard()
     -timecode '00:00:00;00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' -packetsize 2048 "${basename}_telecined_hard.ts" -y
+    -f 'mpegts' -fflags '+bitexact' -packetsize 2048 "${basename}_telecined_hard.ts" -y
   return 0
 }
 
@@ -196,8 +211,10 @@ function _generate_bt601-525_480_telecined_soft()
       scale=size='ntsc', setdar=ratio='16/9', format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
-    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
+    -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -alternate_scan:v false \
     -gop_timecode:v '00:00:00:00' -drop_frame_timecode:v false \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
@@ -208,7 +225,7 @@ function _generate_bt601-525_480_telecined_soft()
     -metadata:s:a:0 'language=eng' \
     -timecode '00:00:00:00' \
     -t "${duration}" \
-    -f tee "[select='v':f='mpeg2video':packetsize=2048]./${basename}_progressive.m2v \
+    -f tee -fflags '+bitexact' "[select='v':f='mpeg2video':packetsize=2048]./${basename}_progressive.m2v \
     | [select='a':f='ac3']./${basename}_audio.ac3" -y
 
   # [TODO] Still needs work to avoid using alias in shell script (add to path or symlink to ~/bin/dgpulldown?)
@@ -223,7 +240,7 @@ function _generate_bt601-525_480_telecined_soft()
     -map '0:v:0' -codec:v 'copy' \
     -map '1:a:0' -codec:a 'copy' \
     -metadata:s:a:0 'language=eng' \
-    -f 'mpegts' -packetsize 2048 "./${basename}_telecined_soft.ts" -y
+    -f 'mpegts' -fflags '+bitexact' -packetsize 2048 "./${basename}_telecined_soft.ts" -y
 
   rm -f "./${basename}_progressive.m2v" "./${basename}_audio.ac3" "./${basename}_pulldown.m2v" # Housekeeping
   return 0
@@ -250,8 +267,10 @@ function _generate_bt601-525_480_progressive()
       format=pix_fmts='yuv420p', limiter=planes=1:min=16:max=235, limiter=planes=6:min=16:max=240,setparams=range='tv'[out]; \
     sine=frequency=440:sample_rate=48000, volume=0.2, aresample=in_chlayout='mono':out_chlayout='stereo'[out1]" \
     -map '0:v:0' -codec:v 'mpeg2video' \
-    -g:v "${gop}" -bf:v 2 -b_strategy 0 -sc_threshold:v 0x7FFFFFFF \
-    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v 8000000 -minrate:v 0 -bufsize:v 1835008 -dc:v 10 \
+    -g:v "${gop}" -bf:v 2 -b_strategy:v 2 -sc_threshold:v 0x7FFFFFFF \
+    -qscale:v "${quality}" -non_linear_quant:v true -qmax:v 28 -maxrate:v "${maxrate}" -minrate:v "${minrate}" -bufsize:v 1835008 -dc:v 10 \
+    -trellis:v "${trellis}" -precmp:v "${precmp}" -cmp:v "${cmp}" -subcmp:v "${subcmp}" -skip_cmp:v "${skip_cmp}" -mbd:v "${mbd}" \
+    -mpv_flags:v '+skip_rd+qp_rd+mv0' \
     -flags:v '+bitexact' \
     -pix_fmt:v 'yuv420p' -chroma_sample_location:v 'left' \
     -alternate_scan:v false \
@@ -262,7 +281,7 @@ function _generate_bt601-525_480_progressive()
     -timecode '00:00:00:00' \
     -metadata:s:a:0 'language=eng' \
     -t "${duration}" \
-    -f 'mpegts' -packetsize 2048 "${basename}_progressive.ts" -y
+    -f 'mpegts' -fflags '+bitexact' -packetsize 2048 "${basename}_progressive.ts" -y
   return 0
 }
 
@@ -427,52 +446,3 @@ function main()
 echo "running main code"
 main "${@}"
 exit 0
-
-# #######################################
-# ### _plotgraph function.
-# # Fun and games with gnuplot.  gnuplot requires TSV
-# #######################################
-# function _plotgraph()
-# {
-#     printf '%s | %s: %s %s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" 'INFO' 'Running function' "${FUNCNAME[0]}" | tee -a "${logdir}/log.txt"
-# 	local infile="$1"
-# 	local outfile="./test.svg"
-# 	gnuplot -e " ; \
-# 		datafile = '${infile}' ; \
-# 		set datafile separator '\t' ; \
-# 		set datafile missing 'null' ; \
-# 		set terminal svg size 1920,1920 dynamic ; \
-# 		set output '${outfile}' ; \
-# 		set multiplot layout 3,1 ; \
-# 			set title 'avframe Metadata Flags' ; \
-# 			set tics nomirror ; \
-# 			set xlabel 'Time(s)' ; \
-# 			set yrange [0:1] ; \
-# 			set ytics offset 5 ('False' 0.10, 'True' 0.90) ; \
-# 			set key autotitle columnhead ; \
-# 			set key opaque ; \
-# 			plot \
-# 				datafile using 1:5 axis x1y1 with points, \
-# 				datafile using 1:4 axis x1y1 with points, \
-# 				datafile using 1:3 axis x1y1 with line ; \
-# 			set title 'Interlace Analysis' ; \
-# 			set xlabel 'Time(s)' ; \
-# 			set yrange [-1:1] ; \
-# 			set tics nomirror ; \
-# 			set ytics offset 25 ('Interlaced BFF' -0.90, 'Progressive' 0.10, 'Interlaced TFF' 0.90) ; \
-# 			set key autotitle columnhead ; \
-# 			set key opaque ; \
-# 			plot \
-# 			  datafile using 1:6 axis x1y1 with line ; \
-# 			set title 'Progressive Analysis' ; \
-# 			set xlabel 'Time(s)' ; \
-# 			set yrange [0:3] ; \
-# 			set tics nomirror ; \
-# 			set ytics offset 25 ('Interlaced' 0.10, 'Progressive' 1.10, 'Telecine Repeat Field 2' 2.10, 'Telecine Repeat Field 3' 2.90) ; \
-# 			set key autotitle columnhead ; \
-# 			set key opaque ; \
-# 			plot \
-# 				datafile using 1:7 axis x1y1 with points ; \
-# 		unset multiplot"
-# 	return 0
-# }
