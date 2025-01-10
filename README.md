@@ -66,12 +66,12 @@ There have been various attempts to add 3:2 pulldown to FFmpeg, but none have re
 
 ### qscale iterative search with ab-av1
 
-[ab-av1's](https://github.com/alexheretic/ab-av1) `crf-search` has been updated to support `qscale` for FFmpeg's mpeg2video.
+[ab-av1's](https://github.com/alexheretic/ab-av1) `crf-search` has been updated to support `qscale` for FFmpeg's mpeg2video.  This could be useful for DVD production.
 
 The `crf-search` tool performs an interative search to identify the pseudo-crf (qscale) necessary to achieve an VMAF score of 95.  The mpeg2video qscale is passed to the command as if it were "crf" (ie `--min-crf` is equivilent to `--min-qscale`).
 
 ```shell
-$ ~/.cargo/bin/ab-av1 crf-search --cache false \
+$ ab-av1 crf-search --cache false \
   -i "${infile}" \
   --min-crf 1 --max-crf 28 \
   --encoder 'mpeg2video' --pix-format 'yuv420p' \
@@ -79,8 +79,7 @@ $ ~/.cargo/bin/ab-av1 crf-search --cache false \
   --enc 'g:v=18' --enc 'bf:v=2' \
   --enc 'non_linear_quant:v=true' --enc 'qmax:v=28' \
   --enc 'maxrate:v=8000000' --enc 'bufsize:v=1835006'
-```
-
+``` 
 
 ### References
 
