@@ -109,7 +109,7 @@ $ ab-av1 crf-search --cache false \
 
 #### TFF vs BFF
 
-- Although the ` { picture_structure, top_field_first, repeat_first_field }` can be modified per picture and is specified in the MPEG-2 Picture Coding Extension, the general consensus (citation needed) seems to be:
+- Although the ` { picture_structure, top_field_first, repeat_first_field }` in the MPEG-2 Picture Coding Extension can be defined on a per-picture basis, the general consensus (citation needed) seems to be:
   - High Definition BT.709 is always top field first
   - Standard definition DV & mini-DV (PAL or NTSC) is usually bottom field first
   - Standard definition D1 PAL is usually top field first
