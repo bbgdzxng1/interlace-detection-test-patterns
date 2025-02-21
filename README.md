@@ -22,7 +22,7 @@ The GIFs embedded in this README are web-previews.  The GIFs are not useful for 
 
 Example Test Pattern | Deinterlaced / Inverse Telecined
 ---|---
-Interlaced - Note the TF/BF indicator in the top left. ![bt601-525_480_interlaced_bff](https://github.com/user-attachments/assets/5f686173-6d03-40da-8837-c3be3dba5b3a) | FFmpeg's `yadif` in field mode correctly separates the frame into top field & bottom field ![bt601-525_480_interlaced_bff_yadif](https://github.com/user-attachments/assets/420e80ef-03aa-4caf-bda9-22a4566ca8d4)
+Interlaced - Note the TF/BF indicator in the top left. ![bt601-525_480_interlaced_bff](https://github.com/user-attachments/assets/5f686173-6d03-40da-8837-c3be3dba5b3a) | FFmpeg's `yadif` in field mode correctly separates the frame into top field & bottom fields ![bt601-525_480_interlaced_bff_yadif](https://github.com/user-attachments/assets/420e80ef-03aa-4caf-bda9-22a4566ca8d4)
 Hard Telecined - Note the ABCD telecine pattern indicator in the top right.  Hard telecined content will show 'extra' frames constructed of repeated fields. ![bt601-525_480_telecined_hard](https://github.com/user-attachments/assets/3ee2cc06-95a1-4b32-83dd-e0f8827e1ae1) | FFmpeg's `fieldmatch,decimate=cycle=5` or `pullup` filters should correctly restore 23.98fps and correctly cycle through the ABCD indicators. ![bt601-525_480_telecined_hard_ivtc](https://github.com/user-attachments/assets/208a33ce-a3c5-42b1-9311-fd3c31eb12fa)
 
 
