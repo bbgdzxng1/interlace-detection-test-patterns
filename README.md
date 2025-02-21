@@ -1,49 +1,49 @@
 # Test patterns for deinterlace and inverse-telecine
 
-These test patterns are useful for:
-- Testing FFmpeg's idet (interlace detect) filter
-- Testing dgpulldown's soft telecine tool
+The script and test patterns in this repository are useful for:
+- Testing FFmpeg's `idet` (interlace detect) filter
+- Evaluating deinterlacers (bwdif, yadif, nnedi) and inverse telecine (pullup, fieldmatch) workflows
+- Testing dgpulldown's soft-telecine tool
 - Testing media analyzers & inspecting headers (FFprobe, mediainfo, wader/fq, https://media-analyzer.pro/app etc)
-- Evaluating deinterlacers (bwdif, yadif, nnedi) and inverse telecine (pullup, fieldmatch) processes
-- Aid in the development of an automated interlace/inverse telecine detection method using FFmpeg's idet filter.
-  - https://github.com/mpv-player/mpv/blob/master/TOOLS/idet.sh
+- Aid in the development of an automated interlace/inverse telecine detection method using FFmpeg's idet filter
   - https://github.com/utahjohnnymontana/DVD-Rip-Prep
+  - https://github.com/mpv-player/mpv/blob/master/TOOLS/idet.sh
   - https://www.mistralsolutions.com/newsletter/Jul13/Field_Dominance_Algorithm.pdf
+
+The test patterns include a field-countup of {0..59} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's `idet` to produce an accurate result.
+
+One feature that is rarely included in other test patterns are the interlace and telecine indicators.
+- The interlace test patterns include Top & Bottom Field visual indicators.  The frames are constructued in such as way so that that when (cleanly) deinterlaced from fields-to-frames that they will separate into Top Field (TF) and Bottom Field (BF).
+- The telecine test patterns include ABCD cadence pattern visual indicators.
+
+#### Web previews...
+
+The GIFs embedded in this README are web-previews.  The GIFs are not useful for testing.  Use the MKV or TS media in the repository, or modify the script to customize the output.
+
+Example Test Pattern | Deinterlaced / Inverse Telecined
+---|---
+Interlaced - Note the TF/BF indicator in the top left. ![bt601-525_480_interlaced_bff](https://github.com/user-attachments/assets/5f686173-6d03-40da-8837-c3be3dba5b3a) | FFmpeg's `yadif` in field mode correctly separates the frame into top field & bottom field ![bt601-525_480_interlaced_bff_yadif](https://github.com/user-attachments/assets/420e80ef-03aa-4caf-bda9-22a4566ca8d4)
+Hard Telecined - Note the ABCD telecine pattern indicator in the top right.  Hard telecined content will show 'extra' frames constructed of repeated fields. ![bt601-525_480_telecined_hard](https://github.com/user-attachments/assets/3ee2cc06-95a1-4b32-83dd-e0f8827e1ae1) | FFmpeg's `fieldmatch,decimate=cycle=5` or `pullup` filters should correctly restore 23.98fps and correctly cycle through the ABCD indicators. ![bt601-525_480_telecined_hard_ivtc](https://github.com/user-attachments/assets/208a33ce-a3c5-42b1-9311-fd3c31eb12fa)
 
 
 #### Notes
-- The test patterns include a frame-countup of {0..29} or {0..23} front-and-center stage.  The large font ensures that there are sufficient varying pixels for FFmpeg's idet to produce an accurate result.
-- The interlace test patterns include Top & Bottom Field visual indicators.  These indicators are not fully deinterlaced by bwdif, but remain weaved.  yadif deinterlaces the visual indicators as expected.
-- The telecine test patterns include ABCD cadence pattern visual indicators.
-- These extreme-case interlace test patterns expose one of the weaknesses of the bwdif deinterlacer.  For general use, bwdif is considered superior to yadif, but the particular characteristics of the content knowingly expose bwdif's weakness.
-  - bwdif is a selective, block-based deinterlacer.  It decides on a block-level whether to either line-double (bob) or weave.  The algorithm struggles with very rapid changes between fields.  bwdif will leave artifacts with these test patterns; bwdif leaves the visual indicators weaved. 
-  - yadif is a field-based deinterlacer and leaves fewer artifacts when there are such significant changes between fields.
-- The source is generated at yuv422p10le.  The drawtext and tinterlace filters produce better output when operating with a yuv422p (8 or 10bit) source.  After interlacing or telecining, files are finally converted to a yuv420p "consumer" format.  
+- These extreme-case test patterns knowingly produces content that will expose some of the weaknesses of the `bwdif` deinterlacer.  For general use, bwdif is still considered superior to yadif, but the particular characteristics of these test patterns will challenge bwdif.  bwdif is a selective, block-based deinterlacer.  It decides on a per-block level whether to either line-double (bob) or leave the block as weaved.  The bwdif algorithm struggles with very rapid changes between fields.
+  - bwdif will leave artifacts with these test patterns
+  - bwdif leaves the visual indicators weaved. 
+- The video frames are generated at yuv422p10le.  The drawtext and tinterlace filters produce better output when fed with a 444 or 422 source.  After interlacing or telecining, files are finally encoded in an 8-bit yuv420p "consumer" format.
+- Files are first generated as MPEG2-TS and subsequently remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from a MakeMKV DVD rip.
 - The script contains almost no error checking of success.  This is intentional to improve readability.
-- The accuracy of FFmpeg's idet filter can be improved by using 'extractplanes=planes='y',idet' to focus on the Y plane, since yuv420p may not have sufficient vertical resolution in the chroma planes to produce an accurate result
-- In theory, output files could be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" is specified to aid concatenation by always(?) writing a Sequence Display Extension, 
-- Files are first generated as MPEG2-TS and remuxed to MKV.  MPEG-TS is a more "broadcast" format, but MKV is included to mimic the output produced from a MakeMKV DVD rip.
+- When dealing with yuv420 chroma-subsampled content, the accuracy of FFmpeg's idet filter can be improved by using `extractplanes=planes='y',idet` to focus on the Y plane, since yuv420p does not have sufficient vertical resolution in the chroma planes for idet to produce an accurate result.
+- In theory, the output files could be concatenated to produce a hybrid/mixed stream. "-seq_disp_ext:v 'always'" writes the Sequence Display Extension to aid concatenation. 
 
-### DGPulldown
-- This script uses DGPulldown 1.0.11 by Donald A. Graft _et al_ to generate the soft-telecine test pattern.
+### DGPulldown soft telecine
+- This script uses FFmpeg's mpeg2video codec and DGPulldown 1.0.11 by Donald A. Graft _et al_ to generate the soft-telecine test pattern.
 - https://www.rationalqm.us/dgpulldown/dgpulldown.html
 - DGPulldown was released under the GNU General Public License v2 (GPLv2).
 - Caveat: The dgpulldown 1.0.11-L (Linux/macOS) port has some build quirks on compilation on macOS.
 - dgpulldown generates a 3:2 pulldown pattern producing the same result as FFmpeg's 'pulldown=pattern=32' hard telecine.  dgpulldown does not offer an option to specify alternate [ 23 | 32 | 2332 ] pulldown patterns.
 
-
-#### TODO
-
-- [ ] Add an interlaced tff "untagged" test case, to simulate interlaced content that has been encoded as progressive.
-- [ ] Improve the script to only analyse if optional dependencies are installed
-- [ ] Use `jq` for parsing and summarizing the json
-- [ ] Add gnuplot graphs to plot csv/tsv to svg.
-- [ ] Investigate FFmpeg audio frame_size warning when reading from raw ac3 (frame rate estimated from bitrate)
-- [ ] Add a Github release(s) of output media.
-- [ ] mediainfo has separate fields for "FrameRate_Original" and "FrameRate" - although I have not yet got DGPulldown to trigger this behavior.  Needs further digging.
-- [x] ~Overlay the names of the test cases into each video.~
-- [x] ~Add a distinct function for progressive.~
-- [x] ~Add `-flags:v '+bitexact'` # to avoid unnecessry git changes in media files between architectures~ 
+MJPEGTool's mpeg2enc encoder supports native 3:2 pulldown, without the need for DGPulldown.
 
 #### Out of Scope / Limitations
 
@@ -63,23 +63,6 @@ There have been various attempts to add 3:2 pulldown to FFmpeg, but none have re
 
 [Here](./mpeg2-encoders.md) are some notes on some alternate, cross platform command-line MPEG-2 encoders.
 - MJPEGTool's mpeg2enc supports native 3:2 pulldown.
-
-### qscale iterative search with ab-av1
-
-[ab-av1's](https://github.com/alexheretic/ab-av1) `crf-search` has been updated to support `qscale` for FFmpeg's mpeg2video.  This could be useful for DVD production.
-
-The `crf-search` tool performs an interative search to identify the pseudo-crf (qscale) necessary to achieve an VMAF score of 95.  The mpeg2video qscale is passed to the command as if it were "crf" (ie `--min-crf` is equivilent to `--min-qscale`).
-
-```shell
-$ ab-av1 crf-search --cache false \
-  -i "${infile}" \
-  --min-crf 1 --max-crf 28 \
-  --encoder 'mpeg2video' --pix-format 'yuv420p' \
-  --enc 'profile:v=main' --enc 'level:v=main' \
-  --enc 'g:v=18' --enc 'bf:v=2' \
-  --enc 'non_linear_quant:v=true' --enc 'qmax:v=28' \
-  --enc 'maxrate:v=8000000' --enc 'bufsize:v=1835006'
-``` 
 
 ### References
 
@@ -131,3 +114,15 @@ Poynton in "Digital Video and HDTV Algorithms and Interfaces" states *"24PsF Ima
 Quasi-Interlace is a *"Term in consumer electronics denoting progressive segmented frame"* and *"Quasi-interlace in consumer SDTV is comparable to Progressive segmented-Frame (PsF) in HDTV, though at 25 or 29.97 frames per second instead of 24"*
 
 
+#### TODO
+
+- [ ] Add an interlaced tff "untagged" test case, to simulate interlaced content that has been encoded as progressive.
+- [ ] Improve the script to only perform the analyse operation if the optional dependencies are installed
+- [ ] Use `jq` for parsing and summarizing the json
+- [ ] Add gnuplot graphs to plot csv/tsv to svg.
+- [ ] Investigate FFmpeg audio frame_size warning when reading from raw ac3 (frame rate estimated from bitrate)
+- [ ] Add a Github release(s) of output media.
+- [ ] mediainfo has separate fields for "FrameRate_Original" and "FrameRate" - although I have not yet got DGPulldown to trigger this behavior.  Needs further digging.
+- [x] ~Overlay the names of the test cases into each video.~
+- [x] ~Add a distinct function for progressive.~
+- [x] ~Add `-flags:v '+bitexact'` # to avoid unnecessry git changes in media files between architectures~ 
